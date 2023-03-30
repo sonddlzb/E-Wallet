@@ -1,0 +1,21 @@
+---
+ name: E-Wallet
+ options:
+   postGenCommand: pod install
+ targets:
+   E-Wallet:
+     deploymentTarget: '13.0'
+     platform: iOS
+     preBuildScripts:
+       - name: SwiftLint
+         script: ${PODS_ROOT}/SwiftLint/swiftlint
+     settings:
+       base:
+         CODE_SIGN_IDENTITY: iPhone Developer
+         CODE_SIGN_STYLE: Manual
+         DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+         INFOPLIST_FILE: E-Wallet/App/Info.plist
+         SWIFT_VERSION: 5
+     sources:
+       - path: E-Wallet
+     type: application
