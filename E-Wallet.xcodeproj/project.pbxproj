@@ -74,6 +74,14 @@
 		C004672193F92031C033FB42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1E6104F15EE2948C610F6D8 /* Assets.xcassets */; };
 		C41659719718D2DAB7A4793A /* AVAudioPlayerNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3161B0DAB9C2940B842AE /* AVAudioPlayerNodeExtensions.swift */; };
 		C5053D0856D0D7AD1439916A /* SignInRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB649C1EDEA37D66D2D7C5A6 /* SignInRouter.swift */; };
+		C8874E8E29DE821800F9FA84 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E8929DE821800F9FA84 /* SignUpRouter.swift */; };
+		C8874E8F29DE821800F9FA84 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E8A29DE821800F9FA84 /* SignUpViewController.swift */; };
+		C8874E9029DE821800F9FA84 /* SignUpBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E8B29DE821800F9FA84 /* SignUpBuilder.swift */; };
+		C8874E9129DE821800F9FA84 /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E8C29DE821800F9FA84 /* SignUpInteractor.swift */; };
+		C8874E9229DE821800F9FA84 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8874E8D29DE821800F9FA84 /* SignUpViewController.xib */; };
+		C8874E9429DE834F00F9FA84 /* RootComponent+SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E9329DE834F00F9FA84 /* RootComponent+SignUp.swift */; };
+		C8874E9629DE840000F9FA84 /* RootInteractor+SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E9529DE840000F9FA84 /* RootInteractor+SignIn.swift */; };
+		C8874E9829DE86DD00F9FA84 /* RootInteractor+SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8874E9729DE86DD00F9FA84 /* RootInteractor+SignUp.swift */; };
 		CA35C8BBE3A620E7F06BCD3E /* AVAudioSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020D8B59B989065EE24C9677 /* AVAudioSessionExtensions.swift */; };
 		CC6278ED99982B35A02DAC6B /* EncodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAD016D9E0A2021415AAD83 /* EncodableExtensions.swift */; };
 		D3A987A3EF7A9503C9AB6DBE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E0885532F8DDCC18E58C4 /* DateExtensions.swift */; };
@@ -174,6 +182,14 @@
 		C0D027C8F4064F48D5F3113C /* NotificationDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDialogView.swift; sourceTree = "<group>"; };
 		C61FC22E86925C64810669C2 /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
 		C6E4727E7C21D7D41072A377 /* SignInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		C8874E8929DE821800F9FA84 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		C8874E8A29DE821800F9FA84 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		C8874E8B29DE821800F9FA84 /* SignUpBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBuilder.swift; sourceTree = "<group>"; };
+		C8874E8C29DE821800F9FA84 /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
+		C8874E8D29DE821800F9FA84 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		C8874E9329DE834F00F9FA84 /* RootComponent+SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+SignUp.swift"; sourceTree = "<group>"; };
+		C8874E9529DE840000F9FA84 /* RootInteractor+SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootInteractor+SignIn.swift"; sourceTree = "<group>"; };
+		C8874E9729DE86DD00F9FA84 /* RootInteractor+SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootInteractor+SignUp.swift"; sourceTree = "<group>"; };
 		CD144125FCFD45D1F64B8386 /* TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
 		D1927E39784CD3CE70F6325D /* PageSlideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSlideBar.swift; sourceTree = "<group>"; };
 		D2ABEAE43F6D17A2DB01504C /* PermissonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissonHelper.swift; sourceTree = "<group>"; };
@@ -335,6 +351,9 @@
 				9C067777B48B9C19A0E3EDEE /* RootInteractor+Splash.swift */,
 				803859CD92AD373771B3C430 /* RootRouter.swift */,
 				25865D70F709458B84C39C7E /* RootViewController.swift */,
+				C8874E9329DE834F00F9FA84 /* RootComponent+SignUp.swift */,
+				C8874E9529DE840000F9FA84 /* RootInteractor+SignIn.swift */,
+				C8874E9729DE86DD00F9FA84 /* RootInteractor+SignUp.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -415,9 +434,22 @@
 			path = CommonView;
 			sourceTree = "<group>";
 		};
+		C8874E8829DE81F500F9FA84 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				C8874E8929DE821800F9FA84 /* SignUpRouter.swift */,
+				C8874E8A29DE821800F9FA84 /* SignUpViewController.swift */,
+				C8874E8B29DE821800F9FA84 /* SignUpBuilder.swift */,
+				C8874E8C29DE821800F9FA84 /* SignUpInteractor.swift */,
+				C8874E8D29DE821800F9FA84 /* SignUpViewController.xib */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		C95ECF7E2B64E9156DC14D3F /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				C8874E8829DE81F500F9FA84 /* SignUp */,
 				9A033AB277BCF7DE23E00527 /* Root */,
 				D3E08E2A40D06CDA3BDA1E81 /* SignIn */,
 				540599CC23AB5A4DAE27EF34 /* Splash */,
@@ -532,6 +564,7 @@
 				00EADCA495E5A3FC117BCD47 /* NotificationDialogView.xib in Resources */,
 				A0246D099DA7A6EBE56DE6D8 /* Outfit-Bold.otf in Resources */,
 				AA19072DEF9298AC9DEE9E7D /* Outfit-Light.otf in Resources */,
+				C8874E9229DE821800F9FA84 /* SignUpViewController.xib in Resources */,
 				5280DF6902903C9ECF543D65 /* Outfit-Medium.otf in Resources */,
 				3C7D87D2F802C253E42231E1 /* Outfit-Regular.otf in Resources */,
 				B09E9BD0F04A4BA42A83A7E5 /* Outfit-SemiBold.otf in Resources */,
@@ -620,13 +653,17 @@
 				A91E1F8D6DC6E354F5458CCF /* BaseNavigationController.swift in Sources */,
 				0997CAA7ABE1085E32B7B867 /* BaseViewController.swift in Sources */,
 				2241087C6F9FD428E4C536BC /* BezierPathExtensions.swift in Sources */,
+				C8874E9429DE834F00F9FA84 /* RootComponent+SignUp.swift in Sources */,
 				52CC8497DED0896CC252AEB4 /* BundleExtensions.swift in Sources */,
 				1A653AEE1DC4872F320DC7AA /* CGFloatExtensions.swift in Sources */,
 				5FA16004C654652F752B1E30 /* CGPointExtensions.swift in Sources */,
 				FAE9FD5B7F840D5F8F9B26D0 /* CGRectExtensions.swift in Sources */,
+				C8874E9829DE86DD00F9FA84 /* RootInteractor+SignUp.swift in Sources */,
 				098924B2A424B901E002CBD6 /* CGSizeExtensions.swift in Sources */,
 				96A910616CEA6900DB353DF5 /* CIImageExtensions.swift in Sources */,
 				0BAC305B2953575B283F6A52 /* CLPlacemarkExtensions.swift in Sources */,
+				C8874E8E29DE821800F9FA84 /* SignUpRouter.swift in Sources */,
+				C8874E9029DE821800F9FA84 /* SignUpBuilder.swift in Sources */,
 				585E8F5075536DF96A9EBECD /* CMTimeExtensions.swift in Sources */,
 				E74EEF4E15730F337E1E3F2F /* CalendarExtensions.swift in Sources */,
 				0DE73602DA2395A1BC9D8258 /* Checkbox.swift in Sources */,
@@ -639,6 +676,8 @@
 				52354F204982AD0DDCA26FEC /* DeviceExtensions.swift in Sources */,
 				E501FA31E679ED3225394A30 /* DictionaryExtension.swift in Sources */,
 				6DF62C383C42BE2769CE5D76 /* DoubleExtensions.swift in Sources */,
+				C8874E8F29DE821800F9FA84 /* SignUpViewController.swift in Sources */,
+				C8874E9129DE821800F9FA84 /* SignUpInteractor.swift in Sources */,
 				CC6278ED99982B35A02DAC6B /* EncodableExtensions.swift in Sources */,
 				2281406798895152548C3F95 /* FailedDialog.swift in Sources */,
 				7902AD7E8A2199B6CCA0E674 /* FileManagerExtensions.swift in Sources */,
@@ -668,6 +707,7 @@
 				C5053D0856D0D7AD1439916A /* SignInRouter.swift in Sources */,
 				50153C8A8B42C2BDB3E1C462 /* SignInViewController.swift in Sources */,
 				69DAA8745762EC495604F145 /* SolarTextField.swift in Sources */,
+				C8874E9629DE840000F9FA84 /* RootInteractor+SignIn.swift in Sources */,
 				4850298DFF4AA823644E6C8C /* SplashBuilder.swift in Sources */,
 				BC3A305CD02927FCE0413567 /* SplashInteractor.swift in Sources */,
 				5D4AA6A2972E1D6A093A6B9C /* SplashRouter.swift in Sources */,

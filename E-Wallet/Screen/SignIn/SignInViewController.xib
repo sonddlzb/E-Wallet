@@ -76,6 +76,9 @@
                         <constraint firstAttribute="trailing" secondItem="Ez5-GF-kDP" secondAttribute="trailing" id="mlr-8n-TKX"/>
                         <constraint firstItem="Ez5-GF-kDP" firstAttribute="leading" secondItem="lF9-te-v8x" secondAttribute="leading" id="pp6-lr-L2v"/>
                     </constraints>
+                    <connections>
+                        <action selector="didTapSignUpButton:" destination="-1" eventType="touchUpInside" id="Csd-vN-Hdd"/>
+                    </connections>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

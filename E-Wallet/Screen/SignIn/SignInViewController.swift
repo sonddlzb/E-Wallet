@@ -10,6 +10,7 @@ import RxSwift
 import UIKit
 
 protocol SignInPresentableListener: AnyObject {
+    func routeToSignUp()
 }
 
 final class SignInViewController: BaseViewControler, SignInPresentable, SignInViewControllable {
@@ -30,11 +31,22 @@ final class SignInViewController: BaseViewControler, SignInPresentable, SignInVi
     private func config() {
         self.loginByPasswordView.delegate = self
     }
+
+    // MARK: - Actions
+    @IBAction func didTapSignUpButton(_ sender: Any) {
+        self.listener?.routeToSignUp()
+    }
 }
 
-// MARK: -
+// MARK: - LoginByPasswordViewDelegate
 extension SignInViewController: LoginByPasswordViewDelegate {
     func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, phoneNumber: String, password: String) {
         // validate and login here
+    }
+}
+
+extension SignInViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
