@@ -24,5 +24,9 @@ extension DIConnector {
         DIContainer.register(SignUpBuildable.self) { _, args in
             return SignUpBuilder(dependency: args.get())
         }
+
+        DIContainer.register(VerifyCodeBuildable.self) { _, args in
+            return VerifyCodeBuilder(dependency: args.get())
+        }
     }
 }

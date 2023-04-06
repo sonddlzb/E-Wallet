@@ -11,6 +11,7 @@ import UIKit
 
 protocol SignInPresentableListener: AnyObject {
     func routeToSignUp()
+    func signInWithPhoneNumber(_ phoneNumber: String)
 }
 
 final class SignInViewController: BaseViewControler, SignInPresentable, SignInViewControllable {
@@ -36,12 +37,17 @@ final class SignInViewController: BaseViewControler, SignInPresentable, SignInVi
     @IBAction func didTapSignUpButton(_ sender: Any) {
         self.listener?.routeToSignUp()
     }
+
+    // MARK: - Helper
+    func formatPhoneNumber(_ phoneNumber: String) -> String {
+        return "+84" + (phoneNumber.first == "0" ?  String(phoneNumber.dropFirst()) : phoneNumber)
+    }
 }
 
 // MARK: - LoginByPasswordViewDelegate
 extension SignInViewController: LoginByPasswordViewDelegate {
-    func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, phoneNumber: String, password: String) {
-        // validate and login here
+    func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, phoneNumber: String) {
+        self.listener?.signInWithPhoneNumber(self.formatPhoneNumber(phoneNumber))
     }
 }
 

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         DIConnector.registerAllDeps()
         self.configWindow()
+        self.configFirebase()
         return true
     }
 
@@ -27,5 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootBuilder = DIContainer.resolve(RootBuildable.self, agrument: component)
         rootRouter = rootBuilder.build()
         rootRouter?.interactable.activate()
+    }
+
+    private func configFirebase() {
+        FirebaseApp.configure()
     }
 }

@@ -7,8 +7,11 @@
 
 import RIBs
 import RxSwift
+import FirebaseAuth
 
 protocol SignInRouting: ViewableRouting {
+    func routeToVerifyCode(verificationID: String, phoneNumber: String)
+    func dismissVerifyCode()
 }
 
 protocol SignInPresentable: Presentable {
@@ -42,5 +45,16 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
 extension SignInInteractor: SignInPresentableListener {
     func routeToSignUp() {
         self.listener?.signInWantToRouteToSignUp()
+    }
+
+    func signInWithPhoneNumber(_ phoneNumber: String) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+            if let error = error {
+                print("Error when verify phone number: \(error)")
+                return
+            } else {
+                self.router?.routeToVerifyCode(verificationID: verificationID!, phoneNumber: phoneNumber)
+            }
+        }
     }
 }
