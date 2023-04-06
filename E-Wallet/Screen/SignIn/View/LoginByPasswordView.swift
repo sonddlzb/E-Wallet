@@ -1,8 +1,8 @@
 //
 //  LoginByPasswordView.swift
-//  TestCustomView
+//  E-Wallet
 //
-//  Created by đào sơn on 03/03/2023.
+//  Created by đào sơn on 03/04/2023.
 //
 
 import UIKit
@@ -13,7 +13,7 @@ private struct Const {
 }
 
 protocol LoginByPasswordViewDelegate: AnyObject {
-    func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, email: String, password: String)
+    func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, phoneNumber: String, password: String)
 }
 
 class LoginByPasswordView: UIView {
@@ -46,18 +46,18 @@ class LoginByPasswordView: UIView {
         return rememberButton
     }()
 
-    private lazy var emailTextField: SolarTextField = {
-        let emailTextField = SolarTextField()
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        emailTextField.placeholder = "Email"
-        emailTextField.isHighlightedWhenEditting = true
-        emailTextField.backgroundColor = .lotion
-        emailTextField.borderColor = .crayola
-        emailTextField.textField.paddingLeft = 10
-        emailTextField.cornerRadius = 12
-        emailTextField.delegate = self
+    private lazy var phoneNumberTextField: SolarTextField = {
+        let phoneNumberTextField = SolarTextField()
+        phoneNumberTextField.translatesAutoresizingMaskIntoConstraints = false
+        phoneNumberTextField.placeholder = "Phone Number"
+        phoneNumberTextField.isHighlightedWhenEditting = true
+        phoneNumberTextField.backgroundColor = .lotion
+        phoneNumberTextField.borderColor = .crayola
+        phoneNumberTextField.textField.paddingLeft = 10
+        phoneNumberTextField.cornerRadius = 12
+        phoneNumberTextField.delegate = self
         self.becomeFirstResponder()
-        return emailTextField
+        return phoneNumberTextField
     }()
 
     private lazy var passwordTextField: PasswordTextField = {
@@ -90,9 +90,9 @@ class LoginByPasswordView: UIView {
         confirmLabel.translatesAutoresizingMaskIntoConstraints = false
         confirmLabel.text = "Sign in"
         confirmLabel.backgroundColor = .lotion
-        confirmLabel.textColor = .white
+        confirmLabel.textColor = .crayola
         confirmLabel.textAlignment = .center
-        confirmLabel.font = Outfit.regularFont(size: 14)
+        confirmLabel.font = Outfit.regularFont(size: 16)
 
         return confirmLabel
     }()
@@ -127,19 +127,21 @@ class LoginByPasswordView: UIView {
         super.init(frame: frame)
         self.addContentView()
         self.addLayoutConstraints()
+        self.config()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.addContentView()
         self.addLayoutConstraints()
+        self.config()
     }
 
     private func addContentView() {
         self.addSubview(self.containerView)
 
         self.containerView.addSubview(self.titleLabel)
-        self.containerView.addSubview(self.emailTextField)
+        self.containerView.addSubview(self.phoneNumberTextField)
         self.containerView.addSubview(self.passwordTextField)
         self.containerView.addSubview(self.rememberContainerView)
         self.containerView.addSubview(self.confirmButton)
@@ -165,14 +167,14 @@ class LoginByPasswordView: UIView {
             self.titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor,
                                                       constant: Const.rightPadding),
 
-            self.emailTextField.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,
+            self.phoneNumberTextField.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,
                                                      constant: 40.0),
-            self.emailTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor,
+            self.phoneNumberTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor,
                                                          constant: Const.leftPadding),
-            self.emailTextField.heightAnchor.constraint(equalToConstant: 50.0),
-            self.emailTextField.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
+            self.phoneNumberTextField.heightAnchor.constraint(equalToConstant: 50.0),
+            self.phoneNumberTextField.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
 
-            self.passwordTextField.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor,
+            self.passwordTextField.topAnchor.constraint(equalTo: self.phoneNumberTextField.bottomAnchor,
                                                         constant: 24.0),
             self.passwordTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor,
                                                             constant: Const.leftPadding),
@@ -205,6 +207,16 @@ class LoginByPasswordView: UIView {
         ])
     }
 
+    private func config() {
+        self.passwordTextField.isRightButtonEnable = true
+        self.passwordTextField.paddingRight = 10.0
+
+        self.phoneNumberTextField.isLeftButtonEnable = true
+        self.phoneNumberTextField.setLeftImage(image: UIImage(named: "ic_vietnam_phone"))
+        self.phoneNumberTextField.paddingLeft = 95.0
+        self.phoneNumberTextField.keyboardType = .decimalPad
+    }
+
     // MARK: - Actions
     @objc func didTapRememberButton(_ sender: Any) {
         self.isRememberMe = !self.isRememberMe
@@ -213,13 +225,13 @@ class LoginByPasswordView: UIView {
 
     @objc func didTapConfirmButton(_ sender: Any) {
         self.delegate?.loginByPasswordViewDidTapConfirm(self,
-                                                        email: self.emailTextField.text,
+                                                        phoneNumber: self.phoneNumberTextField.text,
                                                         password: self.passwordTextField.text)
     }
 
     // MARK: - Helps
-    func isEmailValidate() -> Bool {
-        return self.emailTextField.text.isEmailValid()
+    func validatePhoneNumber() -> Bool {
+        return self.phoneNumberTextField.text.isPhoneNumberValid()
     }
 
     func validatePassword() -> Bool {
@@ -240,8 +252,9 @@ extension LoginByPasswordView: SolarTextFieldDelegate {
     }
 
     func solarTextFieldDidChangeValue(_ textField: SolarTextField) {
-        let isValidInput = self.isEmailValidate() && self.validatePassword()
+        let isValidInput = self.validatePhoneNumber() && self.validatePassword()
         self.confirmButton.isUserInteractionEnabled = isValidInput
         self.confirmLabel.backgroundColor = isValidInput ? .crayola : .lotion
+        self.confirmLabel.textColor = isValidInput ? .lotion : .crayola
     }
 }

@@ -5,11 +5,21 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-Medium.otf">
+            <string>Outfit-Medium</string>
+        </array>
+        <array key="Outfit-Regular.otf">
+            <string>Outfit-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignInViewController">
             <connections>
+                <outlet property="loginByPasswordView" destination="77y-Gx-hTT" id="4WA-GG-7bR"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
             </connections>
         </placeholder>
@@ -17,9 +27,77 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="77y-Gx-hTT" customClass="LoginByPasswordView" customModule="E_Wallet" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="98" width="414" height="400"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="400" id="JU3-NJ-qp3"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1b-6n-Qfm" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                    <rect key="frame" x="129.5" y="518" width="155" height="17"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot the password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZC-79-nBD">
+                            <rect key="frame" x="0.0" y="0.0" width="155" height="17"/>
+                            <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                            <color key="textColor" red="0.1019607843" green="0.71372549019999998" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="jZC-79-nBD" firstAttribute="top" secondItem="N1b-6n-Qfm" secondAttribute="top" id="EfS-cj-8oi"/>
+                        <constraint firstAttribute="bottom" secondItem="jZC-79-nBD" secondAttribute="bottom" id="FE3-rg-Gdh"/>
+                        <constraint firstItem="jZC-79-nBD" firstAttribute="leading" secondItem="N1b-6n-Qfm" secondAttribute="leading" id="khr-xe-egm"/>
+                        <constraint firstAttribute="trailing" secondItem="jZC-79-nBD" secondAttribute="trailing" id="t6H-r5-sSy"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqp-q5-Afb">
+                    <rect key="frame" x="98.5" y="795" width="169.5" height="17"/>
+                    <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lF9-te-v8x" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                    <rect key="frame" x="270" y="794" width="51.5" height="17"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ez5-GF-kDP">
+                            <rect key="frame" x="0.0" y="0.0" width="51.5" height="17"/>
+                            <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="16"/>
+                            <color key="textColor" red="0.1019607843" green="0.71372549019999998" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Ez5-GF-kDP" firstAttribute="top" secondItem="lF9-te-v8x" secondAttribute="top" id="NOC-tc-1ex"/>
+                        <constraint firstAttribute="bottom" secondItem="Ez5-GF-kDP" secondAttribute="bottom" id="cwE-6V-zY3"/>
+                        <constraint firstAttribute="trailing" secondItem="Ez5-GF-kDP" secondAttribute="trailing" id="mlr-8n-TKX"/>
+                        <constraint firstItem="Ez5-GF-kDP" firstAttribute="leading" secondItem="lF9-te-v8x" secondAttribute="leading" id="pp6-lr-L2v"/>
+                    </constraints>
+                </view>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <point key="canvasLocation" x="-394" y="74"/>
+            <constraints>
+                <constraint firstItem="77y-Gx-hTT" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="6AB-Uo-6Wb"/>
+                <constraint firstItem="lF9-te-v8x" firstAttribute="leading" secondItem="Oqp-q5-Afb" secondAttribute="trailing" constant="2" id="8kU-ns-WSw"/>
+                <constraint firstItem="Oqp-q5-Afb" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" constant="-24" id="Hra-oN-oDj"/>
+                <constraint firstItem="lF9-te-v8x" firstAttribute="height" secondItem="Oqp-q5-Afb" secondAttribute="height" id="Kpc-eq-8fh"/>
+                <constraint firstItem="N1b-6n-Qfm" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="SGJ-zM-ePy"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="77y-Gx-hTT" secondAttribute="trailing" id="YL2-x6-4co"/>
+                <constraint firstItem="77y-Gx-hTT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cxY-41-PVe"/>
+                <constraint firstItem="lF9-te-v8x" firstAttribute="centerY" secondItem="Oqp-q5-Afb" secondAttribute="centerY" constant="-1" id="ec3-Vh-RWa"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Oqp-q5-Afb" secondAttribute="bottom" constant="50" id="oVr-k7-b7a"/>
+                <constraint firstItem="N1b-6n-Qfm" firstAttribute="top" secondItem="77y-Gx-hTT" secondAttribute="bottom" constant="20" id="yoh-rm-jRl"/>
+            </constraints>
+            <point key="canvasLocation" x="-394.20289855072468" y="73.660714285714278"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -96,6 +96,18 @@ class SolarTextField: UIView {
         }
     }
 
+    var keyboardType: UIKeyboardType = .alphabet {
+        didSet {
+            self.textField.keyboardType = self.keyboardType
+        }
+    }
+
+    var font: UIFont = UIFont.systemFont(ofSize: 17, weight: .medium) {
+        didSet {
+            self.textField.font = self.font
+        }
+    }
+
     // MARK: - UI
     var textField = PaddingTextField()
     var rightButton = UIButton()
@@ -170,7 +182,7 @@ class SolarTextField: UIView {
             self.leftButton.heightAnchor.constraint(equalToConstant: 25),
             self.leftButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.leftButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            self.leftButton.widthAnchor.constraint(equalToConstant: 25)
+            self.leftButton.widthAnchor.constraint(equalToConstant: 80)
         ])
         self.leftButton.isHidden = true
     }
