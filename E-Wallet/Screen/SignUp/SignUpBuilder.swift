@@ -30,7 +30,10 @@ final class SignUpBuilder: Builder<SignUpDependency>, SignUpBuildable {
         let component = SignUpComponent(dependency: dependency)
         let viewController = SignUpViewController()
         let interactor = SignUpInteractor(presenter: viewController)
+        let verifyCodeBuilder = DIContainer.resolve(VerifyCodeBuildable.self, agrument: component)
         interactor.listener = listener
-        return SignUpRouter(interactor: interactor, viewController: viewController)
+        return SignUpRouter(interactor: interactor,
+                            viewController: viewController,
+                            verifyCodeBuilder: verifyCodeBuilder)
     }
 }

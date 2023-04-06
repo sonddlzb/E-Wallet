@@ -20,6 +20,12 @@
    pod 'Resolver'
    pod 'SVProgressHUD'
    pod 'Kingfisher'
+   pod 'FirebaseCore'
+   pod 'FirebaseAuth'
+   pod 'FirebaseDatabase'
+   pod 'FirebaseFirestore'
+   pod 'FirebaseStorage'
+   pod 'TLLogging'
 
    RxSwiftPod()
    RIBsPod()
