@@ -11,6 +11,7 @@ open class BaseViewControler: UIViewController {
     private var viewWillAppeared: Bool = false
     private var viewDidAppeared: Bool = false
     public var isDisplaying: Bool = false
+    var progressIndicator1: UIActivityIndicatorView?
 
     // MARK: - Override setting
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -92,5 +93,31 @@ open class BaseViewControler: UIViewController {
         }
 
         self.present(alert, animated: true, completion: nil)
+    }
+
+    func showLoadingAsync() {
+        DispatchQueue.main.async {
+            if self.progressIndicator1 == nil {
+                self.progressIndicator1 = UIActivityIndicatorView()
+                self.progressIndicator1?.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                self.progressIndicator1?.layer.cornerRadius = 10.0
+                self.progressIndicator1?.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+                self.progressIndicator1?.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+                self.progressIndicator1?.hidesWhenStopped = true
+                self.progressIndicator1?.style = UIActivityIndicatorView.Style.whiteLarge
+                self.progressIndicator1?.color = UIColor.init(red: 20.0/255.0, green: 140.0/255.0, blue: 222.0/255.0, alpha: 1.0)
+                self.view.addSubview(self.progressIndicator1!)
+            }
+
+            self.progressIndicator1?.startAnimating()
+            self.progressIndicator1?.isHidden = false
+        }
+    }
+
+    func hideLoadingAsync() {
+        DispatchQueue.main.async {
+            self.progressIndicator1?.stopAnimating()
+            self.progressIndicator1?.isHidden = true
+        }
     }
 }
