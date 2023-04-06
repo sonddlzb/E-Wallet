@@ -1,1 +1,7 @@
 Pods/
+/*.xcodeproj
+*.xcworkspace/
+*.DS_Store
+*.generated.swift
+*.generated.swift
+xcuserdata

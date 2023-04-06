@@ -16,9 +16,10 @@ protocol SignInPresentable: Presentable {
 }
 
 protocol SignInListener: AnyObject {
+    func signInWantToRouteToSignUp()
 }
 
-final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInInteractable, SignInPresentableListener {
+final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInInteractable {
 
     weak var router: SignInRouting?
     weak var listener: SignInListener?
@@ -34,5 +35,12 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
 
     override func willResignActive() {
         super.willResignActive()
+    }
+}
+
+// MARK: - SignInPresentableListener
+extension SignInInteractor: SignInPresentableListener {
+    func routeToSignUp() {
+        self.listener?.signInWantToRouteToSignUp()
     }
 }

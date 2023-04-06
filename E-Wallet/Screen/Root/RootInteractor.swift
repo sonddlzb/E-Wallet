@@ -10,8 +10,11 @@ import RxSwift
 
 protocol RootRouting: ViewableRouting {
     func routeToSignIn()
+    func dismissSignIn()
     func routeToSplash()
     func dismissSplash()
+    func routeToSignUp()
+    func dismissSignUp()
 }
 
 protocol RootPresentable: Presentable {
