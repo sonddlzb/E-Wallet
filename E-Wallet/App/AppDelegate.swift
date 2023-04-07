@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+import SVProgressHUD
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DIConnector.registerAllDeps()
         self.configWindow()
         self.configFirebase()
+        self.configSVProgressHUD()
         return true
     }
 
@@ -34,5 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configFirebase() {
         FirebaseApp.configure()
+    }
+
+    private func configSVProgressHUD() {
+        SVProgressHUD.setDefaultStyle(.dark)
     }
 }

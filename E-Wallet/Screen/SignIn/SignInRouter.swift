@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol SignInInteractable: Interactable, VerifyCodeListener, EnterPasswordListener {
+protocol SignInInteractable: Interactable, VerifyCodeListener, EnterPasswordListener, FillProfileListener {
     var router: SignInRouting? { get set }
     var listener: SignInListener? { get set }
 }
@@ -22,12 +22,17 @@ final class SignInRouter: ViewableRouter<SignInInteractable, SignInViewControlla
     private var enterPasswordRouter: EnterPasswordRouting?
     private var enterPasswordBuilder: EnterPasswordBuildable
 
+    private var fillProfileRouter: FillProfileRouting?
+    private var fillProfileBuilder: FillProfileBuildable
+
     init(interactor: SignInInteractable,
          viewController: SignInViewControllable,
          verifyCodeBuilder: VerifyCodeBuildable,
-         enterPasswordBuilder: EnterPasswordBuildable) {
+         enterPasswordBuilder: EnterPasswordBuildable,
+         fillProfileBuilder: FillProfileBuildable) {
         self.verifyCodeBuilder = verifyCodeBuilder
         self.enterPasswordBuilder = enterPasswordBuilder
+        self.fillProfileBuilder = fillProfileBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -83,5 +88,30 @@ extension SignInRouter: SignInRouting {
 
     func bindSignInResultToEnterPassword(isSuccess: Bool) {
         self.enterPasswordRouter?.bindSignInResult(isSuccess: isSuccess)
+    }
+
+    func routeToFillProfile() {
+        guard self.fillProfileRouter == nil else {
+            return
+        }
+
+        let router = self.fillProfileBuilder.build(withListener: self.interactor)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
+        self.attachChild(router)
+        self.fillProfileRouter = router
+    }
+
+    func dismissFillProfile() {
+        guard let router = self.fillProfileRouter else {
+            return
+        }
+
+        detachChild(router)
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.fillProfileRouter = nil
+    }
+
+    func bindSignUpResultToFillProfile(isSuccess: Bool) {
+        self.fillProfileRouter?.bindSignUpResult(isSuccess: isSuccess)
     }
 }

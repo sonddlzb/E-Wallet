@@ -15,6 +15,9 @@ protocol SignInRouting: ViewableRouting {
     func routeToEnterPassword(isNewUser: Bool, isConfirmPassword: Bool, password: String)
     func dismissEnterPassword()
     func bindSignInResultToEnterPassword(isSuccess: Bool)
+    func routeToFillProfile()
+    func dismissFillProfile()
+    func bindSignUpResultToFillProfile(isSuccess: Bool)
 }
 
 protocol SignInPresentable: Presentable {
@@ -28,6 +31,8 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
 
     weak var router: SignInRouting?
     weak var listener: SignInListener?
+    var phoneNumber = ""
+    var password = ""
 
     override init(presenter: SignInPresentable) {
         super.init(presenter: presenter)
@@ -46,6 +51,7 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
 // MARK: - SignInPresentableListener
 extension SignInInteractor: SignInPresentableListener {
     func signInWithPhoneNumber(_ phoneNumber: String) {
+        self.phoneNumber = phoneNumber
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
             if let error = error {
                 print("Error when verify phone number: \(error)")

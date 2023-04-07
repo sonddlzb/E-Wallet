@@ -201,7 +201,7 @@
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Gdd-Ec-zyz">
-                    <rect key="frame" x="103.5" y="435" width="207.5" height="50"/>
+                    <rect key="frame" x="102" y="435" width="210.5" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resend code in " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMA-uq-1OV">
                             <rect key="frame" x="0.0" y="0.0" width="115.5" height="50"/>
@@ -222,10 +222,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-9z-Ccl" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="152.5" y="0.0" width="55" height="50"/>
+                            <rect key="frame" x="152.5" y="0.0" width="58" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqV-Nr-Yxh">
-                                    <rect key="frame" x="0.0" y="2" width="55" height="48"/>
+                                    <rect key="frame" x="0.0" y="2" width="58" height="48"/>
                                     <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="17"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -270,6 +270,13 @@
                         <action selector="btnVerifyDidTap:" destination="-1" eventType="touchUpInside" id="yXj-CH-mUl"/>
                     </connections>
                 </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_run" translatesAutoresizingMaskIntoConstraints="NO" id="0BP-ff-W3A">
+                    <rect key="frame" x="107" y="99" width="200" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="0BP-ff-W3A" secondAttribute="height" id="NvT-rS-e7j"/>
+                        <constraint firstAttribute="width" constant="200" id="nRo-Jy-Ccb"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="j8B-OJ-dQV"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -285,6 +292,8 @@
                 <constraint firstItem="4i2-eV-XPd" firstAttribute="leading" secondItem="j8B-OJ-dQV" secondAttribute="leading" constant="16" id="O9J-Ds-hu7"/>
                 <constraint firstItem="Oga-KX-Ti4" firstAttribute="top" secondItem="uEI-Ce-1XO" secondAttribute="bottom" constant="26.670000000000002" id="Rsw-l2-NmL"/>
                 <constraint firstItem="Oga-KX-Ti4" firstAttribute="leading" secondItem="j8B-OJ-dQV" secondAttribute="leading" constant="16" id="Znh-va-OgD"/>
+                <constraint firstItem="0BP-ff-W3A" firstAttribute="centerX" secondItem="j8B-OJ-dQV" secondAttribute="centerX" id="bky-FV-Ut7"/>
+                <constraint firstItem="0BP-ff-W3A" firstAttribute="top" secondItem="XaN-5I-7X3" secondAttribute="bottom" constant="20" id="erq-57-oCA"/>
                 <constraint firstItem="Gdd-Ec-zyz" firstAttribute="top" secondItem="Oga-KX-Ti4" secondAttribute="bottom" constant="25" id="s6H-a3-wX3"/>
                 <constraint firstItem="j8B-OJ-dQV" firstAttribute="bottom" secondItem="4i2-eV-XPd" secondAttribute="bottom" constant="15" id="ttt-d9-gz9"/>
             </constraints>
@@ -293,6 +302,7 @@
     </objects>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
+        <image name="ic_run" width="500" height="500"/>
         <namedColor name="Crayola">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
