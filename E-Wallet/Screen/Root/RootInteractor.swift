@@ -13,8 +13,6 @@ protocol RootRouting: ViewableRouting {
     func dismissSignIn()
     func routeToSplash()
     func dismissSplash()
-    func routeToSignUp()
-    func dismissSignUp()
 }
 
 protocol RootPresentable: Presentable {

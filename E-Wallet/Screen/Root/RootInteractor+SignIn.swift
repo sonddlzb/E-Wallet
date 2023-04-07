@@ -8,8 +8,4 @@
 import Foundation
 
 extension RootInteractor: SignInListener {
-    func signInWantToRouteToSignUp() {
-        self.router?.dismissSignIn()
-        self.router?.routeToSignUp()
-    }
 }

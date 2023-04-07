@@ -38,12 +38,10 @@ import RIBs
          let interactor = RootInteractor(presenter: viewController)
          let signInBuilder = DIContainer.resolve(SignInBuildable.self, agrument: component)
          let splashBuilder = DIContainer.resolve(SplashBuildable.self, agrument: component)
-         let signUpBuilder = DIContainer.resolve(SignUpBuildable.self, agrument: component)
          return RootRouter(interactor: interactor,
                            viewController: viewController,
                            window: dependency.window,
                            signInBuilder: signInBuilder,
-                           splashBuilder: splashBuilder,
-                           signUpBuilder: signUpBuilder)
+                           splashBuilder: splashBuilder)
      }
  }
