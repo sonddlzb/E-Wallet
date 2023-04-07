@@ -26,6 +26,7 @@
    pod 'FirebaseFirestore'
    pod 'FirebaseStorage'
    pod 'TLLogging'
+   pod 'DropDown'
 
    RxSwiftPod()
    RIBsPod()

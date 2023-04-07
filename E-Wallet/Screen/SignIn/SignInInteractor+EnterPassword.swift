@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 extension SignInInteractor: EnterPasswordListener {
     func enterPasswordWantToDissmiss() {
@@ -20,12 +21,19 @@ extension SignInInteractor: EnterPasswordListener {
     }
 
     func enterPasswordDidConfirmPasswordSuccessfully(password: String) {
+        self.password = password
         self.router?.dismissEnterPassword()
         print("Create new account successfully with password \(password)")
+        self.router?.routeToFillProfile()
     }
 
     func enterPasswordWantToAuthenticateOldUser(password: String) {
-        // check login password here
-        self.router?.bindSignInResultToEnterPassword(isSuccess: false)
+        SVProgressHUD.show()
+        UserDatabase.shared.checkPassword(password: password) { isSuccess in
+            SVProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                self.router?.bindSignInResultToEnterPassword(isSuccess: isSuccess)
+            }
+        }
     }
 }

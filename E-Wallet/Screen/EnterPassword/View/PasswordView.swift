@@ -145,7 +145,9 @@ extension PasswordView: UICollectionViewDelegate, UICollectionViewDataSource {
             self.passwordIconView.select(at: self.currentPassword.count)
             self.currentPassword += self.listNumbers[indexPath.row]
             if self.currentPassword.count == self.passwordIconView.numberOfIcons {
-                self.delegate?.passwordViewDidEnterPassword(self, password: self.currentPassword)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.delegate?.passwordViewDidEnterPassword(self, password: self.currentPassword)
+                }
             }
         }
     }

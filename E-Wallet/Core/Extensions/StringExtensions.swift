@@ -83,4 +83,10 @@ public extension String {
         let phoneNumberRegex = "(0?[3|5|7|8|9])+([0-9]{8})\\b"
         return self.matches(regex: phoneNumberRegex)
     }
+
+    func isResidentIDValid() -> Bool {
+        let cccdRegex = "^[0-9]{12}$"
+        let cmndRegex = "^[0-9]{9}$"
+        return self.matches(regex: cccdRegex) || self.matches(regex: cmndRegex)
+    }
 }

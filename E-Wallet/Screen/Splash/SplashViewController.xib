@@ -27,19 +27,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_app" translatesAutoresizingMaskIntoConstraints="NO" id="KkL-nt-4k3">
-                    <rect key="frame" x="145" y="198" width="124" height="124"/>
+                    <rect key="frame" x="145" y="148" width="124" height="124"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="KkL-nt-4k3" secondAttribute="height" id="hdE-Gn-whR"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E-Wallet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUk-Q2-PXp">
-                    <rect key="frame" x="147" y="352" width="120" height="32"/>
+                    <rect key="frame" x="147" y="302" width="120" height="32"/>
                     <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="30"/>
                     <color key="textColor" red="0.1019607843" green="0.71372549019999998" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A P P L I C A T I O N" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mu-Mh-K8a">
-                    <rect key="frame" x="123" y="394" width="168.5" height="21.5"/>
+                    <rect key="frame" x="123" y="344" width="168.5" height="21.5"/>
                     <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -50,11 +50,19 @@
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_hello" translatesAutoresizingMaskIntoConstraints="NO" id="5Cu-M7-72e">
+                    <rect key="frame" x="87" y="552.5" width="240" height="240"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="5Cu-M7-72e" secondAttribute="height" id="6Od-CO-eDJ"/>
+                        <constraint firstAttribute="height" constant="240" id="pgc-nf-YF1"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cUk-Q2-PXp" firstAttribute="top" secondItem="KkL-nt-4k3" secondAttribute="bottom" constant="30" id="1s9-Ty-wkH"/>
+                <constraint firstItem="huN-lk-OO8" firstAttribute="top" secondItem="5Cu-M7-72e" secondAttribute="bottom" id="7b3-Y2-JsR"/>
                 <constraint firstItem="KkL-nt-4k3" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.3" id="OyG-Ic-q6t"/>
                 <constraint firstItem="9mu-Mh-K8a" firstAttribute="top" secondItem="cUk-Q2-PXp" secondAttribute="bottom" constant="10" id="TTi-Za-gzi"/>
                 <constraint firstItem="9mu-Mh-K8a" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Xnl-MU-LlY"/>
@@ -62,12 +70,14 @@
                 <constraint firstItem="KkL-nt-4k3" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="a8D-6A-PtV"/>
                 <constraint firstItem="cUk-Q2-PXp" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="fX4-eo-73l"/>
                 <constraint firstItem="huN-lk-OO8" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="nLV-8j-fPt"/>
-                <constraint firstItem="KkL-nt-4k3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="150" id="sPJ-8Q-tBd"/>
+                <constraint firstItem="5Cu-M7-72e" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="p9d-Es-Hu1"/>
+                <constraint firstItem="KkL-nt-4k3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="100" id="sPJ-8Q-tBd"/>
             </constraints>
             <point key="canvasLocation" x="-394" y="74"/>
         </view>
     </objects>
     <resources>
         <image name="ic_app" width="512" height="512"/>
+        <image name="ic_hello" width="500" height="500"/>
     </resources>
 </document>

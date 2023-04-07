@@ -28,5 +28,9 @@ extension DIConnector {
         DIContainer.register(EnterPasswordBuildable.self) { _, args in
             return EnterPasswordBuilder(dependency: args.get())
         }
+
+        DIContainer.register(FillProfileBuildable.self) { _, args in
+            return FillProfileBuilder(dependency: args.get())
+        }
     }
 }

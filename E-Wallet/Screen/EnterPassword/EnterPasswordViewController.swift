@@ -85,7 +85,12 @@ extension EnterPasswordViewController: EnterPasswordPresentable {
     }
 
     func bindSignInResult(isSuccess: Bool, chances: Int) {
-        FailedDialog.show(title: "Incorrect Password", message: "Please check your password and try again! You have \(chances) chances left.")
-        self.passwordView.reset()
+        if !isSuccess {
+            FailedDialog.show(title: "Incorrect Password", message: "Please check your password and try again! You have \(chances) chances left.")
+            self.passwordView.reset()
+        } else {
+            print("route to Home")
+            // route to Home
+        }
     }
 }
