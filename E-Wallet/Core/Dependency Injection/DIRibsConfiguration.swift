@@ -21,12 +21,12 @@ extension DIConnector {
             return SplashBuilder(dependency: args.get())
         }
 
-        DIContainer.register(SignUpBuildable.self) { _, args in
-            return SignUpBuilder(dependency: args.get())
-        }
-
         DIContainer.register(VerifyCodeBuildable.self) { _, args in
             return VerifyCodeBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(EnterPasswordBuildable.self) { _, args in
+            return EnterPasswordBuilder(dependency: args.get())
         }
     }
 }

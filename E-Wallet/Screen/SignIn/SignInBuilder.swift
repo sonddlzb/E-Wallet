@@ -31,9 +31,11 @@ final class SignInBuilder: Builder<SignInDependency>, SignInBuildable {
         let viewController = SignInViewController()
         let interactor = SignInInteractor(presenter: viewController)
         let verifyCodeBuilder = DIContainer.resolve(VerifyCodeBuildable.self, agrument: component)
+        let enterPasswordBuilder = DIContainer.resolve(EnterPasswordBuildable.self, agrument: component)
         interactor.listener = listener
         return SignInRouter(interactor: interactor,
                             viewController: viewController,
-                            verifyCodeBuilder: verifyCodeBuilder)
+                            verifyCodeBuilder: verifyCodeBuilder,
+                            enterPasswordBuilder: enterPasswordBuilder)
     }
 }

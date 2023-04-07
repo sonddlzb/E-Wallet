@@ -10,7 +10,6 @@ import RxSwift
 import UIKit
 
 protocol SignInPresentableListener: AnyObject {
-    func routeToSignUp()
     func signInWithPhoneNumber(_ phoneNumber: String)
 }
 
@@ -35,7 +34,6 @@ final class SignInViewController: BaseViewControler, SignInPresentable, SignInVi
 
     // MARK: - Actions
     @IBAction func didTapSignUpButton(_ sender: Any) {
-        self.listener?.routeToSignUp()
     }
 
     // MARK: - Helper

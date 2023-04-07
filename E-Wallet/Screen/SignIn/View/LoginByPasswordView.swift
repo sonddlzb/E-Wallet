@@ -54,7 +54,7 @@ class LoginByPasswordView: UIView {
         confirmLabel.backgroundColor = .lotion
         confirmLabel.textColor = .crayola
         confirmLabel.textAlignment = .center
-        confirmLabel.font = Outfit.regularFont(size: 16)
+        confirmLabel.font = Outfit.regularFont(size: 20)
 
         return confirmLabel
     }()

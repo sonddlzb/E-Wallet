@@ -13,6 +13,7 @@ extension SignInInteractor: VerifyCodeListener {
     }
 
     func verifyCodeSuccessfully(isNewUser: Bool) {
-        // handle sign in success
+        self.router?.dismissVerifyCode()
+        self.router?.routeToEnterPassword(isNewUser: isNewUser, isConfirmPassword: false, password: "")
     }
 }

@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol RootInteractable: Interactable, SignInListener, SplashListener, SignUpListener {
+protocol RootInteractable: Interactable, SignInListener, SplashListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -24,19 +24,14 @@ final class RootRouter: ViewableRouter<RootInteractable, RootViewControllable> {
     private var splashRouter: SplashRouting?
     private var splashBuilder: SplashBuildable
 
-    private var signUpRouter: SignUpRouting?
-    private var signUpBuilder: SignUpBuildable
-
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
          window: UIWindow,
          signInBuilder: SignInBuildable,
-         splashBuilder: SplashBuildable,
-         signUpBuilder: SignUpBuildable) {
+         splashBuilder: SplashBuildable) {
         self.window = window
         self.signInBuilder = signInBuilder
         self.splashBuilder = splashBuilder
-        self.signUpBuilder = signUpBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -69,14 +64,6 @@ extension RootRouter: RootRouting {
         self.splashRouter = nil
     }
 
-    func routeToSignUp() {
-        let router = self.signUpBuilder.build(withListener: self.interactor)
-        let navigationController = BaseNavigationController(rootViewController: router.viewControllable.uiviewController)
-        window.rootViewController = navigationController
-        attachChild(router)
-        self.signUpRouter = router
-    }
-
     func dismissSignIn() {
         guard let router = self.signInRouter else {
             return
@@ -84,14 +71,5 @@ extension RootRouter: RootRouting {
 
         detachChild(router)
         self.signInRouter = nil
-    }
-
-    func dismissSignUp() {
-        guard let router = self.signUpRouter else {
-            return
-        }
-
-        detachChild(router)
-        self.signUpRouter = nil
     }
 }

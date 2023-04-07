@@ -12,6 +12,9 @@ import FirebaseAuth
 protocol SignInRouting: ViewableRouting {
     func routeToVerifyCode(verificationID: String, phoneNumber: String)
     func dismissVerifyCode()
+    func routeToEnterPassword(isNewUser: Bool, isConfirmPassword: Bool, password: String)
+    func dismissEnterPassword()
+    func bindSignInResultToEnterPassword(isSuccess: Bool)
 }
 
 protocol SignInPresentable: Presentable {
@@ -19,7 +22,6 @@ protocol SignInPresentable: Presentable {
 }
 
 protocol SignInListener: AnyObject {
-    func signInWantToRouteToSignUp()
 }
 
 final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInInteractable {
@@ -43,10 +45,6 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
 
 // MARK: - SignInPresentableListener
 extension SignInInteractor: SignInPresentableListener {
-    func routeToSignUp() {
-        self.listener?.signInWantToRouteToSignUp()
-    }
-
     func signInWithPhoneNumber(_ phoneNumber: String) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
             if let error = error {
