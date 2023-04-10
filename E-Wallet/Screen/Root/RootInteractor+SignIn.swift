@@ -8,4 +8,7 @@
 import Foundation
 
 extension RootInteractor: SignInListener {
+    func routeToHome() {
+        self.router?.routeToHome()
+    }
 }

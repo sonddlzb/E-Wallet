@@ -16,7 +16,6 @@ protocol SplashViewControllable: ViewControllable {
 }
 
 final class SplashRouter: ViewableRouter<SplashInteractable, SplashViewControllable>, SplashRouting {
-    
     override init(interactor: SplashInteractable, viewController: SplashViewControllable) {
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self

@@ -36,4 +36,8 @@ extension SignInInteractor: EnterPasswordListener {
             }
         }
     }
+
+    func enterPasswordWantToRouteToHome() {
+        self.listener?.routeToHome()
+    }
 }
