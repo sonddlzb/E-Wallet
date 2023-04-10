@@ -13,6 +13,7 @@ protocol RootRouting: ViewableRouting {
     func dismissSignIn()
     func routeToSplash()
     func dismissSplash()
+    func routeToHome()
 }
 
 protocol RootPresentable: Presentable {
@@ -34,7 +35,8 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        self.router?.routeToSplash()
+//        self.router?.routeToSplash()
+        self.routeToHome()
     }
 
     override func willResignActive() {

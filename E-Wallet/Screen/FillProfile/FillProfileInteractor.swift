@@ -21,6 +21,7 @@ protocol FillProfilePresentable: Presentable {
 protocol FillProfileListener: AnyObject {
     func fillProfileWantToDismiss()
     func fillProfileWantToSignUpNewUser(userEntity: UserEntity, avatar: UIImage)
+    func fillProfileWantToRouteToHome()
 }
 
 final class FillProfileInteractor: PresentableInteractor<FillProfilePresentable> {
@@ -74,6 +75,10 @@ extension FillProfileInteractor: FillProfilePresentableListener {
 
     func fillProfileWantToSignUpNewUser(userEntity: UserEntity, avatar: UIImage) {
         self.listener?.fillProfileWantToSignUpNewUser(userEntity: userEntity, avatar: avatar)
+    }
+
+    func fillProfileWantToRouteToHome() {
+        self.listener?.fillProfileWantToRouteToHome()
     }
 }
 

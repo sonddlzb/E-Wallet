@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol RootInteractable: Interactable, SignInListener, SplashListener {
+protocol RootInteractable: Interactable, SignInListener, SplashListener, HomeListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -24,14 +24,19 @@ final class RootRouter: ViewableRouter<RootInteractable, RootViewControllable> {
     private var splashRouter: SplashRouting?
     private var splashBuilder: SplashBuildable
 
+    private var homeRouter: HomeRouting?
+    private var homeBuilder: HomeBuildable
+
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
          window: UIWindow,
          signInBuilder: SignInBuildable,
-         splashBuilder: SplashBuildable) {
+         splashBuilder: SplashBuildable,
+         homeBuilder: HomeBuildable) {
         self.window = window
         self.signInBuilder = signInBuilder
         self.splashBuilder = splashBuilder
+        self.homeBuilder = homeBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -71,5 +76,13 @@ extension RootRouter: RootRouting {
 
         detachChild(router)
         self.signInRouter = nil
+    }
+
+    func routeToHome() {
+        let router = self.homeBuilder.build(withListener: self.interactor)
+        let navigationController = BaseNavigationController(rootViewController: router.viewControllable.uiviewController)
+        window.rootViewController = navigationController
+        attachChild(router)
+        self.homeRouter = router
     }
 }

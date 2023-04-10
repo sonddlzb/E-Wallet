@@ -1,11 +1,8 @@
 //
-//  HomeTabBarView.swift
-//  TestCustomView
+//  HomeTabBar.swift
 //
-//  Created by đào sơn on 03/03/2023.
+//  Created by đào sơn on 07/09/2022.
 //
-
-import Foundation
 
 import UIKit
 
@@ -20,7 +17,7 @@ class HomeTabBar: UIView {
     }
 
     // MARK: - Private variables
-    private var currentTabPrivate: HomeTab = .home {
+    private var currentTabPrivate: HomeTab = .dashboard {
         didSet {
             if oldValue != currentTabPrivate {
                 reloadContentView()
@@ -31,7 +28,6 @@ class HomeTabBar: UIView {
     private var stackView: UIStackView!
     weak var delegate: HomeTabBarDelegate?
 
-    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
@@ -45,10 +41,18 @@ class HomeTabBar: UIView {
     private func commonInit() {
         self.configStackView()
         self.addAllSubviewsForStackView()
+        self.addTopShadow()
         self.reloadContentView()
     }
 
-    // MARK: - Config
+    private func addTopShadow() {
+        self.layer.shadowColor = UIColor.crayola.cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: -3.0)
+        self.layer.shadowOpacity = 0.4
+        self.layer.shadowRadius = 4.0
+        self.clipsToBounds = false
+    }
+
     private func configStackView() {
         self.stackView = UIStackView()
         self.addSubview(self.stackView)
@@ -64,22 +68,26 @@ class HomeTabBar: UIView {
         }
 
         for homeTab in HomeTab.allCases {
-            let memberView = HomeTabBarItemView()
-            memberView.translatesAutoresizingMaskIntoConstraints = false
-            self.stackView.addArrangedSubview(memberView)
-            memberView.bind(homeTab: homeTab, isFocus: homeTab == self.currentTab)
-            memberView.addTarget(self, action: #selector(didSelectTabBarItem(_:)), for: .touchUpInside)
+            let containerView = HomeItemTabBarView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            self.stackView.addArrangedSubview(containerView)
+            containerView.bind(homeTab: homeTab, isFocus: homeTab == self.currentTab)
+            containerView.addTarget(self, action: #selector(didSelectTabBarItem(_:)), for: .touchUpInside)
         }
     }
 
-    @objc func didSelectTabBarItem(_ sender: HomeTabBarItemView) {
-        self.currentTabPrivate = sender.homeTab
+    @objc func didSelectTabBarItem(_ sender: HomeItemTabBarView) {
+        if sender.homeTab.canHighlighted() {
+            self.currentTabPrivate = sender.homeTab
+            self.reloadContentView()
+        }
+
         delegate?.homeTabBar(self, didSelect: sender.homeTab)
     }
 
     private func reloadContentView() {
         self.stackView.subviews.forEach({ view in
-            if let itemView = view as? HomeTabBarItemView {
+            if let itemView = view as? HomeItemTabBarView {
                 itemView.isFocus = itemView.homeTab == self.currentTabPrivate
             }
         })
@@ -87,6 +95,10 @@ class HomeTabBar: UIView {
 
     // MARK: - Public function
     func setSelectedTab(_ tab: HomeTab) {
+        if !tab.canHighlighted() {
+            return
+        }
+
         self.currentTabPrivate = tab
     }
 }

@@ -25,6 +25,7 @@ protocol SignInPresentable: Presentable {
 }
 
 protocol SignInListener: AnyObject {
+    func routeToHome()
 }
 
 final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInInteractable {

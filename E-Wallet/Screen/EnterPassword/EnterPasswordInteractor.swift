@@ -24,6 +24,7 @@ protocol EnterPasswordListener: AnyObject {
     func enterPasswordWantToConfirmPassword(password: String)
     func enterPasswordDidConfirmPasswordSuccessfully(password: String)
     func enterPasswordWantToAuthenticateOldUser(password: String)
+    func enterPasswordWantToRouteToHome()
 }
 
 final class EnterPasswordInteractor: PresentableInteractor<EnterPasswordPresentable> {
@@ -69,6 +70,10 @@ extension EnterPasswordInteractor: EnterPasswordPresentableListener {
 
     func enterPasswordWantToAuthenticateOldUser(password: String) {
         self.listener?.enterPasswordWantToAuthenticateOldUser(password: password)
+    }
+
+    func enterPasswordWantToRouteToHome() {
+        self.listener?.enterPasswordWantToRouteToHome()
     }
 }
 

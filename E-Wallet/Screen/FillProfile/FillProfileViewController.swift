@@ -19,6 +19,7 @@ protocol FillProfilePresentableListener: AnyObject {
     func isGenderValid(gender: String) -> Bool
     func fillProfileWantToDismiss()
     func fillProfileWantToSignUpNewUser(userEntity: UserEntity, avatar: UIImage)
+    func fillProfileWantToRouteToHome()
 }
 
 final class FillProfileViewController: UIViewController, FillProfileViewControllable {
@@ -281,7 +282,6 @@ extension FillProfileViewController: FillProfilePresentable {
 // MARK: - NotificationDialogViewDelegate
 extension FillProfileViewController: NotificationDialogViewDelegate {
     func notificationDialogViewDidTapOk(_ notificationDialogView: NotificationDialogView) {
-        print("route to Home")
-        // handle route to Home
+        self.listener?.fillProfileWantToRouteToHome()
     }
 }

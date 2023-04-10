@@ -14,6 +14,7 @@ protocol EnterPasswordPresentableListener: AnyObject {
     func enterPasswordWantToConfirmPassword(password: String)
     func enterPasswordDidConfirmPasswordSuccessfully(password: String)
     func enterPasswordWantToAuthenticateOldUser(password: String)
+    func enterPasswordWantToRouteToHome()
 }
 
 final class EnterPasswordViewController: UIViewController, EnterPasswordViewControllable {
@@ -89,8 +90,7 @@ extension EnterPasswordViewController: EnterPasswordPresentable {
             FailedDialog.show(title: "Incorrect Password", message: "Please check your password and try again! You have \(chances) chances left.")
             self.passwordView.reset()
         } else {
-            print("route to Home")
-            // route to Home
+            self.listener?.enterPasswordWantToRouteToHome()
         }
     }
 }
