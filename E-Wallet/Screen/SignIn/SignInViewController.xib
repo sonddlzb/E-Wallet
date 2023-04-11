@@ -21,10 +21,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="77y-Gx-hTT" customClass="LoginByPasswordView" customModule="E_Wallet" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="98" width="414" height="400"/>
+                    <rect key="frame" x="0.0" y="98" width="414" height="270"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="400" id="JU3-NJ-qp3"/>
+                        <constraint firstAttribute="height" constant="270" id="JU3-NJ-qp3"/>
                     </constraints>
                 </view>
             </subviews>

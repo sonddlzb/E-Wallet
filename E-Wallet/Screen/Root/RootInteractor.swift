@@ -14,6 +14,8 @@ protocol RootRouting: ViewableRouting {
     func routeToSplash()
     func dismissSplash()
     func routeToHome()
+    func routeToIntroduction()
+    func dismissIntroduction()
 }
 
 protocol RootPresentable: Presentable {
@@ -27,6 +29,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
 
     weak var router: RootRouting?
     weak var listener: RootListener?
+    var userDefaults = UserDefaults.standard
 
     override init(presenter: RootPresentable) {
         super.init(presenter: presenter)
@@ -35,8 +38,9 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
 
     override func didBecomeActive() {
         super.didBecomeActive()
-//        self.router?.routeToSplash()
-        self.routeToHome()
+        userDefaults.increaseLaunchCount()
+        self.router?.routeToSplash()
+//        self.routeToHome()
     }
 
     override func willResignActive() {

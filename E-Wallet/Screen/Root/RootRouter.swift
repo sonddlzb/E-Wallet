@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol RootInteractable: Interactable, SignInListener, SplashListener, HomeListener {
+protocol RootInteractable: Interactable, SignInListener, SplashListener, HomeListener, IntroductionListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -27,16 +27,21 @@ final class RootRouter: ViewableRouter<RootInteractable, RootViewControllable> {
     private var homeRouter: HomeRouting?
     private var homeBuilder: HomeBuildable
 
+    private var introductionRouter: IntroductionRouting?
+    private var introductionBuilder: IntroductionBuildable
+
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
          window: UIWindow,
          signInBuilder: SignInBuildable,
          splashBuilder: SplashBuildable,
-         homeBuilder: HomeBuildable) {
+         homeBuilder: HomeBuildable,
+         introductionBuilder: IntroductionBuildable) {
         self.window = window
         self.signInBuilder = signInBuilder
         self.splashBuilder = splashBuilder
         self.homeBuilder = homeBuilder
+        self.introductionBuilder = introductionBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -84,5 +89,22 @@ extension RootRouter: RootRouting {
         window.rootViewController = navigationController
         attachChild(router)
         self.homeRouter = router
+    }
+
+    func routeToIntroduction() {
+        let router = self.introductionBuilder.build(withListener: self.interactor)
+        let navigationController = BaseNavigationController(rootViewController: router.viewControllable.uiviewController)
+        window.rootViewController = navigationController
+        attachChild(router)
+        self.introductionRouter = router
+    }
+
+    func dismissIntroduction() {
+        guard let router = self.introductionRouter else {
+            return
+        }
+
+        detachChild(router)
+        self.introductionRouter = nil
     }
 }
