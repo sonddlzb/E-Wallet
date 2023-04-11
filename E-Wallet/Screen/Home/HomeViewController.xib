@@ -22,21 +22,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Es9-Qm-MK0">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="806"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="797"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEr-iG-dus">
-                    <rect key="frame" x="0.0" y="806" width="414" height="90"/>
+                    <rect key="frame" x="0.0" y="797" width="414" height="65"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Km2-iQ-pB1" customClass="HomeTabBar" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="66" id="TYb-On-H2A"/>
+                                <constraint firstAttribute="height" constant="60" id="TYb-On-H2A"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5K-C5-rbU">
-                            <rect key="frame" x="0.0" y="65" width="414" height="25"/>
+                            <rect key="frame" x="0.0" y="59" width="414" height="6"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
@@ -45,7 +45,7 @@
                         <constraint firstItem="O5K-C5-rbU" firstAttribute="top" secondItem="Km2-iQ-pB1" secondAttribute="bottom" constant="-1" id="1U7-yN-QBn"/>
                         <constraint firstItem="Km2-iQ-pB1" firstAttribute="top" secondItem="YEr-iG-dus" secondAttribute="top" id="1qq-xo-8U6"/>
                         <constraint firstAttribute="bottom" secondItem="O5K-C5-rbU" secondAttribute="bottom" id="4jX-P2-pfV"/>
-                        <constraint firstAttribute="height" constant="90" id="5pJ-nn-2yc"/>
+                        <constraint firstAttribute="height" constant="65" id="5pJ-nn-2yc"/>
                         <constraint firstItem="O5K-C5-rbU" firstAttribute="leading" secondItem="YEr-iG-dus" secondAttribute="leading" id="6vg-HW-Y3s"/>
                         <constraint firstAttribute="trailing" secondItem="Km2-iQ-pB1" secondAttribute="trailing" id="jcj-eD-5cC"/>
                         <constraint firstAttribute="trailing" secondItem="O5K-C5-rbU" secondAttribute="trailing" id="zee-wC-1Wr"/>
@@ -61,7 +61,7 @@
                 <constraint firstItem="Es9-Qm-MK0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Lpv-Lm-aPx"/>
                 <constraint firstItem="YEr-iG-dus" firstAttribute="top" secondItem="Es9-Qm-MK0" secondAttribute="bottom" id="Xfa-uI-b3g"/>
                 <constraint firstItem="Es9-Qm-MK0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZAv-mB-mqL"/>
-                <constraint firstAttribute="bottom" secondItem="YEr-iG-dus" secondAttribute="bottom" id="j1i-x8-WfN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="YEr-iG-dus" secondAttribute="bottom" id="j1i-x8-WfN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YEr-iG-dus" secondAttribute="trailing" id="t2l-JD-jzn"/>
             </constraints>
             <point key="canvasLocation" x="-394.20289855072468" y="73.660714285714278"/>
