@@ -16,7 +16,7 @@ protocol SplashPresentable: Presentable {
 }
 
 protocol SplashListener: AnyObject {
-    func splashWantToRouteToSignIn()
+    func splashWantToDismiss()
 }
 
 final class SplashInteractor: PresentableInteractor<SplashPresentable>, SplashInteractable, SplashPresentableListener {
@@ -32,7 +32,7 @@ final class SplashInteractor: PresentableInteractor<SplashPresentable>, SplashIn
     override func didBecomeActive() {
         super.didBecomeActive()
         DispatchQueue.main.asyncAfter(deadline: .now()+3, execute: {
-            self.listener?.splashWantToRouteToSignIn()
+            self.listener?.splashWantToDismiss()
         })
     }
 

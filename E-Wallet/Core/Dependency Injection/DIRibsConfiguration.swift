@@ -40,5 +40,9 @@ extension DIConnector {
         DIContainer.register(DashboardBuildable.self) { _, args in
             return DashboardBuilder(dependency: args.get())
         }
+
+        DIContainer.register(IntroductionBuildable.self) { _, args in
+            return IntroductionBuilder(dependency: args.get())
+        }
     }
 }

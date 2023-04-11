@@ -6,10 +6,20 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 extension RootInteractor: SplashListener {
-    func splashWantToRouteToSignIn() {
+    func splashWantToDismiss() {
+        if self.userDefaults.launchCount() == 1 {
+            self.router?.routeToIntroduction()
+        } else {
+            if Auth.auth().currentUser == nil {
+                self.router?.routeToSignIn()
+            } else {
+                self.router?.routeToHome()
+            }
+        }
+
         self.router?.dismissSplash()
-        self.router?.routeToSignIn()
     }
 }

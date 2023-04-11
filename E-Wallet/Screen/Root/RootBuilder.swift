@@ -39,11 +39,13 @@ import RIBs
          let signInBuilder = DIContainer.resolve(SignInBuildable.self, agrument: component)
          let splashBuilder = DIContainer.resolve(SplashBuildable.self, agrument: component)
          let homeBuilder = DIContainer.resolve(HomeBuildable.self, agrument: component)
+         let introductionBuilder = DIContainer.resolve(IntroductionBuildable.self, agrument: component)
          return RootRouter(interactor: interactor,
                            viewController: viewController,
                            window: dependency.window,
                            signInBuilder: signInBuilder,
                            splashBuilder: splashBuilder,
-                           homeBuilder: homeBuilder)
+                           homeBuilder: homeBuilder,
+                           introductionBuilder: introductionBuilder)
      }
  }
