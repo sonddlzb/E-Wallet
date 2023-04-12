@@ -32,8 +32,10 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let interactor = HomeInteractor(presenter: viewController)
         interactor.listener = listener
         let dashboardBuilder = DIContainer.resolve(DashboardBuildable.self, agrument: component)
+        let profileBuilder = DIContainer.resolve(ProfileBuildable.self, agrument: component)
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
-                          dashboardBuilder: dashboardBuilder)
+                          dashboardBuilder: dashboardBuilder,
+                          profileBuilder: profileBuilder)
     }
 }
