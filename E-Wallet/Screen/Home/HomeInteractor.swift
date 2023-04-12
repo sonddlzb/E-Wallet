@@ -19,6 +19,7 @@ protocol HomePresentable: Presentable {
 }
 
 protocol HomeListener: AnyObject {
+    func routeToSignIn()
 }
 
 final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable {

@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -24,10 +24,15 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var dashboardRouter: DashboardRouting?
     private var dashboardBuilder: DashboardBuildable
 
+    private var profileRouter: ProfileRouting?
+    private var profileBuilder: ProfileBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
-         dashboardBuilder: DashboardBuildable) {
+         dashboardBuilder: DashboardBuildable,
+         profileBuilder: ProfileBuildable) {
         self.dashboardBuilder = dashboardBuilder
+        self.profileBuilder = profileBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -55,7 +60,7 @@ extension HomeRouter: HomeRouting {
         case .account:
             print("route to account")
         case .myProfile:
-            print("route to my profile")
+            self.routeToProfileTab()
         }
 
         self.currentTab = homeTab
@@ -68,5 +73,14 @@ extension HomeRouter: HomeRouting {
         }
 
         self.viewController.embedViewController(self.dashboardRouter!.viewControllable)
+    }
+
+    func routeToProfileTab() {
+        if self.profileRouter == nil {
+            self.profileRouter = self.profileBuilder.build(withListener: self.interactor)
+            attachChild(self.profileRouter!)
+        }
+
+        self.viewController.embedViewController(self.profileRouter!.viewControllable)
     }
 }

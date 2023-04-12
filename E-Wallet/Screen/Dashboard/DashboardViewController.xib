@@ -40,8 +40,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJM-HD-1Ol">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                     <color key="backgroundColor" red="0.17254901960784313" green="0.0" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="400" id="Hge-Y4-X47"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-tE-N0d">
                     <rect key="frame" x="0.0" y="48" width="414" height="50"/>
@@ -195,7 +198,6 @@
                 <constraint firstItem="99o-j3-ZYL" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="120" id="Bxm-nw-e00"/>
                 <constraint firstItem="nJM-HD-1Ol" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CYX-X2-5Dd"/>
                 <constraint firstItem="XLU-4r-1kQ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-20" id="FiI-fq-erv"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="nJM-HD-1Ol" secondAttribute="bottom" id="Q5Y-z7-qGe"/>
                 <constraint firstItem="tT5-tE-N0d" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="VvE-AQ-fdt"/>
                 <constraint firstAttribute="bottom" secondItem="99o-j3-ZYL" secondAttribute="bottom" id="bFj-0i-lYZ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nJM-HD-1Ol" secondAttribute="trailing" id="d30-VW-EMd"/>
