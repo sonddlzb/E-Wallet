@@ -16,15 +16,20 @@ private struct Const {
 
 protocol ProfilePresentableListener: AnyObject {
     func didTapSignOut()
+    func didTapEditProfile()
 }
 
 final class ProfileViewController: UIViewController, ProfileViewControllable {
 
     // MARK: - Outlets
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var phoneNumberLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
 
     // MARK: - Variables
     weak var listener: ProfilePresentableListener?
+    private var viewModel: ProfileViewModel!
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -47,7 +52,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllable {
 
     // MARK: - Actions
     @IBAction func didTapUserInforButton(_ sender: Any) {
-        // show user information
+        self.listener?.didTapEditProfile()
     }
 
     @IBAction func didTapSignOutButton(_ sender: Any) {
@@ -96,5 +101,13 @@ extension ProfileViewController: ConfirmDialogDelegate {
 extension ProfileViewController: ProfilePresentable {
     func bindSignOutFailedResult(message: String) {
         FailedDialog.show(title: "Failed to sign out", message: message)
+    }
+
+    func bind(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        self.loadViewIfNeeded()
+        self.imageView.setImage(with: self.viewModel.avtURL(), indicator: .activity)
+        self.nameLabel.text = self.viewModel.userEntity.fullName
+        self.phoneNumberLabel.text = self.viewModel.userEntity.phoneNumber
     }
 }

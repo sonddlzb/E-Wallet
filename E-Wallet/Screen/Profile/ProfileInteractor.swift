@@ -10,12 +10,15 @@ import RxSwift
 import FirebaseAuth
 
 protocol ProfileRouting: ViewableRouting {
+    func routeToEditProfile(userEntity: UserEntity)
+    func dismissEditProfile()
 }
 
 protocol ProfilePresentable: Presentable {
     var listener: ProfilePresentableListener? { get set }
 
     func bindSignOutFailedResult(message: String)
+    func bind(viewModel: ProfileViewModel)
 }
 
 protocol ProfileListener: AnyObject {
@@ -27,6 +30,8 @@ final class ProfileInteractor: PresentableInteractor<ProfilePresentable>, Profil
     weak var router: ProfileRouting?
     weak var listener: ProfileListener?
 
+    private var viewModel: ProfileViewModel!
+
     override init(presenter: ProfilePresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
@@ -34,10 +39,20 @@ final class ProfileInteractor: PresentableInteractor<ProfilePresentable>, Profil
 
     override func didBecomeActive() {
         super.didBecomeActive()
+        self.fetchUserInfor()
     }
 
     override func willResignActive() {
         super.willResignActive()
+    }
+
+    func fetchUserInfor() {
+        UserDatabase.shared.getUserInfor { user in
+            if let user = user {
+                self.viewModel = ProfileViewModel(userEntity: user)
+                self.presenter.bind(viewModel: self.viewModel)
+            }
+        }
     }
 }
 
@@ -51,5 +66,13 @@ extension ProfileInteractor: ProfilePresentableListener {
         }
 
         self.listener?.profileDidSignOut()
+    }
+
+    func didTapEditProfile() {
+        guard self.viewModel != nil else {
+            return
+        }
+
+        self.router?.routeToEditProfile(userEntity: self.viewModel.userEntity)
     }
 }

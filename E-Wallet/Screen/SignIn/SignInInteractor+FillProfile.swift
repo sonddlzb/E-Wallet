@@ -7,10 +7,12 @@
 
 import Foundation
 import SVProgressHUD
+import FirebaseAuth
 
 extension SignInInteractor: FillProfileListener {
     func fillProfileWantToDismiss() {
         self.router?.dismissFillProfile()
+        Auth.auth().currentUser?.delete()
     }
 
     func fillProfileWantToSignUpNewUser(userEntity: UserEntity, avatar: UIImage) {

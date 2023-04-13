@@ -54,7 +54,7 @@ class NotificationDialogView: UIView {
         }
     }
 
-    func show(in view: UIView, title: String, message: String,image: UIImage?) {
+    func show(in view: UIView, title: String, message: String, image: UIImage?) {
         self.alpha = 0
         self.titleLabel.text = title
         self.messageLabel.text = message

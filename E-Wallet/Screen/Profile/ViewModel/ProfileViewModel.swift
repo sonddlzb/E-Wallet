@@ -8,5 +8,9 @@
 import Foundation
 
 struct ProfileViewModel {
-    
+    var userEntity: UserEntity
+
+    func avtURL() -> URL? {
+        return URL(string: userEntity.avtURL)
+    }
 }
