@@ -1,45 +1,60 @@
 //
-//  FillProfileViewController.swift
+//  EditProfileViewController.swift
 //  E-Wallet
 //
-//  Created by đào sơn on 07/04/2023.
+//  Created by đào sơn on 12/04/2023.
 //
 
 import RIBs
 import RxSwift
 import UIKit
 import DropDown
-import SVProgressHUD
 
-protocol FillProfilePresentableListener: AnyObject {
+protocol EditProfilePresentableListener: AnyObject {
+    func editProfileWantToDismiss()
+    func editProfileWantToUpdate(userEntity: UserEntity, avatar: UIImage)
     func isFullNameValid(fullName: String) -> Bool
     func isResidentIDValid(residentId: String) -> Bool
     func isDateOfBirthValid(dateOfBirth: String) -> Bool
     func isNativePlaceValid(nativePlace: String) -> Bool
     func isGenderValid(gender: String) -> Bool
-    func fillProfileWantToDismiss()
-    func fillProfileWantToSignUpNewUser(userEntity: UserEntity, avatar: UIImage)
-    func fillProfileWantToRouteToHome()
 }
 
-final class FillProfileViewController: UIViewController, FillProfileViewControllable {
+final class EditProfileViewController: UIViewController, EditProfileViewControllable {
+
     // MARK: - Outlets
     @IBOutlet private weak var fullNameTextField: SolarTextField!
     @IBOutlet private weak var residentIdTextField: SolarTextField!
     @IBOutlet private weak var dateOfBirthLabel: UILabel!
+    @IBOutlet private weak var editLabel: UILabel!
     @IBOutlet private weak var nativePlaceTextField: SolarTextField!
     @IBOutlet private weak var genderLabel: UILabel!
     @IBOutlet private weak var avtImageView: UIImageView!
+    @IBOutlet private weak var calendarImageView: UIImageView!
+    @IBOutlet private weak var arrowDownImageView: UIImageView!
     @IBOutlet private weak var datePicker: UIDatePicker!
     @IBOutlet private weak var datePickerContainerView: UIView!
     @IBOutlet private weak var genderControl: UIControl!
     @IBOutlet private weak var dateOfBirthControl: UIControl!
+    @IBOutlet private weak var editButton: TapableView!
 
     // MARK: - Variables
     private var imagePicker = UIImagePickerController()
     private var currentDate = Date()
     private var dropDown = DropDown()
-    weak var listener: FillProfilePresentableListener?
+    weak var listener: EditProfilePresentableListener?
+    private var viewModel: EditProfileViewModel!
+    var isEditable = false {
+        didSet {
+            self.fullNameTextField.isUserInteractionEnabled = isEditable
+            self.residentIdTextField.isUserInteractionEnabled = isEditable
+            self.dateOfBirthControl.isUserInteractionEnabled = isEditable
+            self.nativePlaceTextField.isUserInteractionEnabled = isEditable
+            self.genderControl.isUserInteractionEnabled = isEditable
+            self.arrowDownImageView.isHidden = !isEditable
+            self.calendarImageView.isHidden = !isEditable
+        }
+    }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -55,6 +70,7 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
         fullNameTextField.borderColor = .crayola
         fullNameTextField.textField.paddingLeft = 10
         fullNameTextField.cornerRadius = 12
+        fullNameTextField.delegate = self
         self.becomeFirstResponder()
 
         residentIdTextField.placeholder = "Resident ID (9 or 12 digits)"
@@ -62,6 +78,7 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
         residentIdTextField.backgroundColor = .lotion
         residentIdTextField.borderColor = .crayola
         residentIdTextField.textField.paddingLeft = 10
+        residentIdTextField.delegate = self
         residentIdTextField.cornerRadius = 12
 
         nativePlaceTextField.placeholder = "Native Place"
@@ -70,15 +87,16 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
         nativePlaceTextField.borderColor = .crayola
         nativePlaceTextField.textField.paddingLeft = 10
         nativePlaceTextField.cornerRadius = 12
+        nativePlaceTextField.delegate = self
 
         self.imagePicker.delegate = self
         self.datePicker.maximumDate = Date()
 
-        self.dateOfBirthLabel.textColor = .tertiaryLabel
         self.dateOfBirthControl.addTarget(self, action: #selector(didTapDateOfBirthButton(_:)), for: .touchUpInside)
 
-        self.genderLabel.textColor = .tertiaryLabel
         self.genderControl.addTarget(self, action: #selector(didTapGenderButton(_:)), for: .touchUpInside)
+
+        self.isEditable = false
     }
 
     @IBAction func didTapToChangeAvatar(_ sender: TapableView) {
@@ -170,30 +188,20 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
         }
     }
 
-    private func validateSignUpForm() -> Bool {
+    private func validateProfileForm() -> Bool {
         guard let listener = self.listener else {
             return false
         }
 
         if !listener.isFullNameValid(fullName: self.fullNameTextField.text) {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Your fullname must not be empty!")
             return false
         } else if !listener.isResidentIDValid(residentId: self.residentIdTextField.text) {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Your resident ID is not valid!")
             return false
         } else if !listener.isDateOfBirthValid(dateOfBirth: self.dateOfBirthLabel.text ?? "") {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Your date of birth must be a valid date!")
             return false
         } else if !listener.isNativePlaceValid(nativePlace: self.nativePlaceTextField.text) {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Your native place must not be empty!")
             return false
         } else if !listener.isGenderValid(gender: self.genderLabel.text ?? "Gender") {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Please select your gender!")
             return false
         }
 
@@ -201,7 +209,7 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
     }
 
     @IBAction func didTapBackButton(_ sender: Any) {
-        self.listener?.fillProfileWantToDismiss()
+        self.listener?.editProfileWantToDismiss()
     }
 
     @IBAction func didChangeCalendarValue(_ sender: Any) {
@@ -210,24 +218,33 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
         self.dateOfBirthLabel.textColor = .black
     }
 
-    @IBAction func didTapContinueButton(_ sender: Any) {
-        guard self.validateSignUpForm() else {
-            return
-        }
+    @IBAction func didTapEditButton(_ sender: Any) {
+        self.isEditable = !self.isEditable
+        self.editLabel.text = self.isEditable ? "Save" : "Edit"
+        if self.isEditable {
+            self.fullNameTextField.becomeFirstResponder()
+        } else {
+            self.view.endEditing(true)
+            self.hideDatePicker()
 
-        guard let image = self.avtImageView.image?.resize(to: CGSize(width: 100.0, height: 100.0)) else {
-            return
-        }
+            guard self.validateProfileForm() else {
+                return
+            }
 
-        let entity = UserEntity(fullName: self.fullNameTextField.text,
-                                residentId: self.residentIdTextField.text,
-                                dateOfBirth: self.currentDate.formatDate(),
-                                phoneNumber: "",
-                                nativePlace: self.nativePlaceTextField.text,
-                                gender: self.genderLabel.text!,
-                                avtURL: "",
-                                password: "")
-        self.listener?.fillProfileWantToSignUpNewUser(userEntity: entity, avatar: image)
+            guard let image = self.avtImageView.image?.resize(to: CGSize(width: 100.0, height: 100.0)) else {
+                return
+            }
+
+            let entity = UserEntity(fullName: self.fullNameTextField.text,
+                                    residentId: self.residentIdTextField.text,
+                                    dateOfBirth: self.currentDate.formatDate(),
+                                    phoneNumber: "",
+                                    nativePlace: self.nativePlaceTextField.text,
+                                    gender: self.genderLabel.text!,
+                                    avtURL: "",
+                                    password: "")
+            self.listener?.editProfileWantToUpdate(userEntity: entity, avatar: image)
+        }
     }
 
     @objc func didTapDateOfBirthButton(_ sender: Any) {
@@ -240,7 +257,7 @@ final class FillProfileViewController: UIViewController, FillProfileViewControll
 }
 
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
-extension FillProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -251,7 +268,7 @@ extension FillProfileViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
-extension FillProfileViewController {
+extension EditProfileViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first?.view != self.dateOfBirthControl {
             self.hideDatePicker()
@@ -263,25 +280,49 @@ extension FillProfileViewController {
     }
 }
 
-// MARK: - FillProfilePresentable
-extension FillProfileViewController: FillProfilePresentable {
-    func bindSignUpResult(isSuccess: Bool) {
+// MARK: - EditProfilePresentable
+extension EditProfileViewController: EditProfilePresentable {
+    func bind(viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+        self.loadViewIfNeeded()
+        self.fullNameTextField.text = viewModel.userEntity.fullName
+        self.residentIdTextField.text = viewModel.userEntity.residentId
+        self.dateOfBirthLabel.text = viewModel.userEntity.dateOfBirth
+        self.dateOfBirthLabel.textColor = .black
+        self.nativePlaceTextField.text = viewModel.userEntity.nativePlace
+        self.genderLabel.text = viewModel.userEntity.gender
+        self.genderLabel.textColor = .black
+        self.avtImageView.setImage(with: URL(string: self.viewModel.userEntity.avtURL),
+                                   indicator: .activity)
+    }
+
+    func bindUpdateResult(isSuccess: Bool) {
         if isSuccess {
-            let notificationView = NotificationDialogView.loadView()
-            notificationView.delegate = self
-            notificationView.show(in: self.view,
-                                  title: "Sign up successfully!",
-                                  message: "Welcome to E-Wallet App. Let's try it right now")
+            let notificationDialogView = NotificationDialogView.loadView()
+            notificationDialogView.delegate = self
+            notificationDialogView.show(in: self.view, title: "Update information", message: "Your information was updated successfully!")
         } else {
-            FailedDialog.show(title: "Failed to sign up new account",
-                              message: "Something went wrong. Try again later!")
+            FailedDialog.show(title: "Update information", message: "Something went wrong. Try again later!")
         }
     }
 }
 
+// MARK: - SolarTextFieldDelegate
+extension EditProfileViewController: SolarTextFieldDelegate {
+    func solarTextField(_ textField: SolarTextField, willChangeToText text: String) -> Bool {
+        return true
+    }
+
+    func solarTextFieldDidChangeValue(_ textField: SolarTextField) {
+        let isInputValid = self.validateProfileForm()
+        self.editButton.isUserInteractionEnabled = isInputValid
+        self.editLabel.textColor = isInputValid ? UIColor(rgb: 0x007AFF) : .mediumGray
+    }
+}
+
 // MARK: - NotificationDialogViewDelegate
-extension FillProfileViewController: NotificationDialogViewDelegate {
+extension EditProfileViewController: NotificationDialogViewDelegate {
     func notificationDialogViewDidTapOk(_ notificationDialogView: NotificationDialogView) {
-        self.listener?.fillProfileWantToRouteToHome()
+        self.listener?.editProfileWantToDismiss()
     }
 }

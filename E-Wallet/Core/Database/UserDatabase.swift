@@ -102,8 +102,62 @@ class UserDatabase {
 
                 if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
                     completion(userEntity.password == password)
+                } else {
+                    completion(false)
                 }
             }
         }
+    }
+
+    func getUserInfor(completion: @escaping (_ user: UserEntity?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(nil)
+            return
+        }
+
+        self.database.collection(DatabaseConst.usersCollectionName).document(userId).getDocument { document, err in
+            if let err = err {
+                print("Error get documents: \(err)")
+                completion(nil)
+            } else if let document = document {
+                guard let userData = try? JSONSerialization.data(withJSONObject: document.data() ?? [:],
+                                                                 options: []) else {
+                    completion(nil)
+                    return
+                }
+
+                if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
+                    completion(userEntity)
+                } else {
+                    print("cannot get user 9infor")
+                    completion(nil)
+                }
+            }
+        }
+    }
+
+    func updateProfile(profile: UserEntity, completion: @escaping (_ successfully: Bool?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        let profileData: [String: String] = [
+            "fullName": profile.fullName,
+            "nickname": profile.residentId,
+            "dateOfBirth": profile.dateOfBirth,
+            "gender": profile.gender,
+            "nativePlace": profile.nativePlace
+        ]
+
+        self.database.collection(DatabaseConst.usersCollectionName).document(userId)
+            .updateData(profileData) {err in
+                if let err = err {
+                    completion(false)
+                    print("Error updating document: \(err)")
+                } else {
+                    completion(true)
+                    print("Document successfully updated")
+                }
+            }
     }
 }
