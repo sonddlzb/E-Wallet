@@ -56,5 +56,13 @@ extension DIConnector {
         DIContainer.register(TransferBuildable.self) { _, args in
             return TransferBuilder(dependency: args.get())
         }
+
+        DIContainer.register(AddCardBuildable.self) { _, args in
+            return AddCardBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(AccountBuildable.self) { _, args in
+            return AccountBuilder(dependency: args.get())
+        }
     }
 }

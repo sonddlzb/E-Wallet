@@ -19,7 +19,7 @@ class AccountDatabase {
             return
         }
 
-        let newAccountEntity = AccountEntity(currency: "VND", balance: 0, isActive: true)
+        let newAccountEntity = AccountEntity(currency: "$", balance: 0, isActive: true)
         self.accountRef.child(userId).setValue(newAccountEntity.dict) { error, _ in
             if let error = error {
                 print("Failed to add new review: \(error)")
@@ -40,7 +40,7 @@ class AccountDatabase {
                 return
             }
 
-            let entity = AccountEntity(currency: dict["currenct"] as? String ?? "VND",
+            let entity = AccountEntity(currency: dict["currency"] as? String ?? "$",
                                        balance: dict["balance"] as? Double ?? 0.0,
                                        isActive: dict["isActive"] as? Bool ?? false)
             completion(entity)
