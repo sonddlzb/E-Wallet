@@ -29,7 +29,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllable {
 
     // MARK: - Variables
     weak var listener: ProfilePresentableListener?
-    private var viewModel: ProfileViewModel!
+    private var homeViewModel: HomeViewModel!
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -103,11 +103,11 @@ extension ProfileViewController: ProfilePresentable {
         FailedDialog.show(title: "Failed to sign out", message: message)
     }
 
-    func bind(viewModel: ProfileViewModel) {
-        self.viewModel = viewModel
+    func bind(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
         self.loadViewIfNeeded()
-        self.imageView.setImage(with: self.viewModel.avtURL(), indicator: .activity)
-        self.nameLabel.text = self.viewModel.userEntity.fullName
-        self.phoneNumberLabel.text = self.viewModel.userEntity.phoneNumber
+        self.imageView.setImage(with: self.homeViewModel.avtURL(), indicator: .activity)
+        self.nameLabel.text = self.homeViewModel.name()
+        self.phoneNumberLabel.text = self.homeViewModel.phoneNumber()
     }
 }

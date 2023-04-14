@@ -9,19 +9,24 @@ import RIBs
 import RxSwift
 
 protocol DashboardRouting: ViewableRouting {
+    func bind(homeViewModel: HomeViewModel)
 }
 
 protocol DashboardPresentable: Presentable {
     var listener: DashboardPresentableListener? { get set }
+
+    func bind(homeViewModel: HomeViewModel)
 }
 
 protocol DashboardListener: AnyObject {
+    func dashboadWantToRouteToTransfer()
 }
 
-final class DashboardInteractor: PresentableInteractor<DashboardPresentable>, DashboardInteractable, DashboardPresentableListener {
+final class DashboardInteractor: PresentableInteractor<DashboardPresentable> {
 
     weak var router: DashboardRouting?
     weak var listener: DashboardListener?
+    private var homeViewModel: HomeViewModel!
 
     override init(presenter: DashboardPresentable) {
         super.init(presenter: presenter)
@@ -34,5 +39,20 @@ final class DashboardInteractor: PresentableInteractor<DashboardPresentable>, Da
 
     override func willResignActive() {
         super.willResignActive()
+    }
+}
+
+// MARK: - DashboardInteractable
+extension DashboardInteractor: DashboardInteractable {
+    func bind(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+        self.presenter.bind(homeViewModel: self.homeViewModel)
+    }
+}
+
+// MARK: - DashboardPresentableListener
+extension DashboardInteractor: DashboardPresentableListener {
+    func routeToTransfer() {
+        self.listener?.dashboadWantToRouteToTransfer()
     }
 }

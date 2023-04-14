@@ -8,4 +8,5 @@
 public struct DatabaseConst {
     static let usersCollectionName = "users"
     static let avatarPath = "avatar"
+    static let accountPath = "accounts"
 }

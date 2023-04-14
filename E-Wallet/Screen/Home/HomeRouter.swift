@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -20,6 +20,7 @@ protocol HomeViewControllable: ViewControllable {
 final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
 
     var currentTab: HomeTab = .dashboard
+    private var homeViewModel: HomeViewModel?
 
     private var dashboardRouter: DashboardRouting?
     private var dashboardBuilder: DashboardBuildable
@@ -27,12 +28,17 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var profileRouter: ProfileRouting?
     private var profileBuilder: ProfileBuildable
 
+    private var transferRouter: TransferRouting?
+    private var transferBuilder: TransferBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
-         profileBuilder: ProfileBuildable) {
+         profileBuilder: ProfileBuildable,
+         transferBuilder: TransferBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
+        self.transferBuilder = transferBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -79,8 +85,38 @@ extension HomeRouter: HomeRouting {
         if self.profileRouter == nil {
             self.profileRouter = self.profileBuilder.build(withListener: self.interactor)
             attachChild(self.profileRouter!)
+            if let viewModel = self.homeViewModel {
+                self.profileRouter?.bind(homeViewModel: viewModel)
+            }
         }
 
         self.viewController.embedViewController(self.profileRouter!.viewControllable)
+    }
+
+    func bindDataToHomeTab(viewModel: HomeViewModel) {
+        self.homeViewModel = viewModel
+        self.dashboardRouter?.bind(homeViewModel: viewModel)
+        self.profileRouter?.bind(homeViewModel: viewModel)
+    }
+
+    func routeToTransfer() {
+        guard self.transferRouter == nil else {
+            return
+        }
+
+        let router = self.transferBuilder.build(withListener: self.interactor)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
+        self.attachChild(router)
+        self.transferRouter = router
+    }
+
+    func dismissTransfer() {
+        guard let router = self.transferRouter else {
+            return
+        }
+
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.detachChild(router)
+        self.transferRouter = nil
     }
 }

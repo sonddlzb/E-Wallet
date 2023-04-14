@@ -11,4 +11,8 @@ extension HomeInteractor: ProfileListener {
     func profileDidSignOut() {
         self.listener?.routeToSignIn()
     }
+
+    func profileWantToReloadUserInfor() {
+        self.fetchUserInfor()
+    }
 }

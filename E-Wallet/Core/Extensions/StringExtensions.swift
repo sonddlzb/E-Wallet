@@ -89,4 +89,26 @@ public extension String {
         let cmndRegex = "^[0-9]{9}$"
         return self.matches(regex: cccdRegex) || self.matches(regex: cmndRegex)
     }
+
+    func formatPhoneNumber() -> String {
+        if self.contains("+84") {
+            return (self.first == "0" ?  String(self.dropFirst()) : self).replacingOccurrences(of: " ", with: "")
+        } else {
+            return ("+84" + (self.first == "0" ?  String(self.dropFirst()) : self)).replacingOccurrences(of: " ", with: "")
+        }
+    }
+
+    func convertMoneyToNumber() -> Double? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        formatter.groupingSize = 3
+        formatter.secondaryGroupingSize = 3
+
+        if let number = formatter.number(from: self) {
+            return number.doubleValue
+        } else {
+            return nil
+        }
+    }
 }

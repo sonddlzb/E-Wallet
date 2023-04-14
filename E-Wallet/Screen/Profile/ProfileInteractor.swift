@@ -12,25 +12,27 @@ import FirebaseAuth
 protocol ProfileRouting: ViewableRouting {
     func routeToEditProfile(userEntity: UserEntity)
     func dismissEditProfile()
+    func bind(homeViewModel: HomeViewModel)
 }
 
 protocol ProfilePresentable: Presentable {
     var listener: ProfilePresentableListener? { get set }
 
     func bindSignOutFailedResult(message: String)
-    func bind(viewModel: ProfileViewModel)
+    func bind(homeViewModel: HomeViewModel)
 }
 
 protocol ProfileListener: AnyObject {
     func profileDidSignOut()
+    func profileWantToReloadUserInfor()
 }
 
-final class ProfileInteractor: PresentableInteractor<ProfilePresentable>, ProfileInteractable {
+final class ProfileInteractor: PresentableInteractor<ProfilePresentable> {
 
     weak var router: ProfileRouting?
     weak var listener: ProfileListener?
 
-    private var viewModel: ProfileViewModel!
+    private var homeViewModel: HomeViewModel!
 
     override init(presenter: ProfilePresentable) {
         super.init(presenter: presenter)
@@ -39,7 +41,6 @@ final class ProfileInteractor: PresentableInteractor<ProfilePresentable>, Profil
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        self.fetchUserInfor()
     }
 
     override func willResignActive() {
@@ -49,8 +50,8 @@ final class ProfileInteractor: PresentableInteractor<ProfilePresentable>, Profil
     func fetchUserInfor() {
         UserDatabase.shared.getUserInfor { user in
             if let user = user {
-                self.viewModel = ProfileViewModel(userEntity: user)
-                self.presenter.bind(viewModel: self.viewModel)
+                self.homeViewModel.userEntity = user
+                self.bind(homeViewModel: self.homeViewModel)
             }
         }
     }
@@ -69,10 +70,18 @@ extension ProfileInteractor: ProfilePresentableListener {
     }
 
     func didTapEditProfile() {
-        guard self.viewModel != nil else {
+        guard self.homeViewModel != nil else {
             return
         }
 
-        self.router?.routeToEditProfile(userEntity: self.viewModel.userEntity)
+        self.router?.routeToEditProfile(userEntity: self.homeViewModel.userEntity)
+    }
+}
+
+// MARK: - ProfileInteractable
+extension ProfileInteractor: ProfileInteractable {
+    func bind(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+        self.presenter.bind(homeViewModel: homeViewModel)
     }
 }

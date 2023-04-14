@@ -35,17 +35,12 @@ final class SignInViewController: BaseViewControler, SignInPresentable, SignInVi
     // MARK: - Actions
     @IBAction func didTapSignUpButton(_ sender: Any) {
     }
-
-    // MARK: - Helper
-    func formatPhoneNumber(_ phoneNumber: String) -> String {
-        return "+84" + (phoneNumber.first == "0" ?  String(phoneNumber.dropFirst()) : phoneNumber)
-    }
 }
 
 // MARK: - LoginByPasswordViewDelegate
 extension SignInViewController: LoginByPasswordViewDelegate {
     func loginByPasswordViewDidTapConfirm(_ loginByPasswordView: LoginByPasswordView, phoneNumber: String) {
-        self.listener?.signInWithPhoneNumber(self.formatPhoneNumber(phoneNumber))
+        self.listener?.signInWithPhoneNumber(phoneNumber.formatPhoneNumber())
     }
 }
 
