@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -31,14 +31,19 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var transferRouter: TransferRouting?
     private var transferBuilder: TransferBuildable
 
+    private var accountRouter: AccountRouting?
+    private var accountBuilder: AccountBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
          profileBuilder: ProfileBuildable,
-         transferBuilder: TransferBuildable) {
+         transferBuilder: TransferBuildable,
+         accountBuilder: AccountBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
+        self.accountBuilder = accountBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -64,7 +69,7 @@ extension HomeRouter: HomeRouting {
         case .history:
             print("route to history")
         case .account:
-            print("route to account")
+            self.routeToAccountTab()
         case .myProfile:
             self.routeToProfileTab()
         }
@@ -118,5 +123,14 @@ extension HomeRouter: HomeRouting {
         self.viewController.popToBefore(viewControllable: router.viewControllable)
         self.detachChild(router)
         self.transferRouter = nil
+    }
+
+    func routeToAccountTab() {
+        if self.accountRouter == nil {
+            self.accountRouter = self.accountBuilder.build(withListener: self.interactor)
+            attachChild(self.accountRouter!)
+        }
+
+        self.viewController.embedViewController(self.accountRouter!.viewControllable)
     }
 }

@@ -9,6 +9,11 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 import SVProgressHUD
+import Stripe
+
+private struct Const {
+    static let publishableKey = "pk_test_51MpNF2KkURD5t8wjxLZ80YMElFPJB1ySWCtZOijqIRQlZ0HeuSXZEVLgZZ6D0zTb5IoiD5xpt1e2uflfot3UxNMP0006CyNqiR"
+}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.configWindow()
         self.configFirebase()
         self.configSVProgressHUD()
+        self.configStripe()
         return true
     }
 
@@ -40,5 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configSVProgressHUD() {
         SVProgressHUD.setDefaultStyle(.dark)
+    }
+
+    func configStripe() {
+        STPAPIClient.shared.publishableKey = Const.publishableKey
     }
 }

@@ -79,8 +79,8 @@ extension DashboardViewController: DashboardPresentable {
     func bind(homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
         self.loadViewIfNeeded()
-        self.topPriceLabel.text = String(homeViewModel.balance()) + " " + homeViewModel.currency()
-        self.centerPriceLabel.text = String(homeViewModel.balance()) + " " + homeViewModel.currency()
+        self.topPriceLabel.text = homeViewModel.currency() + " " + String(homeViewModel.balance())
+        self.centerPriceLabel.text = homeViewModel.currency() + " " + String(homeViewModel.balance())
         self.welcomeLabel.text = "Welcome " + homeViewModel.name()
     }
 }

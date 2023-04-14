@@ -27,6 +27,8 @@
    pod 'FirebaseStorage'
    pod 'TLLogging'
    pod 'DropDown'
+   pod 'Stripe' 
+   pod 'CreditCardForm'
 
    RxSwiftPod()
    RIBsPod()
