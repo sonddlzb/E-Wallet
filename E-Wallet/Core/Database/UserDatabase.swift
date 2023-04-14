@@ -43,8 +43,12 @@ class UserDatabase {
                 return
             }
 
-            self.database.collection(DatabaseConst.usersCollectionName).document(userId).setData(userData)
-            completion(nil)
+            AccountDatabase.shared.createNewAccount { isSuccess in
+                if isSuccess {
+                    self.database.collection(DatabaseConst.usersCollectionName).document(userId).setData(userData)
+                    completion(nil)
+                }
+            }
         }
     }
 
@@ -143,7 +147,7 @@ class UserDatabase {
 
         let profileData: [String: String] = [
             "fullName": profile.fullName,
-            "nickname": profile.residentId,
+            "residentId": profile.residentId,
             "dateOfBirth": profile.dateOfBirth,
             "gender": profile.gender,
             "nativePlace": profile.nativePlace
@@ -159,5 +163,24 @@ class UserDatabase {
                     print("Document successfully updated")
                 }
             }
+    }
+
+    func getUsernameBy(phoneNumber: String, completion: @escaping (_ name: String) -> Void) {
+        self.database.collection(DatabaseConst.usersCollectionName).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
+            guard error == nil, let document = querySnapshot?.documents.first else {
+                completion("")
+                print("Error getting phone number \(error?.localizedDescription)")
+                return
+            }
+
+            guard let userData = try?  JSONSerialization.data(withJSONObject: document.data(), options: []) else {
+                completion("")
+                return
+            }
+
+            if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
+                completion(userEntity.fullName)
+            }
+        }
     }
 }

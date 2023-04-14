@@ -13,14 +13,14 @@ open class BaseNavigationController: UINavigationController {
     public override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
 
-        self.modalPresentationStyle = .fullScreen
+        self.modalPresentationStyle = .overFullScreen
         self.navigationBar.isHidden = true
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        self.modalPresentationStyle = .fullScreen
+        self.modalPresentationStyle = .overFullScreen
     }
 
     open override func viewDidLoad() {

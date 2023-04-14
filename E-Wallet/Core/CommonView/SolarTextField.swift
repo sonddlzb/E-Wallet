@@ -10,8 +10,10 @@ import UIKit
 @objc protocol SolarTextFieldDelegate: AnyObject {
     func solarTextField(_ textField: SolarTextField, willChangeToText text: String) -> Bool
     @objc optional func solarTextFieldShouldReturn(_ textField: SolarTextField) -> Bool
+    @objc optional func solarTextFieldShouldBeginEditting(_ textField: SolarTextField) -> Bool
     @objc optional func solarTextField(addTextFieldChangedValueObserverTo textField: PaddingTextField)
     @objc optional func solarTextFieldDidChangeValue(_ textField: SolarTextField)
+    @objc optional func solarTextFieldDidEndEditting(_ textField: SolarTextField)
     @objc optional func solarTextFieldDidTapRightButton(_ textField: SolarTextField)
     @objc optional func solarTextFieldDidTapLeftButton(_ textField: SolarTextField)
 }
@@ -272,9 +274,15 @@ extension SolarTextField: UITextFieldDelegate {
         if isHighlightedWhenEditting {
             self.borderWidth = 0
         }
+
+        delegate?.solarTextFieldDidEndEditting?(self)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return delegate?.solarTextFieldShouldReturn?(self) ?? true
+    }
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return delegate?.solarTextFieldShouldBeginEditting?(self) ?? true
     }
 }

@@ -10,6 +10,8 @@ import RIBs
 protocol ProfileInteractable: Interactable, EditProfileListener {
     var router: ProfileRouting? { get set }
     var listener: ProfileListener? { get set }
+
+    func bind(homeViewModel: HomeViewModel)
 }
 
 protocol ProfileViewControllable: ViewControllable {
@@ -49,5 +51,9 @@ extension ProfileRouter: ProfileRouting {
         detachChild(router)
         self.viewController.popToBefore(viewControllable: router.viewControllable)
         self.editProfileRouter = nil
+    }
+
+    func bind(homeViewModel: HomeViewModel) {
+        self.interactor.bind(homeViewModel: homeViewModel)
     }
 }

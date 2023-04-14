@@ -10,6 +10,7 @@ import Foundation
 extension ProfileInteractor: EditProfileListener {
     func editProfileWantToDismiss() {
         self.fetchUserInfor()
+        self.listener?.profileWantToReloadUserInfor()
         self.router?.dismissEditProfile()
     }
 }

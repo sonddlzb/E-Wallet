@@ -28,10 +28,12 @@
                 <outlet property="centerLabelContainerView" destination="eg3-hW-uUX" id="jTS-3b-3Jz"/>
                 <outlet property="centerPriceLabel" destination="8V9-7E-R9x" id="GeO-rs-tVs"/>
                 <outlet property="contentView" destination="BQv-UX-RDr" id="CbE-Kv-z3H"/>
+                <outlet property="dashBoardBarView" destination="97U-ZV-TzC" id="wKq-vU-5Qd"/>
                 <outlet property="optionViewTopConstraintLayout" destination="yXu-mt-zye" id="4bK-El-yNz"/>
                 <outlet property="scrollView" destination="99o-j3-ZYL" id="Wpy-AM-8SG"/>
                 <outlet property="topPriceLabel" destination="Wb5-xH-2zi" id="dsa-f4-lAK"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
+                <outlet property="welcomeLabel" destination="IeI-RT-HoU" id="5dc-Nz-iau"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -55,8 +57,8 @@
                                 <constraint firstAttribute="width" secondItem="Y6Z-A9-7cf" secondAttribute="height" id="LDI-Yt-bas"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome Mr. Son Dao" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeI-RT-HoU">
-                            <rect key="frame" x="60" y="24.5" width="175.5" height="19.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeI-RT-HoU">
+                            <rect key="frame" x="60" y="44" width="0.0" height="0.0"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="SHh-9U-gmf"/>
                             </constraints>
@@ -64,8 +66,8 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 450.54" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wb5-xH-2zi">
-                            <rect key="frame" x="332" y="24.5" width="72" height="19.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wb5-xH-2zi">
+                            <rect key="frame" x="404" y="44" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -161,8 +163,8 @@
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$450.54" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8V9-7E-R9x">
-                                    <rect key="frame" x="125.5" y="21" width="123" height="34"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8V9-7E-R9x">
+                                    <rect key="frame" x="187" y="55" width="0.0" height="0.0"/>
                                     <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="32"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>

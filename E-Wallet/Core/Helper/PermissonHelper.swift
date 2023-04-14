@@ -7,6 +7,7 @@
 
 import Foundation
 import Photos
+import Contacts
 
 // granted, needOpenSettings
 typealias RequestPermissionCompletion = (Bool, Bool) -> Void
@@ -22,6 +23,10 @@ class PermissionHelper {
         } else {
             return PHPhotoLibrary.authorizationStatus() == .authorized
         }
+    }
+
+    var hasContactsPermission: Bool {
+        return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
 
     func requestPhotoPermission(completion: @escaping RequestPermissionCompletion) {
@@ -59,6 +64,17 @@ class PermissionHelper {
         let previousStatus = AVAudioSession.sharedInstance().recordPermission
         AVAudioSession.sharedInstance().requestRecordPermission { granted in
             completion(granted, previousStatus == .denied)
+        }
+    }
+
+    func requestContactsPermission(completion: @escaping RequestPermissionCompletion) {
+        let previousStatus = CNContactStore.authorizationStatus(for: .contacts)
+        if self.hasContactsPermission {
+            completion(true, false)
+        } else {
+            CNContactStore().requestAccess(for: .contacts) { granted, _ in
+                completion(granted, previousStatus == .denied)
+            }
         }
     }
 }

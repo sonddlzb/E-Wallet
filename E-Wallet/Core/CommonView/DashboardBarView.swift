@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DashboardBarViewDelegate: AnyObject {
-    func dashboardBarView(_ dashboardBarView: DashboardBarView, didSelectAt: DashboardOption)
+    func dashboardBarView(_ dashboardBarView: DashboardBarView, didSelectAt dashboardOption: DashboardOption)
 }
 
 class DashboardBarView: UIView {

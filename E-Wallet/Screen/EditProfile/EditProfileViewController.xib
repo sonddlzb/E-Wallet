@@ -236,7 +236,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPG-OA-GDO" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="374" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="364" y="0.0" width="30" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNT-Pe-dXT">
                                     <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
@@ -267,7 +267,7 @@
                         <constraint firstItem="DPG-OA-GDO" firstAttribute="top" secondItem="fF9-7m-CKW" secondAttribute="top" id="hGd-Gh-pEx"/>
                         <constraint firstItem="gNN-Km-hNq" firstAttribute="centerX" secondItem="fF9-7m-CKW" secondAttribute="centerX" id="lc6-ZB-q3F"/>
                         <constraint firstItem="gNN-Km-hNq" firstAttribute="top" secondItem="fF9-7m-CKW" secondAttribute="top" id="uaR-Dh-KZl"/>
-                        <constraint firstAttribute="trailing" secondItem="DPG-OA-GDO" secondAttribute="trailing" constant="10" id="vyi-1R-rcR"/>
+                        <constraint firstAttribute="trailing" secondItem="DPG-OA-GDO" secondAttribute="trailing" constant="20" id="vyi-1R-rcR"/>
                         <constraint firstItem="LtY-8r-H7H" firstAttribute="leading" secondItem="fF9-7m-CKW" secondAttribute="leading" constant="10" id="wVo-oV-KNp"/>
                     </constraints>
                 </view>

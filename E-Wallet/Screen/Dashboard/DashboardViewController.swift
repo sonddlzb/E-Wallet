@@ -10,9 +10,10 @@ import RxSwift
 import UIKit
 
 protocol DashboardPresentableListener: AnyObject {
+    func routeToTransfer()
 }
 
-final class DashboardViewController: UIViewController, DashboardPresentable, DashboardViewControllable {
+final class DashboardViewController: UIViewController, DashboardViewControllable {
     // MARK: - Outlets
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var contentView: UIView!
@@ -20,9 +21,12 @@ final class DashboardViewController: UIViewController, DashboardPresentable, Das
     @IBOutlet private weak var centerPriceLabel: UILabel!
     @IBOutlet private weak var centerLabelContainerView: UIView!
     @IBOutlet private weak var topPriceLabel: UILabel!
+    @IBOutlet private weak var welcomeLabel: UILabel!
+    @IBOutlet private weak var dashBoardBarView: DashboardBarView!
 
     // MARK: - Variables
     weak var listener: DashboardPresentableListener?
+    private var homeViewModel: HomeViewModel!
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -30,6 +34,7 @@ final class DashboardViewController: UIViewController, DashboardPresentable, Das
         self.scrollView.delegate = self
         self.contentView.setupCornerRadius(topLeftRadius: 32.0, topRightRadius: 32.0, bottomLeftRadius: 0.0, bottomRightRadius: 0.0)
         topPriceLabel.isHidden = true
+        self.dashBoardBarView.delegate = self
     }
 
     override func viewDidLayoutSubviews() {
@@ -65,6 +70,33 @@ extension DashboardViewController: UIScrollViewDelegate {
             showTopPrice()
         } else {
             hideTopPrice()
+        }
+    }
+}
+
+// MARK: - DashboardPresentable
+extension DashboardViewController: DashboardPresentable {
+    func bind(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+        self.loadViewIfNeeded()
+        self.topPriceLabel.text = String(homeViewModel.balance()) + " " + homeViewModel.currency()
+        self.centerPriceLabel.text = String(homeViewModel.balance()) + " " + homeViewModel.currency()
+        self.welcomeLabel.text = "Welcome " + homeViewModel.name()
+    }
+}
+
+// MARK: - DashboardBarViewDelegate
+extension DashboardViewController: DashboardBarViewDelegate {
+    func dashboardBarView(_ dashboardBarView: DashboardBarView, didSelectAt dashboardOption: DashboardOption) {
+        switch dashboardOption {
+        case .transfer:
+            self.listener?.routeToTransfer()
+        case .topUp:
+            print("Did select topup")
+        case .withdraw:
+            print("Did select withdraw")
+        case .qrScan:
+            print("Did select qrscan")
         }
     }
 }

@@ -12,6 +12,9 @@ protocol HomeRouting: ViewableRouting {
     func getCurrentTabType() -> HomeTab
     func dashboardWantToReloadData()
     func routeToTab(homeTab: HomeTab)
+    func bindDataToHomeTab(viewModel: HomeViewModel)
+    func routeToTransfer()
+    func dismissTransfer()
 }
 
 protocol HomePresentable: Presentable {
@@ -26,6 +29,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
 
     weak var router: HomeRouting?
     weak var listener: HomeListener?
+    private var viewModel: HomeViewModel!
 
     override init(presenter: HomePresentable) {
         super.init(presenter: presenter)
@@ -35,10 +39,22 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     override func didBecomeActive() {
         super.didBecomeActive()
         self.router?.routeToTab(homeTab: .dashboard)
+        self.fetchUserInfor()
     }
 
     override func willResignActive() {
         super.willResignActive()
+    }
+
+    func fetchUserInfor() {
+        UserDatabase.shared.getUserInfor { user in
+            if let user = user {
+                AccountDatabase.shared.getAccountInfor { account in
+                    self.viewModel = HomeViewModel(userEntity: user, accountEntity: account)
+                    self.router?.bindDataToHomeTab(viewModel: self.viewModel)
+                }
+            }
+        }
     }
 }
 
