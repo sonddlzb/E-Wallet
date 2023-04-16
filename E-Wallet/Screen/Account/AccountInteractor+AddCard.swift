@@ -13,7 +13,7 @@ extension AccountInteractor: AddCardListener {
     }
 
     func addCardWantToReloadData() {
-        // reload data here
+        self.fetchAccounts()
         self.router?.dismissAddCard()
     }
 }
