@@ -31,7 +31,7 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U0o-ZK-zYm">
-                    <rect key="frame" x="50" y="245" width="314" height="420.5"/>
+                    <rect key="frame" x="50" y="248.5" width="314" height="413.5"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_happy" translatesAutoresizingMaskIntoConstraints="NO" id="GNc-y7-yGX">
                             <rect key="frame" x="60" y="20" width="194" height="194"/>
@@ -52,10 +52,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywx-LP-r8D" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="20" y="345.5" width="274" height="55"/>
+                            <rect key="frame" x="20" y="345.5" width="274" height="48"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6KD-N2-uzG">
-                                    <rect key="frame" x="0.0" y="0.0" width="274" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="274" height="48"/>
                                     <color key="backgroundColor" red="0.1019607843" green="0.71372549019999998" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="18"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -71,7 +71,7 @@
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="6KD-N2-uzG" secondAttribute="bottom" id="HR5-LS-ach"/>
                                 <constraint firstItem="6KD-N2-uzG" firstAttribute="leading" secondItem="ywx-LP-r8D" secondAttribute="leading" id="MKo-s7-7Jm"/>
-                                <constraint firstAttribute="height" constant="55" id="Rwu-vd-0dP"/>
+                                <constraint firstAttribute="height" constant="48" id="Rwu-vd-0dP"/>
                                 <constraint firstAttribute="trailing" secondItem="6KD-N2-uzG" secondAttribute="trailing" id="ozC-s1-7tJ"/>
                                 <constraint firstItem="6KD-N2-uzG" firstAttribute="top" secondItem="ywx-LP-r8D" secondAttribute="top" id="uo9-hd-zpb"/>
                             </constraints>
@@ -93,6 +93,8 @@
                         <constraint firstItem="GNc-y7-yGX" firstAttribute="top" secondItem="U0o-ZK-zYm" secondAttribute="top" constant="20" id="gap-MW-lI1"/>
                         <constraint firstItem="NNC-5k-O12" firstAttribute="centerX" secondItem="U0o-ZK-zYm" secondAttribute="centerX" id="haa-dS-hUk"/>
                         <constraint firstItem="NNC-5k-O12" firstAttribute="top" secondItem="GNc-y7-yGX" secondAttribute="bottom" constant="12" id="jlx-RB-9ob"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NNC-5k-O12" secondAttribute="trailing" constant="20" id="kKv-oC-n2H"/>
+                        <constraint firstItem="NNC-5k-O12" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="U0o-ZK-zYm" secondAttribute="leading" constant="20" id="qRD-NY-4ZE"/>
                         <constraint firstItem="GNc-y7-yGX" firstAttribute="leading" secondItem="U0o-ZK-zYm" secondAttribute="leading" constant="60" id="qYW-x9-KtQ"/>
                         <constraint firstAttribute="bottom" secondItem="ywx-LP-r8D" secondAttribute="bottom" constant="20" id="yUz-zb-18u"/>
                     </constraints>

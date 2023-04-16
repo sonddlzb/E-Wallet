@@ -15,6 +15,8 @@ protocol AccountRouting: ViewableRouting {
 
 protocol AccountPresentable: Presentable {
     var listener: AccountPresentableListener? { get set }
+
+    func bind(viewModel: AccountViewModel)
 }
 
 protocol AccountListener: AnyObject {
@@ -24,6 +26,7 @@ final class AccountInteractor: PresentableInteractor<AccountPresentable>, Accoun
 
     weak var router: AccountRouting?
     weak var listener: AccountListener?
+    private var viewModel = AccountViewModel.makeEmpty()
 
     override init(presenter: AccountPresentable) {
         super.init(presenter: presenter)
@@ -32,10 +35,18 @@ final class AccountInteractor: PresentableInteractor<AccountPresentable>, Accoun
 
     override func didBecomeActive() {
         super.didBecomeActive()
+        self.fetchAccounts()
     }
 
     override func willResignActive() {
         super.willResignActive()
+    }
+
+    func fetchAccounts() {
+        CardDatabase.shared.getListOfCards { listCards in
+            self.viewModel = AccountViewModel(listCards: listCards)
+            self.presenter.bind(viewModel: self.viewModel)
+        }
     }
 }
 

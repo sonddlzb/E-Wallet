@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-SemiBold.otf">
+            <string>Outfit-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AccountCell" customModule="E_Wallet" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="294" height="79"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="294" height="79"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRt-Zc-fOY">
+                        <rect key="frame" x="0.0" y="0.0" width="294" height="79"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_mastercard" translatesAutoresizingMaskIntoConstraints="NO" id="Trm-vs-87H">
+                                <rect key="frame" x="30" y="10" width="59" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Trm-vs-87H" secondAttribute="height" id="rmr-JI-hQf"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=".... .... .... .... 4141" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orY-I6-6Ay">
+                                <rect key="frame" x="108.99999999999999" y="29" width="147.66666666666663" height="21.333333333333329"/>
+                                <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Trm-vs-87H" firstAttribute="top" secondItem="iRt-Zc-fOY" secondAttribute="top" constant="10" id="2t3-NN-J7g"/>
+                            <constraint firstItem="Trm-vs-87H" firstAttribute="leading" secondItem="iRt-Zc-fOY" secondAttribute="leading" constant="30" id="46s-N9-2NF"/>
+                            <constraint firstItem="orY-I6-6Ay" firstAttribute="leading" secondItem="Trm-vs-87H" secondAttribute="trailing" constant="20" id="V7Y-2d-NGK"/>
+                            <constraint firstAttribute="bottom" secondItem="Trm-vs-87H" secondAttribute="bottom" constant="10" id="mcM-Rd-qNF"/>
+                            <constraint firstItem="orY-I6-6Ay" firstAttribute="centerY" secondItem="Trm-vs-87H" secondAttribute="centerY" id="rxp-x3-vqZ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="iRt-Zc-fOY" secondAttribute="trailing" id="G4B-wD-1pB"/>
+                <constraint firstItem="iRt-Zc-fOY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Rcg-kf-EGl"/>
+                <constraint firstItem="iRt-Zc-fOY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Ub2-HH-zq1"/>
+                <constraint firstAttribute="bottom" secondItem="iRt-Zc-fOY" secondAttribute="bottom" id="VVA-k7-tmF"/>
+            </constraints>
+            <size key="customSize" width="294" height="79"/>
+            <connections>
+                <outlet property="imageView" destination="Trm-vs-87H" id="GtR-wa-goh"/>
+                <outlet property="numberLabel" destination="orY-I6-6Ay" id="ACi-sk-0f3"/>
+            </connections>
+            <point key="canvasLocation" x="288.54961832061065" y="-2.4647887323943665"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="ic_mastercard" width="48" height="48"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

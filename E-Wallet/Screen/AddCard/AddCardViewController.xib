@@ -32,7 +32,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PGC-16-ERm">
                     <rect key="frame" x="0.0" y="48" width="414" height="40"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7iZ-HC-QuL" customClass="TapableView" customModule="HeliaHotelBooking" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7iZ-HC-QuL" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="10" y="0.0" width="40" height="40"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oSa-5D-m4B">
@@ -48,6 +48,9 @@
                                 <constraint firstItem="oSa-5D-m4B" firstAttribute="leading" secondItem="7iZ-HC-QuL" secondAttribute="leading" id="gsq-iv-f5n"/>
                                 <constraint firstAttribute="bottom" secondItem="oSa-5D-m4B" secondAttribute="bottom" constant="10" id="o28-OI-lFm"/>
                             </constraints>
+                            <connections>
+                                <action selector="didTapBackButton:" destination="-1" eventType="touchUpInside" id="Fnd-bH-GgD"/>
+                            </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLp-Fh-DXP">
                             <rect key="frame" x="55" y="0.0" width="107.5" height="40"/>
@@ -77,12 +80,12 @@
                                 <constraint firstAttribute="height" constant="100" id="3c8-B3-4n3"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFQ-T7-ThU" customClass="TapableView" customModule="HeliaHotelBooking" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFQ-T7-ThU" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="20" y="674" width="374" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Card" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKd-YP-u9z">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                    <color key="backgroundColor" red="0.1019607843" green="0.71372549019999998" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.17254901960784313" green="0.0" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="18"/>
                                     <color key="textColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
