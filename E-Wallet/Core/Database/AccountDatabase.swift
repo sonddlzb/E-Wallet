@@ -46,4 +46,23 @@ class AccountDatabase {
             completion(entity)
         })
     }
+
+    func topUp(amount: Double, completion: @escaping (_ error: Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.accountRef.child(userId).getData { error, snapshot in
+            if let error = error {
+                completion(error)
+            } else {
+                if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
+                    self.accountRef.child(userId).updateChildValues(["balance": balance + amount]) { error, _ in
+                        print("update")
+                        completion(error)
+                    }
+                }
+            }
+        }
+    }
 }

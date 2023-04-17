@@ -15,6 +15,11 @@ protocol HomeRouting: ViewableRouting {
     func bindDataToHomeTab(viewModel: HomeViewModel)
     func routeToTransfer()
     func dismissTransfer()
+    func routeToTopUp()
+    func dismissTopUp()
+    func routeToAddCard()
+    func dismissAddCard()
+    func reloadCardData()
 }
 
 protocol HomePresentable: Presentable {

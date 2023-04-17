@@ -9,10 +9,9 @@ import RIBs
 import RxSwift
 
 protocol AccountRouting: ViewableRouting {
-    func routeToAddCard()
-    func dismissAddCard()
     func routeToCardDetails(_ card: Card)
     func dismissCardDetails()
+    func reloadData()
 }
 
 protocol AccountPresentable: Presentable {
@@ -22,9 +21,10 @@ protocol AccountPresentable: Presentable {
 }
 
 protocol AccountListener: AnyObject {
+    func routeToAddCard()
 }
 
-final class AccountInteractor: PresentableInteractor<AccountPresentable>, AccountInteractable {
+final class AccountInteractor: PresentableInteractor<AccountPresentable> {
 
     weak var router: AccountRouting?
     weak var listener: AccountListener?
@@ -55,10 +55,17 @@ final class AccountInteractor: PresentableInteractor<AccountPresentable>, Accoun
 // MARK: - AccountPresentableListener
 extension AccountInteractor: AccountPresentableListener {
     func routeToAddCard() {
-        self.router?.routeToAddCard()
+        self.listener?.routeToAddCard()
     }
 
     func didSelectCard(_ card: Card) {
         self.router?.routeToCardDetails(card)
+    }
+}
+
+// MARK: - AccountInteractable
+extension AccountInteractor: AccountInteractable {
+    func reloadData() {
+        self.fetchAccounts()
     }
 }
