@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol AccountInteractable: Interactable, AddCardListener {
+protocol AccountInteractable: Interactable, AddCardListener, CardDetailsListener {
     var router: AccountRouting? { get set }
     var listener: AccountListener? { get set }
 }
@@ -19,10 +19,15 @@ final class AccountRouter: ViewableRouter<AccountInteractable, AccountViewContro
     private var addCardRouter: AddCardRouting?
     private var addCardBuilder: AddCardBuildable
 
+    private var cardDetailsRouter: CardDetailsRouting?
+    private var cardDetailsBuilder: CardDetailsBuildable
+
     init(interactor: AccountInteractable,
-                  viewController: AccountViewControllable,
-                  addCardBuilder: AddCardBuildable) {
+         viewController: AccountViewControllable,
+         addCardBuilder: AddCardBuildable,
+         cardDetailsBuilder: CardDetailsBuildable) {
         self.addCardBuilder = addCardBuilder
+        self.cardDetailsBuilder = cardDetailsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -30,6 +35,27 @@ final class AccountRouter: ViewableRouter<AccountInteractable, AccountViewContro
 
 // MARK: - AccountRouting
 extension AccountRouter: AccountRouting {
+    func routeToCardDetails(_ card: Card) {
+        guard self.cardDetailsRouter == nil else {
+            return
+        }
+
+        let router = self.cardDetailsBuilder.build(withListener: interactor, card: card)
+        self.attachChild(router)
+        self.viewController.push(viewControllable: router.viewControllable, animated: true)
+        self.cardDetailsRouter = router
+    }
+
+    func dismissCardDetails() {
+        guard let router = self.cardDetailsRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.cardDetailsRouter = nil
+    }
+
     func routeToAddCard() {
         guard self.addCardRouter == nil else {
             return

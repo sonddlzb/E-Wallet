@@ -111,4 +111,11 @@ public extension String {
             return nil
         }
     }
+
+    func formatMoney() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let formattedText = formatter.string(from: NSNumber(value: Double(self) ?? 0.0)) ?? ""
+        return formattedText
+    }
 }

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+import FirebaseRemoteConfig
 import SVProgressHUD
 import Stripe
 
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.configFirebase()
         self.configSVProgressHUD()
         self.configStripe()
+        self.configRemoteConfig()
         return true
     }
 
@@ -46,6 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configSVProgressHUD() {
         SVProgressHUD.setDefaultStyle(.dark)
+    }
+
+    private func configRemoteConfig() {
+        RemoteConfigManager.shared.configRemoteConfigDefaults()
     }
 
     func configStripe() {

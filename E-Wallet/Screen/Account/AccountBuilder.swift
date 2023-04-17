@@ -32,8 +32,10 @@ final class AccountBuilder: Builder<AccountDependency>, AccountBuildable {
         let interactor = AccountInteractor(presenter: viewController)
         interactor.listener = listener
         let addCardBuilder = DIContainer.resolve(AddCardBuildable.self, agrument: component)
+        let cardDetailsBuilder = DIContainer.resolve(CardDetailsBuildable.self, agrument: component)
         return AccountRouter(interactor: interactor,
                              viewController: viewController,
-                             addCardBuilder: addCardBuilder)
+                             addCardBuilder: addCardBuilder,
+                             cardDetailsBuilder: cardDetailsBuilder)
     }
 }

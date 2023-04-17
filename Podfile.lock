@@ -614,6 +614,8 @@ PODS:
   - Firebase/Crashlytics (10.6.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 10.6.0)
+  - FirebaseABTesting (10.6.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.6.0):
     - FirebaseAnalytics/AdIdSupport (= 10.6.0)
     - FirebaseCore (~> 10.0)
@@ -676,6 +678,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseRemoteConfig (10.6.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseSessions (10.6.0):
     - FirebaseCore (~> 10.5)
     - FirebaseCoreExtension (~> 10.0)
@@ -844,6 +852,7 @@ DEPENDENCIES:
   - FirebaseCore
   - FirebaseDatabase
   - FirebaseFirestore
+  - FirebaseRemoteConfig
   - FirebaseStorage
   - Kingfisher
   - Resolver
@@ -862,6 +871,7 @@ SPEC REPOS:
     - CreditCardForm
     - DropDown
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
     - FirebaseAuth
@@ -873,6 +883,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
+    - FirebaseRemoteConfig
     - FirebaseSessions
     - FirebaseStorage
     - GoogleAppMeasurement
@@ -917,6 +928,7 @@ SPEC CHECKSUMS:
   CreditCardForm: bba4aad545236f97f2dc45ea3bed0cb57d5e0e99
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   Firebase: f13680471b021937f2230ea8503c7809d8c29806
+  FirebaseABTesting: cec558d2e670053b1e862c98cfecae64aecfd629
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
   FirebaseAppCheckInterop: 13e5394346a811e7158cc136c01f10e3302a3514
   FirebaseAuth: 743e5cd568af59d6d99a91ea9300843672515cf7
@@ -928,6 +940,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 06195bac336b5e4c893ec04a111631a4cdb00178
   FirebaseFirestore: f91b23a3c71448475d17163baf916d5d20d01609
   FirebaseInstallations: 13dde135fa0524e15bddb133ccc8465c53a1b3f3
+  FirebaseRemoteConfig: 7ef4dd164f3066c64ca1efab0f990152a6b94fc0
   FirebaseSessions: 60e877d5159eb571a3d82df68947a7941b475a20
   FirebaseStorage: 10d4f43a4ef98e7554da72197ad52216686ea990
   GoogleAppMeasurement: 686b48c3c895f3c55c70719041913d5d150b74f6
@@ -957,6 +970,6 @@ SPEC CHECKSUMS:
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
 
-PODFILE CHECKSUM: af6df651aa7e2e0a634f0c7929095db1afe1632e
+PODFILE CHECKSUM: 7e5f9c1eeca7b6b646401d65ee2a8940b9414560
 
 COCOAPODS: 1.11.3

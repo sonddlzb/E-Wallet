@@ -22,6 +22,7 @@
                 <outlet property="arrowDownImageView" destination="T6h-DQ-T3t" id="g0J-8J-2xf"/>
                 <outlet property="avtImageView" destination="FAz-G5-Vsx" id="0xQ-XR-NAM"/>
                 <outlet property="calendarImageView" destination="Ozz-nr-CH5" id="Yeh-eY-Ju3"/>
+                <outlet property="changeAvtButton" destination="rb4-sh-VlC" id="Cfb-dN-rlN"/>
                 <outlet property="dateOfBirthControl" destination="lCK-7y-DGM" id="lP9-pu-LL1"/>
                 <outlet property="dateOfBirthLabel" destination="LaO-7f-ZIl" id="QKQ-ay-cdy"/>
                 <outlet property="datePicker" destination="BQL-DK-zzb" id="O8K-af-zuL"/>
@@ -42,7 +43,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-FB-Z0j">
-                    <rect key="frame" x="137" y="118" width="140" height="140"/>
+                    <rect key="frame" x="137" y="70" width="140" height="140"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_no_avt" translatesAutoresizingMaskIntoConstraints="NO" id="FAz-G5-Vsx">
                             <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
@@ -75,6 +76,9 @@
                                 <constraint firstAttribute="height" constant="32" id="i9I-pg-YQR"/>
                                 <constraint firstItem="JGD-Bo-uik" firstAttribute="leading" secondItem="rb4-sh-VlC" secondAttribute="leading" id="sE9-JO-X4m"/>
                             </constraints>
+                            <connections>
+                                <action selector="didTapToChangeAvatar:" destination="-1" eventType="touchUpInside" id="ReN-0N-0ih"/>
+                            </connections>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -90,7 +94,7 @@
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ifx-9D-qn4">
-                    <rect key="frame" x="12" y="278" width="390" height="330"/>
+                    <rect key="frame" x="12" y="230" width="390" height="330"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xq-ro-l1G" customClass="SolarTextField" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
@@ -207,13 +211,13 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fF9-7m-CKW">
-                    <rect key="frame" x="0.0" y="48" width="414" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LtY-8r-H7H" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="10" y="10" width="37.5" height="20"/>
+                            <rect key="frame" x="10" y="10" width="37.666666666666664" height="20"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tof-6H-QD3">
-                                    <rect key="frame" x="0.0" y="2.5" width="37.5" height="15"/>
+                                    <rect key="frame" x="0.0" y="3" width="37.666666666666664" height="14.333333333333332"/>
                                     <color key="tintColor" systemColor="labelColor"/>
                                 </imageView>
                             </subviews>
@@ -230,16 +234,16 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNN-Km-hNq">
-                            <rect key="frame" x="144" y="0.0" width="126" height="40"/>
+                            <rect key="frame" x="146" y="0.0" width="122.33333333333331" height="40"/>
                             <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="24"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPG-OA-GDO" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="364" y="0.0" width="30" height="40"/>
+                            <rect key="frame" x="364.33333333333331" y="0.0" width="29.666666666666686" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNT-Pe-dXT">
-                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="29.666666666666668" height="40"/>
                                     <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>

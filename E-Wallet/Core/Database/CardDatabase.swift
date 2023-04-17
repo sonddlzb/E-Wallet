@@ -74,4 +74,10 @@ class CardDatabase {
             }
         }
     }
+
+    func removeCard(_ cardId: String, completion: @escaping (_ error: Error?) -> Void) {
+        self.database.collection(DatabaseConst.cardPath).document(cardId).delete { error in
+            completion(error)
+        }
+    }
 }

@@ -92,7 +92,7 @@ extension AddCardViewController: AddCardPresentable {
         } else {
             let notificationView = NotificationDialogView.loadView()
             notificationView.delegate = self
-            notificationView.show(in: self.view, title: "Add new card successfully!", message: "Your card was added for your payment.")
+            notificationView.show(in: self.view, title: "Successfully!", message: "Your card was added for your payment.")
         }
     }
 }

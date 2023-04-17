@@ -182,10 +182,13 @@ extension TransferViewController: UITextFieldDelegate {
 
         // Remove all non-digit characters from the updated text.
         let filteredText = updatedText.filter("0123456789".contains)
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        let formattedText = formatter.string(from: NSNumber(value: Int(filteredText) ?? 0)) ?? ""
-        textField.text = formattedText
+        if filteredText.isEmpty {
+            textField.textColor = .lightGray
+        } else {
+            textField.textColor = .black
+        }
+
+        textField.text = filteredText.formatMoney()
         return false
     }
 }

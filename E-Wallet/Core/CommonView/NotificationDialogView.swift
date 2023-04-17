@@ -79,6 +79,7 @@ class NotificationDialogView: UIView {
         super.touchesBegan(touches, with: event)
         if touches.first?.view == self.backgroundView {
             self.dismiss()
+            self.delegate?.notificationDialogViewDidTapOk(self)
         }
     }
 

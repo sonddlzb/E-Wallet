@@ -17,6 +17,7 @@ private struct Const {
 
 protocol AccountPresentableListener: AnyObject {
     func routeToAddCard()
+    func didSelectCard(_ card: Card)
 }
 
 final class AccountViewController: UIViewController, AccountViewControllable {
@@ -73,6 +74,10 @@ extension AccountViewController: UICollectionViewDelegate, UICollectionViewDataS
 
         cell.bind(itemViewModel: self.viewModel.item(at: indexPath.row))
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.listener?.didSelectCard(self.viewModel.listCards[indexPath.row])
     }
 }
 
