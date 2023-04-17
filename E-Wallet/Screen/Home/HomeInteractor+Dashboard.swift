@@ -11,4 +11,8 @@ extension HomeInteractor: DashboardListener {
     func dashboadWantToRouteToTransfer() {
         self.router?.routeToTransfer()
     }
+
+    func dashboadWantToRouteToTopUp() {
+        self.router?.routeToTopUp()
+    }
 }

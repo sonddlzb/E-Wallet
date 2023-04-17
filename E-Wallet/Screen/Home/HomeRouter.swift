@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -34,16 +34,26 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var accountRouter: AccountRouting?
     private var accountBuilder: AccountBuildable
 
+    private var topUpRouter: TopUpRouting?
+    private var topUpBuilder: TopUpBuildable
+
+    private var addCardRouter: AddCardRouting?
+    private var addCardBuilder: AddCardBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
          profileBuilder: ProfileBuildable,
          transferBuilder: TransferBuildable,
-         accountBuilder: AccountBuildable) {
+         accountBuilder: AccountBuildable,
+         topUpBuilder: TopUpBuildable,
+         addCardBuilder: AddCardBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
         self.accountBuilder = accountBuilder
+        self.topUpBuilder = topUpBuilder
+        self.addCardBuilder = addCardBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -132,5 +142,53 @@ extension HomeRouter: HomeRouting {
         }
 
         self.viewController.embedViewController(self.accountRouter!.viewControllable)
+    }
+
+    func routeToTopUp() {
+        guard self.topUpRouter == nil else {
+            return
+        }
+
+        let router = self.topUpBuilder.build(withListener: self.interactor)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
+        self.attachChild(router)
+        self.topUpRouter = router
+    }
+
+    func dismissTopUp() {
+        guard let router = self.topUpRouter else {
+            return
+        }
+
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.detachChild(router)
+        self.topUpRouter = nil
+    }
+
+
+    func routeToAddCard() {
+        guard self.addCardRouter == nil else {
+            return
+        }
+
+        let router = self.addCardBuilder.build(withListener: interactor)
+        self.attachChild(router)
+        self.viewController.push(viewControllable: router.viewControllable, animated: true)
+        self.addCardRouter = router
+    }
+
+    func dismissAddCard() {
+        guard let router = self.addCardRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.addCardRouter = nil
+    }
+
+    func reloadCardData() {
+        self.accountRouter?.reloadData()
+        self.topUpRouter?.reloadData()
     }
 }

@@ -20,6 +20,7 @@ protocol DashboardPresentable: Presentable {
 
 protocol DashboardListener: AnyObject {
     func dashboadWantToRouteToTransfer()
+    func dashboadWantToRouteToTopUp()
 }
 
 final class DashboardInteractor: PresentableInteractor<DashboardPresentable> {
@@ -54,5 +55,9 @@ extension DashboardInteractor: DashboardInteractable {
 extension DashboardInteractor: DashboardPresentableListener {
     func routeToTransfer() {
         self.listener?.dashboadWantToRouteToTransfer()
+    }
+
+    func routeToTopUp() {
+        self.listener?.dashboadWantToRouteToTopUp()
     }
 }

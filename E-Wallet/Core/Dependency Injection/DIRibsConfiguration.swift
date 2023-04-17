@@ -68,5 +68,9 @@ extension DIConnector {
         DIContainer.register(CardDetailsBuildable.self) { _, args in
             return CardDetailsBuilder(dependency: args.get())
         }
+
+        DIContainer.register(TopUpBuildable.self) { _, args in
+            return TopUpBuilder(dependency: args.get())
+        }
     }
 }

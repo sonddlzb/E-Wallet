@@ -96,7 +96,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xCS-Sr-96t">
-                            <rect key="frame" x="23.5" y="80" width="20" height="33.5"/>
+                            <rect key="frame" x="23.5" y="89.5" width="20" height="33.5"/>
                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="30"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -109,19 +109,19 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount of money" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPe-aC-jgJ">
-                            <rect key="frame" x="0.0" y="60" width="127" height="17"/>
-                            <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                            <rect key="frame" x="0.0" y="60" width="143" height="19.5"/>
+                            <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIp-Kh-j0g">
-                            <rect key="frame" x="0.0" y="133.5" width="63" height="17"/>
+                            <rect key="frame" x="0.0" y="143" width="63" height="17"/>
                             <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Your message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ynX-KD-boe">
-                            <rect key="frame" x="0.0" y="153.5" width="374" height="100"/>
+                            <rect key="frame" x="0.0" y="163" width="374" height="100"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="8Wb-NE-zi3"/>
@@ -170,7 +170,7 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQ1-MQ-m8G">
-                            <rect key="frame" x="0.0" y="80" width="18.5" height="32"/>
+                            <rect key="frame" x="0.0" y="89.5" width="18.5" height="32"/>
                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="30"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -180,10 +180,10 @@
                     <constraints>
                         <constraint firstItem="DLj-3p-98e" firstAttribute="leading" secondItem="bP2-D2-1zp" secondAttribute="leading" constant="11" id="0u4-EV-0Nz"/>
                         <constraint firstItem="ynX-KD-boe" firstAttribute="leading" secondItem="bP2-D2-1zp" secondAttribute="leading" id="1hN-DT-vIT"/>
-                        <constraint firstItem="eQ1-MQ-m8G" firstAttribute="top" secondItem="LPe-aC-jgJ" secondAttribute="bottom" constant="3" id="2WL-B0-A8o"/>
+                        <constraint firstItem="eQ1-MQ-m8G" firstAttribute="top" secondItem="LPe-aC-jgJ" secondAttribute="bottom" constant="10" id="2WL-B0-A8o"/>
                         <constraint firstAttribute="trailing" secondItem="gzH-cD-fTr" secondAttribute="trailing" id="8iQ-Qp-tzw"/>
                         <constraint firstItem="LPe-aC-jgJ" firstAttribute="leading" secondItem="bP2-D2-1zp" secondAttribute="leading" id="DIU-0J-fs0"/>
-                        <constraint firstItem="xCS-Sr-96t" firstAttribute="top" secondItem="LPe-aC-jgJ" secondAttribute="bottom" constant="3" id="F4o-f9-TPX"/>
+                        <constraint firstItem="xCS-Sr-96t" firstAttribute="top" secondItem="LPe-aC-jgJ" secondAttribute="bottom" constant="10" id="F4o-f9-TPX"/>
                         <constraint firstAttribute="trailing" secondItem="FQD-gP-2RD" secondAttribute="trailing" id="F7e-mH-Ata"/>
                         <constraint firstAttribute="bottom" secondItem="gzH-cD-fTr" secondAttribute="bottom" constant="20" id="Gv6-ha-VCr"/>
                         <constraint firstAttribute="trailing" secondItem="ynX-KD-boe" secondAttribute="trailing" id="IYQ-FX-dCb"/>

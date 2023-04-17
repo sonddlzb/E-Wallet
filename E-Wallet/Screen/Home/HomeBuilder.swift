@@ -35,11 +35,15 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let profileBuilder = DIContainer.resolve(ProfileBuildable.self, agrument: component)
         let transferBuilder = DIContainer.resolve(TransferBuildable.self, agrument: component)
         let accountBuilder = DIContainer.resolve(AccountBuildable.self, agrument: component)
+        let topUpBuilder = DIContainer.resolve(TopUpBuildable.self, agrument: component)
+        let addCardBuilder = DIContainer.resolve(AddCardBuildable.self, agrument: component)
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
                           dashboardBuilder: dashboardBuilder,
                           profileBuilder: profileBuilder,
                           transferBuilder: transferBuilder,
-                          accountBuilder: accountBuilder)
+                          accountBuilder: accountBuilder,
+                          topUpBuilder: topUpBuilder,
+                          addCardBuilder: addCardBuilder)
     }
 }
