@@ -11,6 +11,8 @@ import RxSwift
 protocol AccountRouting: ViewableRouting {
     func routeToAddCard()
     func dismissAddCard()
+    func routeToCardDetails(_ card: Card)
+    func dismissCardDetails()
 }
 
 protocol AccountPresentable: Presentable {
@@ -54,5 +56,9 @@ final class AccountInteractor: PresentableInteractor<AccountPresentable>, Accoun
 extension AccountInteractor: AccountPresentableListener {
     func routeToAddCard() {
         self.router?.routeToAddCard()
+    }
+
+    func didSelectCard(_ card: Card) {
+        self.router?.routeToCardDetails(card)
     }
 }

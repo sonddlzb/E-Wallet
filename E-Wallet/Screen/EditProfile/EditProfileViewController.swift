@@ -37,6 +37,7 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
     @IBOutlet private weak var genderControl: UIControl!
     @IBOutlet private weak var dateOfBirthControl: UIControl!
     @IBOutlet private weak var editButton: TapableView!
+    @IBOutlet private weak var changeAvtButton: TapableView!
 
     // MARK: - Variables
     private var imagePicker = UIImagePickerController()
@@ -53,6 +54,7 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
             self.genderControl.isUserInteractionEnabled = isEditable
             self.arrowDownImageView.isHidden = !isEditable
             self.calendarImageView.isHidden = !isEditable
+            self.changeAvtButton.isUserInteractionEnabled = isEditable
         }
     }
 
@@ -97,21 +99,6 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
         self.genderControl.addTarget(self, action: #selector(didTapGenderButton(_:)), for: .touchUpInside)
 
         self.isEditable = false
-    }
-
-    @IBAction func didTapToChangeAvatar(_ sender: TapableView) {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-                self.openCamera()
-            }))
-
-            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-                self.openGallary()
-            }))
-
-            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-        self.present(alert, animated: true, completion: nil)
     }
 
     func openCamera() {
@@ -216,6 +203,21 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
         self.currentDate = datePicker.date
         self.dateOfBirthLabel.text = self.currentDate.formatDate()
         self.dateOfBirthLabel.textColor = .black
+    }
+
+    @IBAction func didTapToChangeAvatar(_ sender: TapableView) {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+                self.openCamera()
+            }))
+
+            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+                self.openGallary()
+            }))
+
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
     }
 
     @IBAction func didTapEditButton(_ sender: Any) {

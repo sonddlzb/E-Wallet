@@ -23,6 +23,7 @@
    pod 'FirebaseCore'
    pod 'FirebaseAuth'
    pod 'FirebaseDatabase'
+   pod 'FirebaseRemoteConfig'
    pod 'FirebaseFirestore'
    pod 'FirebaseStorage'
    pod 'TLLogging'
