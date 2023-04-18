@@ -68,7 +68,7 @@ class AccountDatabase {
                                                                   amount: amount,
                                                                   currency: "$",
                                                                   status: PaymentStatus.completed.rawValue,
-                                                                  time: Date().formatDate())
+                                                                  time: Date().formatDateTime())
                         TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error in
                             if let error = error {
                                 print("Create transaction failed with error \(error.localizedDescription)")
@@ -106,7 +106,7 @@ class AccountDatabase {
                                                                   amount: amount,
                                                                   currency: "$",
                                                                   status: PaymentStatus.completed.rawValue,
-                                                                  time: Date().formatDate())
+                                                                  time: Date().formatDateTime())
                         TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error in
                             if let error = error {
                                 print("Create transaction failed with error \(error.localizedDescription)")
