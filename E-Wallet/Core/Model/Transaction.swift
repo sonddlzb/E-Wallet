@@ -37,6 +37,6 @@ class Transaction {
         self.amount = entity.amount
         self.currency = entity.currency
         self.status = PaymentStatus(rawValue: entity.status) ?? .completed
-        self.time = entity.time.convertToDate() ?? Date()
+        self.time = entity.time.convertToDateTime() ?? Date()
     }
 }

@@ -283,6 +283,12 @@ public extension Date {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: self)
     }
+
+    func formatDateTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.string(from: self)
+    }
 }
 
 extension Date {

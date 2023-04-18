@@ -70,6 +70,12 @@ public extension String {
         return dateFormatter.date(from: self)
     }
 
+    func convertToDateTime() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: self)
+    }
+
     func matches(regex: String) -> Bool {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
