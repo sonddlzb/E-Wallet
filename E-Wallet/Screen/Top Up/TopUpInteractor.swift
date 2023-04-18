@@ -63,13 +63,6 @@ extension TopUpInteractor: TopUpPresentableListener {
     func routeToAddCard() {
         self.listener?.topUpWantToRouteToAddCard()
     }
-}
-
-// MARK: - TopUpInteractable
-extension TopUpInteractor: TopUpInteractable {
-    func reloadData() {
-        self.fetchAccounts()
-    }
 
     func didTapTopUpButton(card: Card, amount: Double) {
         SVProgressHUD.show()
@@ -88,5 +81,12 @@ extension TopUpInteractor: TopUpInteractable {
                 }
             }
         })
+    }
+}
+
+// MARK: - TopUpInteractable
+extension TopUpInteractor: TopUpInteractable {
+    func reloadData() {
+        self.fetchAccounts()
     }
 }

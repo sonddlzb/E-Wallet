@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -40,6 +40,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var addCardRouter: AddCardRouting?
     private var addCardBuilder: AddCardBuildable
 
+    private var withdrawRouter: WithdrawRouting?
+    private var withdrawBuilder: WithdrawBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -47,13 +50,15 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          transferBuilder: TransferBuildable,
          accountBuilder: AccountBuildable,
          topUpBuilder: TopUpBuildable,
-         addCardBuilder: AddCardBuildable) {
+         addCardBuilder: AddCardBuildable,
+         withdrawBuilder: WithdrawBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
         self.accountBuilder = accountBuilder
         self.topUpBuilder = topUpBuilder
         self.addCardBuilder = addCardBuilder
+        self.withdrawBuilder = withdrawBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -112,6 +117,7 @@ extension HomeRouter: HomeRouting {
         self.homeViewModel = viewModel
         self.dashboardRouter?.bind(homeViewModel: viewModel)
         self.profileRouter?.bind(homeViewModel: viewModel)
+        self.withdrawRouter?.bind(homeViewModel: viewModel)
     }
 
     func routeToTransfer() {
@@ -165,6 +171,29 @@ extension HomeRouter: HomeRouting {
         self.topUpRouter = nil
     }
 
+    func routeToWithdraw() {
+        guard self.withdrawRouter == nil else {
+            return
+        }
+
+        let router = self.withdrawBuilder.build(withListener: self.interactor)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
+        self.attachChild(router)
+        self.withdrawRouter = router
+        if let viewModel = self.homeViewModel {
+            self.withdrawRouter?.bind(homeViewModel: viewModel)
+        }
+    }
+
+    func dismissWithdraw() {
+        guard let router = self.withdrawRouter else {
+            return
+        }
+
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.detachChild(router)
+        self.withdrawRouter = nil
+    }
 
     func routeToAddCard() {
         guard self.addCardRouter == nil else {

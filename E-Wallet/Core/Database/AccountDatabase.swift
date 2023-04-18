@@ -10,6 +10,10 @@ import FirebaseDatabase
 import FirebaseAuth
 import UIKit
 
+enum AccountError: Error {
+    case insufficientBalance(String)
+}
+
 class AccountDatabase {
     private var accountRef = Database.database().reference().child(DatabaseConst.accountPath)
     static var shared = AccountDatabase()
@@ -58,6 +62,30 @@ class AccountDatabase {
             } else {
                 if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
                     self.accountRef.child(userId).updateChildValues(["balance": balance + amount]) { error, _ in
+                        print("update")
+                        completion(error)
+                    }
+                }
+            }
+        }
+    }
+
+    func withdraw(amount: Double, completion: @escaping (_ error: Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.accountRef.child(userId).getData { error, snapshot in
+            if let error = error {
+                completion(error)
+            } else {
+                if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
+                    guard balance >= amount else {
+                        completion(AccountError.insufficientBalance("Your balance is not enough"))
+                        return
+                    }
+
+                    self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
                         print("update")
                         completion(error)
                     }
