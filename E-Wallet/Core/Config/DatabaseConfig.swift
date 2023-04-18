@@ -6,8 +6,9 @@
 //
 
 public struct DatabaseConst {
-    static let usersCollectionName = "users"
+    static let userPath = "users"
     static let avatarPath = "avatar"
     static let accountPath = "accounts"
     static let cardPath = "cards"
+    static let transactionPath = "transactions"
 }

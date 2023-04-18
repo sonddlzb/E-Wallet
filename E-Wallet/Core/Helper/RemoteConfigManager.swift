@@ -17,12 +17,7 @@ class RemoteConfigManager {
     private var remoteConfig = RemoteConfig.remoteConfig()
 
     func configRemoteConfigDefaults() {
-        let defaultValues = ["max_top_up": 1000,
-                             "max_withdraw": 1000,
-                             "min_top_up": 0.5,
-                             "min_withdraw": 0.5,
-                             "top_up_rate": 0.0,
-                             "withdraw_rate": 0.0]
+        let defaultValues = FirebaseConst.defaultFValues
         remoteConfig.setDefaults(defaultValues as [String: NSObject])
     }
 
