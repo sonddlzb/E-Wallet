@@ -18,11 +18,6 @@ import Foundation
 import Stripe
 import FirebaseAuth
 
-private struct Const {
-    static let secretKey = "sk_test_51MpNF2KkURD5t8wjINNC64H1D8KbEzTzKob7fgizoZeaGbGX3elUrwTWvsZKctZoIU7NWbO9QlWjYUdgNzuGjULC00ErVWX1Ws"
-    static let withdrawURL = "https://api.stripe.com/v1/payouts"
-}
-
 class STPPaymentHelper {
     static let shared = STPPaymentHelper()
     unowned var viewController: UIViewController!

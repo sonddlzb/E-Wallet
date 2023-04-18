@@ -45,7 +45,7 @@ class UserDatabase {
 
             AccountDatabase.shared.createNewAccount { isSuccess in
                 if isSuccess {
-                    self.database.collection(DatabaseConst.usersCollectionName).document(userId).setData(userData)
+                    self.database.collection(DatabaseConst.userPath).document(userId).setData(userData)
                     completion(nil)
                 }
             }
@@ -74,7 +74,7 @@ class UserDatabase {
                             return
                         }
 
-                        self.database.collection(DatabaseConst.usersCollectionName).document(userId)
+                        self.database.collection(DatabaseConst.userPath).document(userId)
                         .updateData(["avtURL": url.absoluteString]) { err in
                                 if let err = err {
                                     print("Error updating document: \(err)")
@@ -93,7 +93,7 @@ class UserDatabase {
             return
         }
 
-        self.database.collection(DatabaseConst.usersCollectionName).document(userId).getDocument { document, err in
+        self.database.collection(DatabaseConst.userPath).document(userId).getDocument { document, err in
             if let err = err {
                 print("Error get documents: \(err)")
                 completion(false)
@@ -119,7 +119,7 @@ class UserDatabase {
             return
         }
 
-        self.database.collection(DatabaseConst.usersCollectionName).document(userId).getDocument { document, err in
+        self.database.collection(DatabaseConst.userPath).document(userId).getDocument { document, err in
             if let err = err {
                 print("Error get documents: \(err)")
                 completion(nil)
@@ -153,7 +153,7 @@ class UserDatabase {
             "nativePlace": profile.nativePlace
         ]
 
-        self.database.collection(DatabaseConst.usersCollectionName).document(userId)
+        self.database.collection(DatabaseConst.userPath).document(userId)
             .updateData(profileData) {err in
                 if let err = err {
                     completion(false)
@@ -166,7 +166,7 @@ class UserDatabase {
     }
 
     func getUsernameBy(phoneNumber: String, completion: @escaping (_ name: String) -> Void) {
-        self.database.collection(DatabaseConst.usersCollectionName).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
+        self.database.collection(DatabaseConst.userPath).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
             guard error == nil, let document = querySnapshot?.documents.first else {
                 completion("")
                 print("Error getting phone number \(error?.localizedDescription)")

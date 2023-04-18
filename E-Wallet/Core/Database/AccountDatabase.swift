@@ -62,8 +62,22 @@ class AccountDatabase {
             } else {
                 if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
                     self.accountRef.child(userId).updateChildValues(["balance": balance + amount]) { error, _ in
-                        print("update")
-                        completion(error)
+                        let transactionEntity = TransactionEntity(type: PaymentType.topUp.rawValue,
+                                                                  senderId: userId,
+                                                                  receiverId: userId,
+                                                                  amount: amount,
+                                                                  currency: "$",
+                                                                  status: PaymentStatus.completed.rawValue,
+                                                                  time: Date().formatDate())
+                        TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error in
+                            if let error = error {
+                                print("Create transaction failed with error \(error.localizedDescription)")
+                            } else {
+                                print("Create transaction successfully")
+                            }
+                        }
+
+                        completion(nil)
                     }
                 }
             }
@@ -86,8 +100,22 @@ class AccountDatabase {
                     }
 
                     self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
-                        print("update")
-                        completion(error)
+                        let transactionEntity = TransactionEntity(type: PaymentType.withdraw.rawValue,
+                                                                  senderId: userId,
+                                                                  receiverId: userId,
+                                                                  amount: amount,
+                                                                  currency: "$",
+                                                                  status: PaymentStatus.completed.rawValue,
+                                                                  time: Date().formatDate())
+                        TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error in
+                            if let error = error {
+                                print("Create transaction failed with error \(error.localizedDescription)")
+                            } else {
+                                print("Create transaction successfully")
+                            }
+                        }
+
+                        completion(nil)
                     }
                 }
             }
