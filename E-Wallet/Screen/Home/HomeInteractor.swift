@@ -20,6 +20,8 @@ protocol HomeRouting: ViewableRouting {
     func routeToAddCard()
     func dismissAddCard()
     func reloadCardData()
+    func routeToWithdraw()
+    func dismissWithdraw()
 }
 
 protocol HomePresentable: Presentable {

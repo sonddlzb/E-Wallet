@@ -15,4 +15,8 @@ extension HomeInteractor: DashboardListener {
     func dashboadWantToRouteToTopUp() {
         self.router?.routeToTopUp()
     }
+
+    func dashboadWantToRouteToWithdraw() {
+        self.router?.routeToWithdraw()
+    }
 }

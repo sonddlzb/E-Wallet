@@ -118,4 +118,8 @@ public extension String {
         let formattedText = formatter.string(from: NSNumber(value: Double(self) ?? 0.0)) ?? ""
         return formattedText
     }
+
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
+    }
 }

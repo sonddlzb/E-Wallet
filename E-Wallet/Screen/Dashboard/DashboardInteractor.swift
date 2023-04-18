@@ -21,6 +21,7 @@ protocol DashboardPresentable: Presentable {
 protocol DashboardListener: AnyObject {
     func dashboadWantToRouteToTransfer()
     func dashboadWantToRouteToTopUp()
+    func dashboadWantToRouteToWithdraw()
 }
 
 final class DashboardInteractor: PresentableInteractor<DashboardPresentable> {
@@ -59,5 +60,9 @@ extension DashboardInteractor: DashboardPresentableListener {
 
     func routeToTopUp() {
         self.listener?.dashboadWantToRouteToTopUp()
+    }
+
+    func routeToWithdraw() {
+        self.listener?.dashboadWantToRouteToWithdraw()
     }
 }

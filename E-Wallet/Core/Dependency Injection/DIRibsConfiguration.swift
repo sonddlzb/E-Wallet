@@ -72,5 +72,9 @@ extension DIConnector {
         DIContainer.register(TopUpBuildable.self) { _, args in
             return TopUpBuilder(dependency: args.get())
         }
+
+        DIContainer.register(WithdrawBuildable.self) { _, args in
+            return WithdrawBuilder(dependency: args.get())
+        }
     }
 }

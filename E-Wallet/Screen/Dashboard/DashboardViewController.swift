@@ -12,6 +12,7 @@ import UIKit
 protocol DashboardPresentableListener: AnyObject {
     func routeToTransfer()
     func routeToTopUp()
+    func routeToWithdraw()
 }
 
 final class DashboardViewController: UIViewController, DashboardViewControllable {
@@ -95,7 +96,7 @@ extension DashboardViewController: DashboardBarViewDelegate {
         case .topUp:
             self.listener?.routeToTopUp()
         case .withdraw:
-            print("Did select withdraw")
+            self.listener?.routeToWithdraw()
         case .qrScan:
             print("Did select qrscan")
         }
