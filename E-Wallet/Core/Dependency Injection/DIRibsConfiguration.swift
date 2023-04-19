@@ -76,5 +76,13 @@ extension DIConnector {
         DIContainer.register(WithdrawBuildable.self) { _, args in
             return WithdrawBuilder(dependency: args.get())
         }
+
+        DIContainer.register(TransactionConfirmBuildable.self) { _, args in
+            return TransactionConfirmBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(SelectCardBuildable.self) { _, args in
+            return SelectCardBuilder(dependency: args.get())
+        }
     }
 }

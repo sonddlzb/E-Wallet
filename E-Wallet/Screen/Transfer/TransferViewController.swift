@@ -15,16 +15,19 @@ protocol TransferPresentableListener: AnyObject {
     func transferWantToDismiss()
     func openContacts()
     func getNameBy(phoneNumber: String, completion: @escaping (_ name: String) -> Void)
+    func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double)
 }
 
 final class TransferViewController: UIViewController, TransferViewControllable {
 
     // MARK: - Outlets
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var moneyTextField: UITextField!
-    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var moneyTextField: UITextField!
+    @IBOutlet private weak var messageTextView: UITextView!
     @IBOutlet private weak var phoneNumberTextField: SolarTextField!
-    @IBOutlet weak var phoneNumberHeighConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var phoneNumberHeighConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var transferButton: TapableView!
+    @IBOutlet private weak var transferLabel: UILabel!
 
     @IBOutlet weak var transferButtonBottomConstraint: NSLayoutConstraint!
     // MARK: - Variables
@@ -71,7 +74,14 @@ final class TransferViewController: UIViewController, TransferViewControllable {
     }
 
     @IBAction func transferButtonDidTap(_ sender: Any) {
+        guard let name = self.nameLabel.text, !name.isEmpty, self.phoneNumberTextField.text.isPhoneNumberValid() else {
+            FailedDialog.show(title: "Oh no!", message: "You must enter a valid user")
+            return
+        }
 
+        if let amount = self.moneyTextField.text?.convertMoneyToNumber() {
+            self.listener?.routeToTransactionConfirm(phoneNumber: phoneNumberTextField.text, name: name, amount: amount)
+        }
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -181,14 +191,23 @@ extension TransferViewController: UITextFieldDelegate {
         let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
 
         // Remove all non-digit characters from the updated text.
-        let filteredText = updatedText.filter("0123456789".contains)
+        let filteredText = updatedText.filter("0123456789.".contains)
         if filteredText.isEmpty {
             textField.textColor = .lightGray
+            self.transferLabel.backgroundColor = .lightGray
+            self.transferButton.isUserInteractionEnabled = false
         } else {
             textField.textColor = .black
+            self.transferLabel.backgroundColor = .crayola
+            self.transferButton.isUserInteractionEnabled = true
         }
 
-        textField.text = filteredText.formatMoney()
+        if string != "." && !string.isEmpty {
+            textField.text = filteredText.formatMoney()
+        } else {
+            textField.text = filteredText
+        }
+
         return false
     }
 }

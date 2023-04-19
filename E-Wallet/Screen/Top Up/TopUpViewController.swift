@@ -73,7 +73,7 @@ extension TopUpViewController: UITextFieldDelegate {
         let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
 
         // Remove all non-digit characters from the updated text.
-        let filteredText = updatedText.filter("0123456789".contains)
+        let filteredText = updatedText.filter("0123456789.".contains)
         if filteredText.isEmpty {
             textField.textColor = .lightGray
             self.topUpButton.backgroundColor = .lightGray
@@ -84,7 +84,12 @@ extension TopUpViewController: UITextFieldDelegate {
             self.topUpButton.isUserInteractionEnabled = true
         }
 
-        textField.text = filteredText.formatMoney()
+        if string != "." {
+            textField.text = filteredText.formatMoney()
+        } else {
+            textField.text = filteredText
+        }
+
         return false
     }
 }

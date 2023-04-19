@@ -27,4 +27,15 @@ public extension UIViewController {
             navigationController?.popToViewController(targetVC, animated: true)
         }
     }
+
+    func presentCustomViewController(_ viewController: UIViewController) {
+        let customPresentTransitioningDelegate = CustomPresentTransitioningDelegate()
+        viewController.modalPresentationStyle = .custom
+        viewController.transitioningDelegate = customPresentTransitioningDelegate
+        present(viewController, animated: true, completion: nil)
+    }
+
+    func dismissCustomViewController() {
+        dismiss(animated: true, completion: nil)
+    }
 }

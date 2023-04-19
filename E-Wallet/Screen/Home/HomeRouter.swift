@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -43,6 +43,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var withdrawRouter: WithdrawRouting?
     private var withdrawBuilder: WithdrawBuildable
 
+    private var transactionConfirmRouter: TransactionConfirmRouting?
+    private var transactionConfirmBuilder: TransactionConfirmBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -51,7 +54,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          accountBuilder: AccountBuildable,
          topUpBuilder: TopUpBuildable,
          addCardBuilder: AddCardBuildable,
-         withdrawBuilder: WithdrawBuildable) {
+         withdrawBuilder: WithdrawBuildable,
+         transactionConfirmBuilder: TransactionConfirmBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
@@ -59,6 +63,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.topUpBuilder = topUpBuilder
         self.addCardBuilder = addCardBuilder
         self.withdrawBuilder = withdrawBuilder
+        self.transactionConfirmBuilder = transactionConfirmBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -219,5 +224,29 @@ extension HomeRouter: HomeRouting {
     func reloadCardData() {
         self.accountRouter?.reloadData()
         self.topUpRouter?.reloadData()
+        self.transactionConfirmRouter?.reloadData()
+    }
+
+    func routeToTransactionConfirm(confirmData: [String: Any], paymentType: PaymentType) {
+        guard self.transactionConfirmRouter == nil else {
+            return
+        }
+
+        let router = self.transactionConfirmBuilder.build(withListener: interactor,
+                                                          paymentType: paymentType,
+                                                          confirmData: confirmData)
+        self.attachChild(router)
+        self.viewController.push(viewControllable: router.viewControllable, animated: true)
+        self.transactionConfirmRouter = router
+    }
+
+    func dismissTransactionConfirm() {
+        guard let router = self.transactionConfirmRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.transactionConfirmRouter = nil
     }
 }
