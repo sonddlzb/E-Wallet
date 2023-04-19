@@ -18,4 +18,8 @@ struct CardItemViewModel {
     func cardNumber() -> String {
         return ".... .... .... " + self.card.cardNumber.suffix(4)
     }
+
+    func name() -> String {
+        return self.card.type.rawValue.capitalized
+    }
 }

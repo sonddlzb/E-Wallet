@@ -22,6 +22,8 @@ protocol HomeRouting: ViewableRouting {
     func reloadCardData()
     func routeToWithdraw()
     func dismissWithdraw()
+    func routeToTransactionConfirm(confirmData: [String: Any], paymentType: PaymentType)
+    func dismissTransactionConfirm()
 }
 
 protocol HomePresentable: Presentable {
