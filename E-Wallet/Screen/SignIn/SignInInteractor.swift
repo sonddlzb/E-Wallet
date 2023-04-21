@@ -14,7 +14,7 @@ protocol SignInRouting: ViewableRouting {
     func dismissVerifyCode()
     func routeToEnterPassword(isNewUser: Bool, isConfirmPassword: Bool, password: String)
     func dismissEnterPassword()
-    func bindSignInResultToEnterPassword(isSuccess: Bool)
+    func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
     func routeToFillProfile()
     func dismissFillProfile()
     func bindSignUpResultToFillProfile(isSuccess: Bool)
@@ -34,6 +34,7 @@ final class SignInInteractor: PresentableInteractor<SignInPresentable>, SignInIn
     weak var listener: SignInListener?
     var phoneNumber = ""
     var password = ""
+    var userDefaults = UserDefaults.standard
 
     override init(presenter: SignInPresentable) {
         super.init(presenter: presenter)

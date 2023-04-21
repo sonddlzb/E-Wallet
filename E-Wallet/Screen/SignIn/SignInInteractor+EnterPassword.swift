@@ -15,9 +15,13 @@ extension SignInInteractor: EnterPasswordListener {
 
     func enterPasswordWantToConfirmPassword(password: String) {
         self.router?.dismissEnterPassword()
-        self.router?.routeToEnterPassword(isNewUser: true,
-                                          isConfirmPassword: true,
-                                          password: password)
+        SVProgressHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            SVProgressHUD.dismiss()
+            self.router?.routeToEnterPassword(isNewUser: true,
+                                              isConfirmPassword: true,
+                                              password: password)
+        })
     }
 
     func enterPasswordDidConfirmPasswordSuccessfully(password: String) {
@@ -31,13 +35,17 @@ extension SignInInteractor: EnterPasswordListener {
         SVProgressHUD.show()
         UserDatabase.shared.checkPassword(password: password) { isSuccess in
             SVProgressHUD.dismiss()
+            if isSuccess {
+                self.userDefaults.saveValidPasswordStatus()
+            }
+
             DispatchQueue.main.async {
-                self.router?.bindSignInResultToEnterPassword(isSuccess: isSuccess)
+                self.router?.bindAuthenticationResultToEnterPassword(isSuccess: isSuccess)
             }
         }
     }
 
-    func enterPasswordWantToRouteToHome() {
+    func enterPasswordDidAuthenticateOldUserSuccess() {
         self.listener?.routeToHome()
     }
 }

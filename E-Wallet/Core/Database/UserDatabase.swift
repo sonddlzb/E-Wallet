@@ -183,4 +183,33 @@ class UserDatabase {
             }
         }
     }
+
+    func getUserBy(phoneNumber: String, completion: @escaping (_ userEntity: UserEntity) -> Void) {
+        self.database.collection(DatabaseConst.userPath).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
+            guard error == nil, let document = querySnapshot?.documents.first else {
+                print("Error getting user \(error?.localizedDescription)")
+                return
+            }
+
+            guard let userData = try?  JSONSerialization.data(withJSONObject: document.data(), options: []) else {
+                print("False to parsed data")
+                return
+            }
+
+            if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
+                completion(userEntity)
+            }
+        }
+    }
+
+    func getUserIdBy(phoneNumber: String, completion: @escaping (_ userId: String) -> Void) {
+        self.database.collection(DatabaseConst.userPath).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
+            guard error == nil, let document = querySnapshot?.documents.first else {
+                print("Error getting user \(error?.localizedDescription)")
+                return
+            }
+
+            completion(document.documentID)
+        }
+    }
 }

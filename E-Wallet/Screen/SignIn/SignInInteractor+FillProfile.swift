@@ -31,6 +31,7 @@ extension SignInInteractor: FillProfileListener {
             if error != nil {
                 self.router?.bindSignUpResultToFillProfile(isSuccess: false)
             } else {
+                self.userDefaults.saveValidPasswordStatus()
                 self.router?.bindSignUpResultToFillProfile(isSuccess: true)
             }
         }

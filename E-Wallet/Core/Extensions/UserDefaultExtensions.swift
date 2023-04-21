@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 private struct UserDefaultsConst {
     static let launchCountKey = "launchCount"
+    static let validatePassword = "validatePassword"
 }
 
 public extension UserDefaults {
@@ -20,5 +22,19 @@ public extension UserDefaults {
 
     func launchCount() -> Int {
         return self.integer(forKey: UserDefaultsConst.launchCountKey)
+    }
+
+    func isValidatePassword() -> Bool {
+        if let userId = Auth.auth().currentUser?.uid {
+            return self.bool(forKey: UserDefaultsConst.validatePassword + userId)
+        } else {
+            return false
+        }
+    }
+
+    func saveValidPasswordStatus() {
+        if let userId = Auth.auth().currentUser?.uid {
+            self.setValue(true, forKey: UserDefaultsConst.validatePassword + userId)
+        }
     }
 }

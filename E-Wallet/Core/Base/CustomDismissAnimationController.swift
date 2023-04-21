@@ -18,7 +18,7 @@ class CustomDismissAnimationController: NSObject, UIViewControllerAnimatedTransi
         let containerView = transitionContext.containerView
 
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            fromViewController.view.frame = CGRect(x: 0, y: containerView.frame.height, width: containerView.frame.width, height: containerView.frame.height/2)
+            fromViewController.view.frame = CGRect(x: 0, y: containerView.frame.height, width: containerView.frame.width, height: containerView.frame.height/3*2)
             containerView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         }, completion: { finished in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
