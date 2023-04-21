@@ -62,6 +62,11 @@ class AccountDatabase {
             } else {
                 if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
                     self.accountRef.child(userId).updateChildValues(["balance": balance + amount]) { error, _ in
+                        guard error == nil else {
+                            completion(error)
+                            return
+                        }
+
                         let transactionEntity = TransactionEntity(type: PaymentType.topUp.rawValue,
                                                                   senderId: userId,
                                                                   receiverId: userId,
@@ -100,9 +105,85 @@ class AccountDatabase {
                     }
 
                     self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
+                        guard error == nil else {
+                            completion(error)
+                            return
+                        }
+
                         let transactionEntity = TransactionEntity(type: PaymentType.withdraw.rawValue,
                                                                   senderId: userId,
                                                                   receiverId: userId,
+                                                                  amount: amount,
+                                                                  currency: "$",
+                                                                  status: PaymentStatus.completed.rawValue,
+                                                                  time: Date().formatDateTime())
+                        TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error in
+                            if let error = error {
+                                print("Create transaction failed with error \(error.localizedDescription)")
+                            } else {
+                                print("Create transaction successfully")
+                            }
+                        }
+
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
+
+    func getAccountInforBy(userId: String, completion: @escaping (_ accountEntity: AccountEntity) -> Void) {
+        self.accountRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dict = snapshot.value as? [String: AnyObject] else {
+                return
+            }
+
+            let entity = AccountEntity(currency: dict["currency"] as? String ?? "$",
+                                       balance: dict["balance"] as? Double ?? 0.0,
+                                       isActive: dict["isActive"] as? Bool ?? false)
+            completion(entity)
+        }) { (error) in
+            print(error.localizedDescription)
+        }    }
+
+
+    func transfer(amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        var receiverID = ""
+        self.accountRef.child(userId).getData { error, snapshot in
+            if let error = error {
+                completion(error)
+            } else {
+                if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
+                    guard balance >= amount else {
+                        completion(AccountError.insufficientBalance("Your balance is not enough"))
+                        return
+                    }
+
+                    self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
+                        guard error == nil else {
+                            completion(error)
+                            return
+                        }
+
+                        UserDatabase.shared.getUserIdBy(phoneNumber: receiverPhoneNumber) { receiverId in
+                            receiverID = receiverId
+                            AccountDatabase.shared.getAccountInforBy(userId: receiverId) { accountEntity in
+                                self.accountRef.child(receiverId).updateChildValues(["balance": accountEntity.balance + amount]) { error, _ in
+                                    guard error == nil else {
+                                        completion(error)
+                                        return
+                                    }
+                                }
+                            }
+                        }
+
+                        let transactionEntity = TransactionEntity(type: PaymentType.withdraw.rawValue,
+                                                                  senderId: userId,
+                                                                  receiverId: receiverID,
                                                                   amount: amount,
                                                                   currency: "$",
                                                                   status: PaymentStatus.completed.rawValue,

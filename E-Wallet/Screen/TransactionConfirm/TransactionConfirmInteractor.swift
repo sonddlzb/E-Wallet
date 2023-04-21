@@ -12,6 +12,9 @@ protocol TransactionConfirmRouting: ViewableRouting {
     func showSelectCard(selectedCard: Card?)
     func dismissSelectCard()
     func reloadData()
+    func presentPassword()
+    func dismissPassword()
+    func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
 }
 
 protocol TransactionConfirmPresentable: Presentable {
@@ -19,6 +22,7 @@ protocol TransactionConfirmPresentable: Presentable {
 
     func bind(cardViewModel: CardViewModel, balance: Double)
     func bindCardSelectedResult(at indexPath: IndexPath)
+    func bind(viewModel: TransactionConfirmViewModel)
 }
 
 protocol TransactionConfirmListener: AnyObject {
@@ -30,10 +34,12 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
 
     weak var router: TransactionConfirmRouting?
     weak var listener: TransactionConfirmListener?
-    private var cardViewModel = CardViewModel.makeEmpty()
+    var cardViewModel = CardViewModel.makeEmpty()
     private var balance = 0.0
+    var viewModel = TransactionConfirmViewModel.makeEmpty()
 
-    init(presenter: TransactionConfirmPresentable, paymentType: PaymentType, confirmData: [String: Any]) {
+    init(presenter: TransactionConfirmPresentable, confirmData: [String: String]) {
+        self.viewModel = TransactionConfirmViewModel(confirmData: confirmData)
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -41,6 +47,7 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
     override func didBecomeActive() {
         super.didBecomeActive()
         self.fetchAccounts()
+        self.presenter.bind(viewModel: self.viewModel)
     }
 
     override func willResignActive() {
@@ -76,6 +83,10 @@ extension TransactionConfirmInteractor: TransactionConfirmPresentableListener {
 
     func showSelectCard(selectedCard: Card?) {
         self.router?.showSelectCard(selectedCard: selectedCard)
+    }
+
+    func showPasswordAuthentication() {
+        self.router?.presentPassword()
     }
 }
 

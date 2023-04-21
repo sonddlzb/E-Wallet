@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 extension SignInInteractor: VerifyCodeListener {
     func verifyCodeWantToDismiss() {
@@ -14,6 +15,10 @@ extension SignInInteractor: VerifyCodeListener {
 
     func verifyCodeSuccessfully(isNewUser: Bool) {
         self.router?.dismissVerifyCode()
-        self.router?.routeToEnterPassword(isNewUser: isNewUser, isConfirmPassword: false, password: "")
+        SVProgressHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            SVProgressHUD.dismiss()
+            self.router?.routeToEnterPassword(isNewUser: isNewUser, isConfirmPassword: false, password: "")
+        })
     }
 }

@@ -28,7 +28,7 @@ class PaymentMethodView: UIView {
 
     // MARK: - Variables
     private var viewModel = CardViewModel.makeEmpty()
-    private var balance = 0.0
+    var balance = 0.0
     var selectedCard: Card? {
         didSet {
             self.collectionView.reloadData()

@@ -9,9 +9,9 @@ import UIKit
 
 private struct Const {
     static let cellSpacing = 20.0
-    static let collectionViewLeftPadding = 40.0
-    static let collectionViewRightPadding = 40.0
-    static let cellPadding = 12.0
+    static let collectionViewLeftPadding = 80.0
+    static let collectionViewRightPadding = 80.0
+    static let cellPadding = 10.0
 }
 
 protocol PasswordViewDelegate: AnyObject {
@@ -105,7 +105,7 @@ class PasswordView: UIView {
             self.passwordIconView.widthAnchor.constraint(equalToConstant: 135.0),
             self.passwordIconView.heightAnchor.constraint(equalToConstant: 16.0),
 
-            self.collectionView.topAnchor.constraint(equalTo: self.passwordIconView.bottomAnchor, constant: 60.0),
+            self.collectionView.topAnchor.constraint(equalTo: self.passwordIconView.bottomAnchor, constant: 20.0),
             self.collectionView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: Const.collectionViewLeftPadding),
             self.collectionView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -Const.collectionViewRightPadding),
             self.collectionView.heightAnchor.constraint(equalToConstant: 400.0)

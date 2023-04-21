@@ -17,9 +17,7 @@ final class TransactionConfirmComponent: Component<TransactionConfirmDependency>
 // MARK: - Builder
 
 protocol TransactionConfirmBuildable: Buildable {
-    func build(withListener listener: TransactionConfirmListener,
-               paymentType: PaymentType,
-               confirmData: [String: Any]) -> TransactionConfirmRouting
+    func build(withListener listener: TransactionConfirmListener, confirmData: [String: String]) -> TransactionConfirmRouting
 }
 
 final class TransactionConfirmBuilder: Builder<TransactionConfirmDependency>, TransactionConfirmBuildable {
@@ -28,16 +26,16 @@ final class TransactionConfirmBuilder: Builder<TransactionConfirmDependency>, Tr
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: TransactionConfirmListener,
-               paymentType: PaymentType,
-               confirmData: [String: Any]) -> TransactionConfirmRouting {
+    func build(withListener listener: TransactionConfirmListener, confirmData: [String: String]) -> TransactionConfirmRouting {
         let component = TransactionConfirmComponent(dependency: dependency)
         let viewController = TransactionConfirmViewController()
-        let interactor = TransactionConfirmInteractor(presenter: viewController, paymentType: paymentType, confirmData: confirmData)
+        let interactor = TransactionConfirmInteractor(presenter: viewController, confirmData: confirmData)
         interactor.listener = listener
         let selectCardBuilder = DIContainer.resolve(SelectCardBuildable.self, agrument: component)
+        let enterPasswordBuilder = DIContainer.resolve(EnterPasswordBuildable.self, agrument: component)
         return TransactionConfirmRouter(interactor: interactor,
                                         viewController: viewController,
-                                        selectCardBuilder: selectCardBuilder)
+                                        selectCardBuilder: selectCardBuilder,
+                                        enterPasswordBuilder: enterPasswordBuilder)
     }
 }

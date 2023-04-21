@@ -13,7 +13,8 @@ extension RootInteractor: SplashListener {
         if self.userDefaults.launchCount() == 1 {
             self.router?.routeToIntroduction()
         } else {
-            if Auth.auth().currentUser == nil {
+            if Auth.auth().currentUser == nil || !self.userDefaults.isValidatePassword() {
+                Auth.auth().currentUser?.delete()
                 self.router?.routeToSignIn()
             } else {
                 self.router?.routeToHome()

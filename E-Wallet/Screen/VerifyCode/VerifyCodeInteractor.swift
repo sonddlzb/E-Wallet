@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 import FirebaseAuth
+import SVProgressHUD
 
 protocol VerifyCodeRouting: ViewableRouting {
 }
@@ -51,8 +52,10 @@ extension VerifyCodeInteractor: VerifyCodePresentableListener {
     }
 
     func verifyPhoneNumber(verificationCode: String) {
+        SVProgressHUD.show()
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: verificationCode)
                 Auth.auth().signIn(with: credential) { authResult, error in
+                    SVProgressHUD.dismiss()
                     if let error = error {
                         print("Error when sign in with phone number: \(error)")
                         self.presenter.showFailedDialog(title: "Verify OTP failed", message: error.localizedDescription)

@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol TransactionConfirmInteractable: Interactable, SelectCardListener {
+protocol TransactionConfirmInteractable: Interactable, SelectCardListener, EnterPasswordListener {
     var router: TransactionConfirmRouting? { get set }
     var listener: TransactionConfirmListener? { get set }
 
@@ -21,10 +21,15 @@ final class TransactionConfirmRouter: ViewableRouter<TransactionConfirmInteracta
     private var selectCardRouter: SelectCardRouting?
     private var selectCardBuilder: SelectCardBuildable
 
+    private var enterPasswordRouter: EnterPasswordRouting?
+    private var enterPasswordBuilder: EnterPasswordBuildable
+
     init(interactor: TransactionConfirmInteractable,
          viewController: TransactionConfirmViewControllable,
-         selectCardBuilder: SelectCardBuildable) {
+         selectCardBuilder: SelectCardBuildable,
+         enterPasswordBuilder: EnterPasswordBuildable) {
         self.selectCardBuilder = selectCardBuilder
+        self.enterPasswordBuilder = enterPasswordBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -55,5 +60,30 @@ extension TransactionConfirmRouter: TransactionConfirmRouting {
 
     func reloadData() {
         self.interactor.reloadData()
+    }
+
+    func presentPassword() {
+        guard self.enterPasswordRouter == nil else {
+            return
+        }
+
+        let router = self.enterPasswordBuilder.build(withListener: interactor, isNewUser: false, isConfirmPassword: false, password: "")
+        self.attachChild(router)
+        self.viewController.uiviewController.presentCustomViewController(router.viewControllable.uiviewController)
+        self.enterPasswordRouter = router
+    }
+
+    func dismissPassword() {
+        guard let router = self.enterPasswordRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.uiviewController.dismissCustomViewController()
+        self.enterPasswordRouter = nil
+    }
+
+    func bindAuthenticationResultToEnterPassword(isSuccess: Bool) {
+        self.enterPasswordRouter?.bindSignInResult(isSuccess: isSuccess)
     }
 }

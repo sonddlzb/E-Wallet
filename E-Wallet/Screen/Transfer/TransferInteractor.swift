@@ -20,7 +20,7 @@ protocol TransferPresentable: Presentable {
 
 protocol TransferListener: AnyObject {
     func transferWantToDismiss()
-    func transferWantToRouteToTransactionConfirm(confirmData: [String: Any], phoneNumber: String)
+    func transferWantToRouteToTransactionConfirm(confirmData: [String: String])
 }
 
 final class TransferInteractor: PresentableInteractor<TransferPresentable>, TransferInteractable {
@@ -69,9 +69,10 @@ extension TransferInteractor: TransferPresentableListener {
     }
 
     func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double) {
-        let confirmData: [String: Any] = ["phoneNumber": phoneNumber,
-                           "name": name,
-                           "amount": amount]
-        self.listener?.transferWantToRouteToTransactionConfirm(confirmData: confirmData, phoneNumber: phoneNumber)
+        let confirmData: [String: String] = ["Payment Type": "Transfer",
+                                             "Phone number": phoneNumber,
+                                             "Name": name,
+                                             "Amount": "$" + String(amount)]
+        self.listener?.transferWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 }

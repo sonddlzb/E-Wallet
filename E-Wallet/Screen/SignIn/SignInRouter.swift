@@ -70,8 +70,7 @@ extension SignInRouter: SignInRouting {
                                                      isNewUser: isNewUser,
                                                      isConfirmPassword: isConfirmPassword,
                                                      password: password)
-        router.viewControllable.uiviewController.modalPresentationStyle = .overFullScreen
-        self.viewControllable.present(viewControllable: router.viewControllable, animated: true)
+        self.viewController.uiviewController.presentCustomViewController(router.viewControllable.uiviewController)
         self.attachChild(router)
         self.enterPasswordRouter = router
     }
@@ -86,7 +85,7 @@ extension SignInRouter: SignInRouting {
         self.enterPasswordRouter = nil
     }
 
-    func bindSignInResultToEnterPassword(isSuccess: Bool) {
+    func bindAuthenticationResultToEnterPassword(isSuccess: Bool) {
         self.enterPasswordRouter?.bindSignInResult(isSuccess: isSuccess)
     }
 

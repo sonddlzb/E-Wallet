@@ -157,12 +157,14 @@ extension TopUpViewController: TopUpPresentable {
     }
 
     func bindTopUpResult(isSuccess: Bool, message: String) {
-        if isSuccess {
-            let notificationDialogView = NotificationDialogView.loadView()
-            notificationDialogView.delegate = self
-            notificationDialogView.show(in: self.view, title: "Successfully", message: message)
-        } else {
-            FailedDialog.show(title: "Failed to top up", message: message)
+        DispatchQueue.main.async {
+            if isSuccess {
+                let notificationDialogView = NotificationDialogView.loadView()
+                notificationDialogView.delegate = self
+                notificationDialogView.show(in: self.view, title: "Successfully", message: message)
+            } else {
+                FailedDialog.show(title: "Failed to top up", message: message)
+            }
         }
     }
 }

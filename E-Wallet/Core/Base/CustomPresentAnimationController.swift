@@ -16,11 +16,11 @@ class CustomPresentAnimationController: NSObject, UIViewControllerAnimatedTransi
         guard let toViewController = transitionContext.viewController(forKey: .to) else { return }
         let containerView = transitionContext.containerView
 
-        toViewController.view.frame = CGRect(x: 0, y: containerView.frame.height, width: containerView.frame.width, height: containerView.frame.height/2)
+        toViewController.view.frame = CGRect(x: 0, y: containerView.frame.height, width: containerView.frame.width, height: containerView.frame.height/3*2)
         containerView.addSubview(toViewController.view)
 
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            toViewController.view.frame = CGRect(x: 0, y: containerView.frame.height/2, width: containerView.frame.width, height: containerView.frame.height/2)
+            toViewController.view.frame = CGRect(x: 0, y: containerView.frame.height/3, width: containerView.frame.width, height: containerView.frame.height/3*2)
             containerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         }, completion: { finished in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
