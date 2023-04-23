@@ -1,0 +1,15 @@
+//
+//  TransactionConfirm+Receipt.swift
+//  E-Wallet
+//
+//  Created by đào sơn on 23/04/2023.
+//
+
+import Foundation
+
+extension TransactionConfirmInteractor: ReceiptListener {
+    func receiptWantToRouteToHome() {
+        self.router?.dismissReceipt(animated: false)
+        self.listener?.receiptWantToRouteToHome()
+    }
+}

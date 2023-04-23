@@ -13,9 +13,10 @@ class TransactionDatabase {
     static let shared = TransactionDatabase()
     private var database = Firestore.firestore()
 
-    func addNewTransaction(entity: TransactionEntity, completion: @escaping (_ error: Error?) -> Void) {
-        self.database.collection(DatabaseConst.transactionPath).addDocument(data: entity.dict ?? [:]) { error in
-            completion(error)
+    func addNewTransaction(entity: TransactionEntity, completion: @escaping (_ error: Error?, _ documentId: String?) -> Void) {
+        var ref: DocumentReference?
+        ref = self.database.collection(DatabaseConst.transactionPath).addDocument(data: entity.dict ?? [:]) { error in
+            completion(error, ref?.documentID)
         }
     }
 }

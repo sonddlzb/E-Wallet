@@ -9,7 +9,7 @@ import Foundation
 
 extension HomeInteractor: WithdrawListener {
     func withDrawWantToDismiss() {
-        self.router?.dismissWithdraw()
+        self.router?.dismissWithdraw(animated: true)
     }
 
     func withDrawWantToRouteToAddCard() {

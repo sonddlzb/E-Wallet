@@ -9,10 +9,14 @@ import Foundation
 
 extension HomeInteractor: TransactionConfirmListener {
     func transactionConfirmWantToDismiss() {
-        self.router?.dismissTransactionConfirm()
+        self.router?.dismissTransactionConfirm(animated: true)
     }
 
     func selectCardWantToRouteToAddNewCard() {
         self.router?.routeToAddCard()
+    }
+
+    func receiptWantToRouteToHome() {
+        self.router?.routeBackToHome()
     }
 }
