@@ -102,6 +102,12 @@ extension TransactionConfirmViewController: TransactionConfirmPresentable {
         self.checkPurchasble()
         self.collectionView.reloadData()
     }
+
+    func bindPaymentResult(isSuccess: Bool, message: String) {
+        if !isSuccess {
+            FailedDialog.show(title: "Payment failed!", message: message)
+        }
+    }
 }
 
 // MARK: - PaymentMethodViewDelegate

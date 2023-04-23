@@ -9,7 +9,7 @@ import Foundation
 
 extension HomeInteractor: TopUpListener {
     func topUpWantToDismiss() {
-        self.router?.dismissTopUp()
+        self.router?.dismissTopUp(animated: true)
     }
 
     func topUpWantToRouteToAddCard() {

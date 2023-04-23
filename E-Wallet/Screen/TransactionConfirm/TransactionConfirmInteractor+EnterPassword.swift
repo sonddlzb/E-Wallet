@@ -33,12 +33,21 @@ extension TransactionConfirmInteractor: EnterPasswordListener {
 
     func enterPasswordDidAuthenticateOldUserSuccess() {
         self.router?.dismissPassword()
-        AccountDatabase.shared.transfer(amount: self.viewModel.amount(), receiverPhoneNumber: self.viewModel.phoneNumber(), completion: { error in
-            if let error = error {
-                print("transfer failed! \(error.localizedDescription)")
-            } else {
-                print("transfer successfully")
-            }
-        })
+        switch self.viewModel.paymentType() {
+        case .transfer:
+            AccountDatabase.shared.transfer(amount: self.viewModel.amount(), receiverPhoneNumber: self.viewModel.phoneNumber(), completion: { error, transaction in
+                if let error = error {
+                    print("transfer failed! \(error.localizedDescription)")
+                    self.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
+                } else {
+                    print("transfer successfully")
+                    self.presenter.bindPaymentResult(isSuccess: true, message: "Your money has been transfered successfully")
+                    if let transaction = transaction {
+                        self.router?.routeToReceipt(transaction: transaction)
+                    }
+                }
+            })
+        default: print("not handle")
+        }
     }
 }

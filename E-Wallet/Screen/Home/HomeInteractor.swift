@@ -14,16 +14,17 @@ protocol HomeRouting: ViewableRouting {
     func routeToTab(homeTab: HomeTab)
     func bindDataToHomeTab(viewModel: HomeViewModel)
     func routeToTransfer()
-    func dismissTransfer()
+    func dismissTransfer(animated: Bool)
     func routeToTopUp()
-    func dismissTopUp()
+    func dismissTopUp(animated: Bool)
     func routeToAddCard()
-    func dismissAddCard()
+    func dismissAddCard(animated: Bool)
     func reloadCardData()
     func routeToWithdraw()
-    func dismissWithdraw()
+    func dismissWithdraw(animated: Bool)
     func routeToTransactionConfirm(confirmData: [String: String])
-    func dismissTransactionConfirm()
+    func dismissTransactionConfirm(animated: Bool)
+    func routeBackToHome()
 }
 
 protocol HomePresentable: Presentable {

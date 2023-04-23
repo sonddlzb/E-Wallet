@@ -9,11 +9,11 @@ import Foundation
 
 extension HomeInteractor: AddCardListener {
     func addCardWantToDismiss() {
-        self.router?.dismissAddCard()
+        self.router?.dismissAddCard(animated: true)
     }
 
     func addCardWantToReloadData() {
         self.router?.reloadCardData()
-        self.router?.dismissAddCard()
+        self.router?.dismissAddCard(animated: true)
     }
 }

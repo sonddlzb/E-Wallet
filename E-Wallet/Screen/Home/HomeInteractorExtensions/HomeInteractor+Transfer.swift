@@ -9,7 +9,7 @@ import Foundation
 
 extension HomeInteractor: TransferListener {
     func transferWantToDismiss() {
-        self.router?.dismissTransfer()
+        self.router?.dismissTransfer(animated: true)
     }
 
     func transferWantToRouteToTransactionConfirm(confirmData: [String: String]) {

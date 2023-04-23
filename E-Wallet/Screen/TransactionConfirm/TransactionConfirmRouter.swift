@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol TransactionConfirmInteractable: Interactable, SelectCardListener, EnterPasswordListener {
+protocol TransactionConfirmInteractable: Interactable, SelectCardListener, EnterPasswordListener, ReceiptListener {
     var router: TransactionConfirmRouting? { get set }
     var listener: TransactionConfirmListener? { get set }
 
@@ -24,12 +24,17 @@ final class TransactionConfirmRouter: ViewableRouter<TransactionConfirmInteracta
     private var enterPasswordRouter: EnterPasswordRouting?
     private var enterPasswordBuilder: EnterPasswordBuildable
 
+    private var receiptRouter: ReceiptRouting?
+    private var receiptBuilder: ReceiptBuildable
+
     init(interactor: TransactionConfirmInteractable,
          viewController: TransactionConfirmViewControllable,
          selectCardBuilder: SelectCardBuildable,
-         enterPasswordBuilder: EnterPasswordBuildable) {
+         enterPasswordBuilder: EnterPasswordBuildable,
+         receiptBuilder: ReceiptBuildable) {
         self.selectCardBuilder = selectCardBuilder
         self.enterPasswordBuilder = enterPasswordBuilder
+        self.receiptBuilder = receiptBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -85,5 +90,27 @@ extension TransactionConfirmRouter: TransactionConfirmRouting {
 
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool) {
         self.enterPasswordRouter?.bindSignInResult(isSuccess: isSuccess)
+    }
+
+    func routeToReceipt(transaction: Transaction) {
+        guard self.receiptRouter == nil else {
+            return
+        }
+
+        let router = self.receiptBuilder.build(withListener: interactor,
+                                               transaction: transaction)
+        self.attachChild(router)
+        self.viewController.push(viewControllable: router.viewControllable)
+        self.receiptRouter = router
+    }
+
+    func dismissReceipt(animated: Bool) {
+        guard let router = self.receiptRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable, animated: animated)
+        self.receiptRouter = nil
     }
 }

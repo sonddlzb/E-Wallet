@@ -15,6 +15,8 @@ protocol TransactionConfirmRouting: ViewableRouting {
     func presentPassword()
     func dismissPassword()
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
+    func routeToReceipt(transaction: Transaction)
+    func dismissReceipt(animated: Bool)
 }
 
 protocol TransactionConfirmPresentable: Presentable {
@@ -23,11 +25,13 @@ protocol TransactionConfirmPresentable: Presentable {
     func bind(cardViewModel: CardViewModel, balance: Double)
     func bindCardSelectedResult(at indexPath: IndexPath)
     func bind(viewModel: TransactionConfirmViewModel)
+    func bindPaymentResult(isSuccess: Bool, message: String)
 }
 
 protocol TransactionConfirmListener: AnyObject {
     func transactionConfirmWantToDismiss()
     func selectCardWantToRouteToAddNewCard()
+    func receiptWantToRouteToHome()
 }
 
 final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfirmPresentable> {

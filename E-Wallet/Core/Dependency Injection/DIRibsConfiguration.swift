@@ -84,5 +84,9 @@ extension DIConnector {
         DIContainer.register(SelectCardBuildable.self) { _, args in
             return SelectCardBuilder(dependency: args.get())
         }
+
+        DIContainer.register(ReceiptBuildable.self) { _, args in
+            return ReceiptBuilder(dependency: args.get())
+        }
     }
 }

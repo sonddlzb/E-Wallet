@@ -136,12 +136,12 @@ extension HomeRouter: HomeRouting {
         self.transferRouter = router
     }
 
-    func dismissTransfer() {
+    func dismissTransfer(animated: Bool) {
         guard let router = self.transferRouter else {
             return
         }
 
-        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.viewController.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.detachChild(router)
         self.transferRouter = nil
     }
@@ -166,12 +166,12 @@ extension HomeRouter: HomeRouting {
         self.topUpRouter = router
     }
 
-    func dismissTopUp() {
+    func dismissTopUp(animated: Bool) {
         guard let router = self.topUpRouter else {
             return
         }
 
-        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.viewController.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.detachChild(router)
         self.topUpRouter = nil
     }
@@ -190,12 +190,12 @@ extension HomeRouter: HomeRouting {
         }
     }
 
-    func dismissWithdraw() {
+    func dismissWithdraw(animated: Bool) {
         guard let router = self.withdrawRouter else {
             return
         }
 
-        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.viewController.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.detachChild(router)
         self.withdrawRouter = nil
     }
@@ -211,13 +211,13 @@ extension HomeRouter: HomeRouting {
         self.addCardRouter = router
     }
 
-    func dismissAddCard() {
+    func dismissAddCard(animated: Bool) {
         guard let router = self.addCardRouter else {
             return
         }
 
         self.detachChild(router)
-        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.viewController.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.addCardRouter = nil
     }
 
@@ -239,13 +239,21 @@ extension HomeRouter: HomeRouting {
         self.transactionConfirmRouter = router
     }
 
-    func dismissTransactionConfirm() {
+    func dismissTransactionConfirm(animated: Bool) {
         guard let router = self.transactionConfirmRouter else {
             return
         }
 
         self.detachChild(router)
-        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.viewController.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.transactionConfirmRouter = nil
+    }
+
+    func routeBackToHome() {
+        self.dismissTransactionConfirm(animated: false)
+        self.dismissTransfer(animated: false)
+        self.dismissWithdraw(animated: false)
+        self.dismissTopUp(animated: false)
+        self.routeToDashboardTab()
     }
 }
