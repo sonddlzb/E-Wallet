@@ -33,9 +33,11 @@ extension TransactionConfirmInteractor: EnterPasswordListener {
 
     func enterPasswordDidAuthenticateOldUserSuccess() {
         self.router?.dismissPassword()
+        SVProgressHUD.show()
         switch self.viewModel.paymentType() {
         case .transfer:
             AccountDatabase.shared.transfer(amount: self.viewModel.amount(), receiverPhoneNumber: self.viewModel.phoneNumber(), completion: { error, transaction in
+                SVProgressHUD.dismiss()
                 if let error = error {
                     print("transfer failed! \(error.localizedDescription)")
                     self.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
@@ -47,6 +49,58 @@ extension TransactionConfirmInteractor: EnterPasswordListener {
                     }
                 }
             })
+        case .topUp:
+            CardDatabase.shared.getCardById(self.viewModel.cardId()) { card in
+                guard let card = card else {
+                    return
+                }
+
+                STPPaymentHelper.shared.handlePayment(card: card, price: self.viewModel.amount(), paymentType: .topUp, completion: {[weak self] error in
+                    if let error = error {
+                        SVProgressHUD.dismiss()
+                        self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
+                    } else {
+                        AccountDatabase.shared.topUp(amount: self?.viewModel.amount() ?? 0.0) { error, transaction in
+                            SVProgressHUD.dismiss()
+                            if let error = error {
+                                self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
+                            } else {
+                                self?.presenter.bindPaymentResult(isSuccess: true, message: "Your top-up payment was handled successfully")
+                                if let transaction = transaction {
+                                    self?.router?.routeToReceipt(transaction: transaction)
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+
+        case .withdraw:
+            CardDatabase.shared.getCardById(self.viewModel.cardId()) { card in
+                guard let card = card else {
+                    return
+                }
+
+                STPPaymentHelper.shared.handlePayment(card: card, price: self.viewModel.amount(), paymentType: .withdraw, completion: {[weak self] error in
+                    if let error = error {
+                        SVProgressHUD.dismiss()
+                        self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
+                    } else {
+                        AccountDatabase.shared.withdraw(amount: self?.viewModel.amount() ?? 0.0) { error, transaction in
+                            SVProgressHUD.dismiss()
+                            if let error = error {
+                                self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
+                            } else {
+                                self?.presenter.bindPaymentResult(isSuccess: true, message: "Your withdraw payment was handled successfully")
+                                if let transaction = transaction {
+                                    self?.router?.routeToReceipt(transaction: transaction)
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+
         default: print("not handle")
         }
     }

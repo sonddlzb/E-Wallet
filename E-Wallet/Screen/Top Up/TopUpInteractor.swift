@@ -24,6 +24,7 @@ protocol TopUpPresentable: Presentable {
 protocol TopUpListener: AnyObject {
     func topUpWantToDismiss()
     func topUpWantToRouteToAddCard()
+    func topUpWantToRouteToTransactionConfirm(confirmData: [String: String])
 }
 
 final class TopUpInteractor: PresentableInteractor<TopUpPresentable> {
@@ -65,22 +66,10 @@ extension TopUpInteractor: TopUpPresentableListener {
     }
 
     func didTapTopUpButton(card: Card, amount: Double) {
-        SVProgressHUD.show()
-        STPPaymentHelper.shared.handlePayment(card: card, price: amount, paymentType: .topUp, completion: {[weak self] error in
-            if let error = error {
-                SVProgressHUD.dismiss()
-                self?.presenter.bindTopUpResult(isSuccess: false, message: error.localizedDescription)
-            } else {
-                AccountDatabase.shared.topUp(amount: amount) { error in
-                    SVProgressHUD.dismiss()
-                    if let error = error {
-                        self?.presenter.bindTopUpResult(isSuccess: false, message: error.localizedDescription)
-                    } else {
-                        self?.presenter.bindTopUpResult(isSuccess: true, message: "Your payment was handled successfully")
-                    }
-                }
-            }
-        })
+        let confirmData: [String: String] = ["Payment Type": "Top Up",
+                                             "Payment Methods": card.type.rawValue.capitalized,
+                                             "Amount": "$" + String(amount), "cardId": card.id]
+        self.listener?.topUpWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 }
 

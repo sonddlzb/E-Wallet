@@ -142,7 +142,7 @@ extension TransactionConfirmViewController: UICollectionViewDelegate, UICollecti
             return UICollectionReusableView()
         }
 
-        footerView.bind(amount: self.viewModel.amount(), discount: 2.0)
+        footerView.bind(amount: self.viewModel.amount(), discount: 0.0)
         return footerView
     }
 }

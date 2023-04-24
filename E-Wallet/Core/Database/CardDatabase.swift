@@ -80,4 +80,23 @@ class CardDatabase {
             completion(error)
         }
     }
+
+    func getCardById(_ id: String, completion: @escaping (_ card: Card?) -> Void) {
+        self.database.collection(DatabaseConst.cardPath).document(id).getDocument { document, error in
+            guard error == nil, document != nil else {
+                completion(nil)
+                return
+            }
+
+            guard let cardData = try? JSONSerialization
+                .data(withJSONObject: document!.data(), options: []) else {
+                completion(nil)
+                return
+            }
+
+            if let cardEntity = try? JSONDecoder().decode(CardEntity.self, from: cardData) {
+                completion(Card(id: id, entity: cardEntity))
+            }
+        }
+    }
 }
