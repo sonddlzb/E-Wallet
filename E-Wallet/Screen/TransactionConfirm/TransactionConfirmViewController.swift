@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import Stripe
 
 private struct Const {
     static let contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 20.0)
@@ -19,7 +20,7 @@ private struct Const {
 protocol TransactionConfirmPresentableListener: AnyObject {
     func didTapBackButton()
     func showSelectCard(selectedCard: Card?)
-    func showPasswordAuthentication()
+    func showPasswordAuthentication(selectedCard: Card?)
 }
 
 final class TransactionConfirmViewController: UIViewController, TransactionConfirmViewControllable {
@@ -60,7 +61,8 @@ final class TransactionConfirmViewController: UIViewController, TransactionConfi
     }
 
     @IBAction func didTapConfirmButton(_ sender: Any) {
-        self.listener?.showPasswordAuthentication()
+        STPPaymentHelper.shared.viewController = self
+        self.listener?.showPasswordAuthentication(selectedCard: self.selectedCard)
     }
 
     // MARK: - Helpers
@@ -163,5 +165,12 @@ extension TransactionConfirmViewController: UICollectionViewDelegateFlowLayout {
         let width = self.collectionView.frame.width - Const.contentInset.left - Const.contentInset.right
         let height = Const.footerHeight
         return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: - STPAuthenticationContext
+extension TransactionConfirmViewController: STPAuthenticationContext {
+    func authenticationPresentingViewController() -> UIViewController {
+        return self
     }
 }

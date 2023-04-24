@@ -80,7 +80,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVO-Xu-GTB">
-                    <rect key="frame" x="0.0" y="228" width="414" height="584"/>
+                    <rect key="frame" x="0.0" y="228" width="414" height="564"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBH-bY-wqz">
                             <rect key="frame" x="20" y="0.0" width="171.5" height="21.5"/>
@@ -89,7 +89,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UXg-10-Ey4">
-                            <rect key="frame" x="0.0" y="31.5" width="414" height="552.5"/>
+                            <rect key="frame" x="0.0" y="31.5" width="414" height="532.5"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZmB-ai-G01">
                                 <size key="itemSize" width="128" height="128"/>
@@ -110,7 +110,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Doa-Vp-LUg" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                    <rect key="frame" x="20" y="812" width="374" height="50"/>
+                    <rect key="frame" x="20" y="792" width="374" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confim" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7f-fK-b2r">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -142,7 +142,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nr5-WT-heo" secondAttribute="trailing" id="0EM-nL-KfQ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Doa-Vp-LUg" secondAttribute="bottom" id="1ZL-xw-w7N"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Doa-Vp-LUg" secondAttribute="bottom" constant="20" id="1ZL-xw-w7N"/>
                 <constraint firstItem="4ll-8T-N6I" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="7Yq-Kb-nxG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4ll-8T-N6I" secondAttribute="trailing" id="FzF-MQ-kyN"/>
                 <constraint firstItem="Doa-Vp-LUg" firstAttribute="top" secondItem="pVO-Xu-GTB" secondAttribute="bottom" id="J4M-z1-eAi"/>
