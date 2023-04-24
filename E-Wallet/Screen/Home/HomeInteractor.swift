@@ -22,7 +22,7 @@ protocol HomeRouting: ViewableRouting {
     func reloadCardData()
     func routeToWithdraw()
     func dismissWithdraw(animated: Bool)
-    func routeToTransactionConfirm(confirmData: [String: String])
+    func routeToTransactionConfirm(confirmData: [String: String], isShowPaymentMethodView: Bool)
     func dismissTransactionConfirm(animated: Bool)
     func routeBackToHome()
 }

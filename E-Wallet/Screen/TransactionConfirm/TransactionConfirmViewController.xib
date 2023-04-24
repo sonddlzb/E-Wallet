@@ -22,6 +22,7 @@
                 <outlet property="collectionView" destination="UXg-10-Ey4" id="g7f-TJ-dPP"/>
                 <outlet property="confirmButton" destination="Doa-Vp-LUg" id="hbU-oY-VAX"/>
                 <outlet property="confirmLabel" destination="S7f-fK-b2r" id="A5e-UJ-wIk"/>
+                <outlet property="contentViewTopConstraint" destination="xRe-ay-IHc" id="Sjx-oF-ELo"/>
                 <outlet property="paymentMethodView" destination="nr5-WT-heo" id="3Ce-yc-nJQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
             </connections>
@@ -153,7 +154,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Doa-Vp-LUg" secondAttribute="trailing" constant="20" id="dqP-00-QCq"/>
                 <constraint firstItem="pVO-Xu-GTB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hFr-5O-w4p"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="pVO-Xu-GTB" secondAttribute="trailing" id="rYT-5U-CfG"/>
-                <constraint firstItem="pVO-Xu-GTB" firstAttribute="top" secondItem="nr5-WT-heo" secondAttribute="bottom" constant="20" id="xRe-ay-IHc"/>
+                <constraint firstItem="pVO-Xu-GTB" firstAttribute="top" secondItem="4ll-8T-N6I" secondAttribute="bottom" constant="140" id="xRe-ay-IHc"/>
             </constraints>
             <point key="canvasLocation" x="-394" y="74"/>
         </view>

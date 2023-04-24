@@ -227,13 +227,14 @@ extension HomeRouter: HomeRouting {
         self.transactionConfirmRouter?.reloadData()
     }
 
-    func routeToTransactionConfirm(confirmData: [String: String]) {
+    func routeToTransactionConfirm(confirmData: [String: String], isShowPaymentMethodView: Bool) {
         guard self.transactionConfirmRouter == nil else {
             return
         }
 
         let router = self.transactionConfirmBuilder.build(withListener: interactor,
-                                                          confirmData: confirmData)
+                                                          confirmData: confirmData,
+                                                          isShowPaymentMethodView: isShowPaymentMethodView)
         self.attachChild(router)
         self.viewController.push(viewControllable: router.viewControllable, animated: true)
         self.transactionConfirmRouter = router

@@ -30,13 +30,25 @@ final class TransactionConfirmViewController: UIViewController, TransactionConfi
     @IBOutlet private weak var confirmLabel: UILabel!
     @IBOutlet private weak var paymentMethodView: PaymentMethodView!
 
+    @IBOutlet private weak var contentViewTopConstraint: NSLayoutConstraint!
+
     // MARK: - Variables
     weak var listener: TransactionConfirmPresentableListener?
     private var cardViewModel = CardViewModel.makeEmpty()
     private var selectedCard: Card?
     private var viewModel = TransactionConfirmViewModel.makeEmpty()
+    private var isShowPaymentMethodView = true
 
     // MARK: - Lifecycle
+    init(isShowPaymentMethodView: Bool) {
+        self.isShowPaymentMethodView = isShowPaymentMethodView
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -53,6 +65,8 @@ final class TransactionConfirmViewController: UIViewController, TransactionConfi
         self.collectionView.dataSource = self
         self.collectionView.registerCell(type: ConfirmDataCell.self)
         collectionView.register(UINib(nibName: "TransactionFooterView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "TransactionFooterView")
+
+        self.contentViewTopConstraint.constant = self.isShowPaymentMethodView ? 140.0 : 20.0
     }
 
     // MARK: - Actions

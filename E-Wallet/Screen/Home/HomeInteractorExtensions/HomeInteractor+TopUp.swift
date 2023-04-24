@@ -17,6 +17,6 @@ extension HomeInteractor: TopUpListener {
     }
 
     func topUpWantToRouteToTransactionConfirm(confirmData: [String: String]) {
-        self.router?.routeToTransactionConfirm(confirmData: confirmData)
+        self.router?.routeToTransactionConfirm(confirmData: confirmData, isShowPaymentMethodView: false)
     }
 }
