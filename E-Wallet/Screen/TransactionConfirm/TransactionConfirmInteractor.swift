@@ -89,7 +89,8 @@ extension TransactionConfirmInteractor: TransactionConfirmPresentableListener {
         self.router?.showSelectCard(selectedCard: selectedCard)
     }
 
-    func showPasswordAuthentication() {
+    func showPasswordAuthentication(selectedCard: Card?) {
+        self.viewModel.selectedCard = selectedCard
         self.router?.presentPassword()
     }
 }

@@ -148,7 +148,33 @@ class AccountDatabase {
             print(error.localizedDescription)
         }    }
 
-    func transfer(amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+    func transfer(selectedCard: Card?, amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        if let card = selectedCard {
+            STPPaymentHelper.shared.handlePayment(card: card, price: amount, paymentType: .topUp, completion: {[weak self] error in
+                if let error = error {
+                    completion(error, nil)
+                    return
+                } else {
+                    self?.topUp(amount: amount) { error, transaction in
+                        if let error = error {
+                            completion(error, nil)
+                            return
+                        } else {
+                            self?.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, completion: completion)
+                        }
+                    }
+                }
+            })
+        } else {
+            self.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, completion: completion)
+        }
+    }
+
+    func transferWithBalance(amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
