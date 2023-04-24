@@ -13,6 +13,6 @@ extension HomeInteractor: TransferListener {
     }
 
     func transferWantToRouteToTransactionConfirm(confirmData: [String: String]) {
-        self.router?.routeToTransactionConfirm(confirmData: confirmData)
+        self.router?.routeToTransactionConfirm(confirmData: confirmData, isShowPaymentMethodView: true)
     }
 }

@@ -17,7 +17,9 @@ final class TransactionConfirmComponent: Component<TransactionConfirmDependency>
 // MARK: - Builder
 
 protocol TransactionConfirmBuildable: Buildable {
-    func build(withListener listener: TransactionConfirmListener, confirmData: [String: String]) -> TransactionConfirmRouting
+    func build(withListener listener: TransactionConfirmListener,
+               confirmData: [String: String],
+               isShowPaymentMethodView: Bool) -> TransactionConfirmRouting
 }
 
 final class TransactionConfirmBuilder: Builder<TransactionConfirmDependency>, TransactionConfirmBuildable {
@@ -26,9 +28,11 @@ final class TransactionConfirmBuilder: Builder<TransactionConfirmDependency>, Tr
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: TransactionConfirmListener, confirmData: [String: String]) -> TransactionConfirmRouting {
+    func build(withListener listener: TransactionConfirmListener,
+               confirmData: [String: String],
+               isShowPaymentMethodView: Bool) -> TransactionConfirmRouting {
         let component = TransactionConfirmComponent(dependency: dependency)
-        let viewController = TransactionConfirmViewController()
+        let viewController = TransactionConfirmViewController(isShowPaymentMethodView: isShowPaymentMethodView)
         let interactor = TransactionConfirmInteractor(presenter: viewController, confirmData: confirmData)
         interactor.listener = listener
         let selectCardBuilder = DIContainer.resolve(SelectCardBuildable.self, agrument: component)
