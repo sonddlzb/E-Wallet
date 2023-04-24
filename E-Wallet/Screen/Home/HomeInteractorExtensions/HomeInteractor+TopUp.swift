@@ -15,4 +15,8 @@ extension HomeInteractor: TopUpListener {
     func topUpWantToRouteToAddCard() {
         self.router?.routeToAddCard()
     }
+
+    func topUpWantToRouteToTransactionConfirm(confirmData: [String: String]) {
+        self.router?.routeToTransactionConfirm(confirmData: confirmData)
+    }
 }

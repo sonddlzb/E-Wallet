@@ -15,4 +15,8 @@ extension HomeInteractor: WithdrawListener {
     func withDrawWantToRouteToAddCard() {
         self.router?.routeToAddCard()
     }
+
+    func withdrawWantToRouteToTransactionConfirm(confirmData: [String: String]) {
+        self.router?.routeToTransactionConfirm(confirmData: confirmData)
+    }
 }

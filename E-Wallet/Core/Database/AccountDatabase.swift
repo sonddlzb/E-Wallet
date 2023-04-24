@@ -51,19 +51,19 @@ class AccountDatabase {
         })
     }
 
-    func topUp(amount: Double, completion: @escaping (_ error: Error?) -> Void) {
+    func topUp(amount: Double, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
 
         self.accountRef.child(userId).getData { error, snapshot in
             if let error = error {
-                completion(error)
+                completion(error, nil)
             } else {
                 if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
                     self.accountRef.child(userId).updateChildValues(["balance": balance + amount]) { error, _ in
                         guard error == nil else {
-                            completion(error)
+                            completion(error, nil)
                             return
                         }
 
@@ -79,34 +79,35 @@ class AccountDatabase {
                                 print("Create transaction failed with error \(error.localizedDescription)")
                             } else {
                                 print("Create transaction successfully")
+                                if let transactionId = transactionId {
+                                    completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                }
                             }
                         }
-
-                        completion(nil)
                     }
                 }
             }
         }
     }
 
-    func withdraw(amount: Double, completion: @escaping (_ error: Error?) -> Void) {
+    func withdraw(amount: Double, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
 
         self.accountRef.child(userId).getData { error, snapshot in
             if let error = error {
-                completion(error)
+                completion(error, nil)
             } else {
                 if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
                     guard balance >= amount else {
-                        completion(AccountError.insufficientBalance("Your balance is not enough"))
+                        completion(AccountError.insufficientBalance("Your balance is not enough"), nil)
                         return
                     }
 
                     self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
                         guard error == nil else {
-                            completion(error)
+                            completion(error, nil)
                             return
                         }
 
@@ -122,10 +123,11 @@ class AccountDatabase {
                                 print("Create transaction failed with error \(error.localizedDescription)")
                             } else {
                                 print("Create transaction successfully")
+                                if let transactionId = transactionId {
+                                    completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                }
                             }
                         }
-
-                        completion(nil)
                     }
                 }
             }

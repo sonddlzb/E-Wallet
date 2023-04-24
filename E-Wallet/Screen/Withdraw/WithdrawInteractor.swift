@@ -25,6 +25,7 @@ protocol WithdrawPresentable: Presentable {
 protocol WithdrawListener: AnyObject {
     func withDrawWantToDismiss()
     func withDrawWantToRouteToAddCard()
+    func withdrawWantToRouteToTransactionConfirm(confirmData: [String: String])
 }
 
 final class WithdrawInteractor: PresentableInteractor<WithdrawPresentable>  {
@@ -67,22 +68,10 @@ extension WithdrawInteractor: WithdrawPresentableListener {
     }
 
     func didTapWithdrawButton(card: Card, amount: Double) {
-        SVProgressHUD.show()
-        STPPaymentHelper.shared.handlePayment(card: card, price: amount, paymentType: .withdraw, completion: {[weak self] error in
-            if let error = error {
-                SVProgressHUD.dismiss()
-                self?.presenter.bindWithdrawResult(isSuccess: false, message: error.localizedDescription)
-            } else {
-                AccountDatabase.shared.withdraw(amount: amount) { error in
-                    SVProgressHUD.dismiss()
-                    if let error = error {
-                        self?.presenter.bindWithdrawResult(isSuccess: false, message: error.localizedDescription)
-                    } else {
-                        self?.presenter.bindWithdrawResult(isSuccess: true, message: "Your payment was handled successfully")
-                    }
-                }
-            }
-        })
+        let confirmData: [String: String] = ["Payment Type": "Withdraw",
+                                             "Payment Methods": card.type.rawValue.capitalized,
+                                             "Amount": "$" + String(amount), "cardId": card.id]
+        self.listener?.withdrawWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 }
 
@@ -97,4 +86,3 @@ extension WithdrawInteractor: WithdrawInteractable {
         self.presenter.bind(homeViewModel: homeViewModel)
     }
 }
-

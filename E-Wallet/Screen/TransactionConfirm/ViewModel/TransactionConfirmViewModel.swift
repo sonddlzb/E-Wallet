@@ -15,15 +15,22 @@ struct TransactionConfirmViewModel {
     }
 
     func numberOfData() -> Int {
-        return confirmData.count
+        return self.listKeys().count
     }
 
     func listKeys() -> [String] {
-        return Array(self.confirmData.keys)
+        var listKeys: [String] = Array(self.confirmData.keys.sorted(by: <))
+        listKeys.remove("cardId")
+        return listKeys
     }
 
     func listValues() -> [String] {
-        return Array(self.confirmData.values)
+        var listValues: [String] = []
+        for key in self.listKeys() {
+            listValues.append(confirmData[key]!)
+        }
+
+        return listValues
     }
 
     func item(at index: Int) -> TransactionConfirmItemViewModel {
@@ -36,11 +43,15 @@ struct TransactionConfirmViewModel {
     }
 
     func paymentType() -> PaymentType? {
-        var paymentType = self.confirmData["Payment Type"] ?? ""
+        let paymentType = self.confirmData["Payment Type"] ?? ""
         return PaymentType(rawValue: paymentType)
     }
 
     func phoneNumber() -> String {
         return self.confirmData["Phone number"] ?? ""
+    }
+
+    func cardId() -> String {
+        return self.confirmData["cardId"] ?? ""
     }
 }
