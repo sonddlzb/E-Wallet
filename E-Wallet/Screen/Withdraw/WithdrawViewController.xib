@@ -27,6 +27,7 @@
             <connections>
                 <outlet property="balanceLabel" destination="f1R-RS-1Hc" id="9hb-q0-bY4"/>
                 <outlet property="collectionView" destination="Yux-Ub-zRV" id="1Rr-pg-301"/>
+                <outlet property="containerView" destination="WlO-9O-sN4" id="PVd-CI-5X0"/>
                 <outlet property="moneyTextField" destination="xhd-ew-Lz2" id="5sm-D7-NPe"/>
                 <outlet property="view" destination="Vjd-Cr-2Ck" id="8m2-qi-z29"/>
                 <outlet property="withdrawButton" destination="uOD-tv-b2h" id="7wG-gX-cvl"/>

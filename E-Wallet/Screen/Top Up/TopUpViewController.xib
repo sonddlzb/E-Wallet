@@ -26,6 +26,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopUpViewController">
             <connections>
                 <outlet property="collectionView" destination="RIr-Eb-MPZ" id="bnW-sk-vSb"/>
+                <outlet property="containerView" destination="mZn-7Q-bva" id="BTE-nM-5i9"/>
                 <outlet property="moneyTextField" destination="6mV-z9-qrl" id="3EG-VD-86n"/>
                 <outlet property="topUpButton" destination="Lbh-UZ-Yi4" id="udE-1L-fdf"/>
                 <outlet property="topUpLabel" destination="MTQ-yv-9p6" id="0dY-Vc-ngr"/>
@@ -38,13 +39,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKW-pH-Ldq">
-                    <rect key="frame" x="0.0" y="48" width="414" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nin-xR-RSu" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="10" y="10" width="37.5" height="20"/>
+                            <rect key="frame" x="10" y="10" width="37.666666666666664" height="20"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-gl-oWl">
-                                    <rect key="frame" x="0.0" y="2.5" width="37.5" height="15"/>
+                                    <rect key="frame" x="0.0" y="3" width="37.666666666666664" height="14.333333333333332"/>
                                     <color key="tintColor" systemColor="labelColor"/>
                                 </imageView>
                             </subviews>
@@ -61,7 +62,7 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAI-68-mtx">
-                            <rect key="frame" x="169.5" y="0.0" width="75.5" height="40"/>
+                            <rect key="frame" x="169.33333333333334" y="0.0" width="75.333333333333343" height="40"/>
                             <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="24"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -80,28 +81,28 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZn-7Q-bva">
-                    <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                    <rect key="frame" x="0.0" y="60" width="414" height="836"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount of money" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LGW-vY-6Vi">
-                            <rect key="frame" x="20" y="0.0" width="143" height="19.5"/>
+                            <rect key="frame" x="20" y="0.0" width="143" height="19.666666666666668"/>
                             <fontDescription key="fontDescription" name="Outfit-Medium" family="Outfit" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76S-gO-l6R">
-                            <rect key="frame" x="20" y="29.5" width="18.5" height="32"/>
+                            <rect key="frame" x="20" y="29.666666666666671" width="18.666666666666671" height="32"/>
                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="30"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accounts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxY-IN-uEx">
-                            <rect key="frame" x="20" y="83" width="91" height="23.5"/>
+                            <rect key="frame" x="20" y="83" width="91" height="23.666666666666671"/>
                             <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="22"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="RIr-Eb-MPZ">
-                            <rect key="frame" x="20" y="116.5" width="374" height="512.5"/>
+                            <rect key="frame" x="20" y="116.66666666666669" width="374" height="594.66666666666652"/>
                             <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4yk-dY-ONN">
                                 <size key="itemSize" width="128" height="128"/>
@@ -111,7 +112,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6mV-z9-qrl">
-                            <rect key="frame" x="43.5" y="29.5" width="20" height="33.5"/>
+                            <rect key="frame" x="43.666666666666664" y="29.666666666666675" width="20" height="33.333333333333343"/>
                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="30"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -124,7 +125,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYF-LI-Ldn">
-                            <rect key="frame" x="0.0" y="674" width="414" height="80"/>
+                            <rect key="frame" x="0.0" y="756" width="414" height="80"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-UZ-Yi4" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
                                     <rect key="frame" x="20" y="15" width="374" height="50"/>
@@ -164,7 +165,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8Z-Rg-QZq">
-                            <rect key="frame" x="20" y="634" width="374" height="30"/>
+                            <rect key="frame" x="20" y="716.33333333333337" width="374" height="29.666666666666629"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_protect" translatesAutoresizingMaskIntoConstraints="NO" id="ggQ-TE-hEv">
                                     <rect key="frame" x="0.0" y="3" width="24" height="24"/>
@@ -175,7 +176,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All your information will be ecrypted for confidentiality" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJ6-bY-YPI">
-                                    <rect key="frame" x="34" y="0.0" width="247.5" height="30"/>
+                                    <rect key="frame" x="33.999999999999986" y="0.0" width="247.66666666666663" height="29.666666666666668"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="14"/>
                                     <nil key="textColor"/>

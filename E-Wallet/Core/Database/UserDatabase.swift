@@ -140,8 +140,38 @@ class UserDatabase {
         }
     }
 
-    func updateProfile(profile: UserEntity, completion: @escaping (_ successfully: Bool?) -> Void) {
+    func updateProfile(profile: UserEntity, avatar: UIImage?, completion: @escaping (_ successfully: Bool?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        if let avatar = avatar {
+            let storageRef = Storage.storage().reference()
+            let fileRef = storageRef.child(DatabaseConst.avatarPath + "/\(userId).png")
+            fileRef.delete { error in
+                self.uploadAvatar(name: userId, image: avatar) { url, error in
+                    guard error == nil, let url = url else {
+                        completion(false)
+                        return
+                    }
+
+                    var profileUrl = profile
+                    profileUrl.avtURL = url
+                    self.updateUserInformation(profile: profileUrl) { successfully in
+                        completion(successfully)
+                    }
+                }
+            }
+        } else {
+            self.updateUserInformation(profile: profile) { successfully in
+                completion(successfully)
+            }
+        }
+    }
+
+    func updateUserInformation(profile: UserEntity, completion: @escaping (_ successfully: Bool?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
             return
         }
 
@@ -153,8 +183,7 @@ class UserDatabase {
             "nativePlace": profile.nativePlace
         ]
 
-        self.database.collection(DatabaseConst.userPath).document(userId)
-            .updateData(profileData) {err in
+        self.database.collection(DatabaseConst.userPath).document(userId).updateData(profileData) { err in
                 if let err = err {
                     completion(false)
                     print("Error updating document: \(err)")
@@ -202,14 +231,48 @@ class UserDatabase {
         }
     }
 
-    func getUserIdBy(phoneNumber: String, completion: @escaping (_ userId: String) -> Void) {
+    func getUserBy(phoneNumber: String, completion: @escaping (_ user: User?) -> Void) {
         self.database.collection(DatabaseConst.userPath).whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { querySnapshot, error in
             guard error == nil, let document = querySnapshot?.documents.first else {
                 print("Error getting user \(error?.localizedDescription)")
+                completion(nil)
                 return
             }
 
-            completion(document.documentID)
+            guard let userData = try? JSONSerialization.data(withJSONObject: document.data(),
+                                                             options: []) else {
+                completion(nil)
+                return
+            }
+
+            if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
+                completion(User(id: document.documentID, entity: userEntity))
+            } else {
+                print("cannot get user infor")
+                completion(nil)
+            }
+        }
+    }
+
+    func getUserBy(id: String, completion: @escaping (_ userEntity: UserEntity?) -> Void) {
+        self.database.collection(DatabaseConst.userPath).document(id).getDocument { document, err in
+            if let err = err {
+                print("Error get documents: \(err)")
+                completion(nil)
+            } else if let document = document {
+                guard let userData = try? JSONSerialization.data(withJSONObject: document.data() ?? [:],
+                                                                 options: []) else {
+                    completion(nil)
+                    return
+                }
+
+                if let userEntity = try? JSONDecoder().decode(UserEntity.self, from: userData) {
+                    completion(userEntity)
+                } else {
+                    print("cannot get user infor")
+                    completion(nil)
+                }
+            }
         }
     }
 }

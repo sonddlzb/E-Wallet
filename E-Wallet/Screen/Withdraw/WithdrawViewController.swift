@@ -28,6 +28,7 @@ final class WithdrawViewController: UIViewController, WithdrawViewControllable {
     @IBOutlet private weak var moneyTextField: UITextField!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var withdrawButton: TapableView!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var withdrawLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
 
@@ -53,6 +54,10 @@ final class WithdrawViewController: UIViewController, WithdrawViewControllable {
         self.collectionView.dataSource = self
         self.collectionView.contentInset = Const.contentInset
         self.collectionView.registerCell(type: CardCell.self)
+
+        let tapRecognize = UITapGestureRecognizer(target: self, action: #selector(didTapContentView(_:)))
+        tapRecognize.cancelsTouchesInView = false
+        self.containerView.addGestureRecognizer(tapRecognize)
     }
 
     // MARK: - Actions
@@ -65,6 +70,10 @@ final class WithdrawViewController: UIViewController, WithdrawViewControllable {
             STPPaymentHelper.shared.viewController = self
             self.listener?.didTapWithdrawButton(card: selectedCard, amount: amount)
         }
+    }
+
+    @objc func didTapContentView(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 }
 
@@ -200,3 +209,9 @@ extension WithdrawViewController: STPAuthenticationContext {
     }
 }
 
+extension WithdrawViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
+}

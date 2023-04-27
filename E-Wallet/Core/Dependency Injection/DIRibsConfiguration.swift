@@ -88,5 +88,9 @@ extension DIConnector {
         DIContainer.register(ReceiptBuildable.self) { _, args in
             return ReceiptBuilder(dependency: args.get())
         }
+
+        DIContainer.register(HistoryBuildable.self) { _, args in
+            return HistoryBuilder(dependency: args.get())
+        }
     }
 }

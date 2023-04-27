@@ -27,6 +27,7 @@ final class TopUpViewController: UIViewController, TopUpViewControllable {
     // MARK: - Outlets
     @IBOutlet private weak var moneyTextField: UITextField!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var topUpButton: TapableView!
     @IBOutlet private weak var topUpLabel: UILabel!
 
@@ -51,6 +52,10 @@ final class TopUpViewController: UIViewController, TopUpViewControllable {
         self.collectionView.dataSource = self
         self.collectionView.contentInset = Const.contentInset
         self.collectionView.registerCell(type: CardCell.self)
+
+        let tapRecognize = UITapGestureRecognizer(target: self, action: #selector(didTapContentView(_:)))
+        tapRecognize.cancelsTouchesInView = false
+        self.containerView.addGestureRecognizer(tapRecognize)
     }
 
     // MARK: - Actions
@@ -63,6 +68,10 @@ final class TopUpViewController: UIViewController, TopUpViewControllable {
             STPPaymentHelper.shared.viewController = self
             self.listener?.didTapTopUpButton(card: selectedCard, amount: amount)
         }
+    }
+
+    @objc func didTapContentView(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 }
 
@@ -182,3 +191,11 @@ extension TopUpViewController: NotificationDialogViewDelegate {
         self.listener?.didTapBackButton()
     }
 }
+
+extension TopUpViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
+}
+

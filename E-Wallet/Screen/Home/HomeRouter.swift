@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -46,6 +46,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var transactionConfirmRouter: TransactionConfirmRouting?
     private var transactionConfirmBuilder: TransactionConfirmBuildable
 
+    private var historyRouter: HistoryRouting?
+    private var historyBuilder: HistoryBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -55,7 +58,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          topUpBuilder: TopUpBuildable,
          addCardBuilder: AddCardBuildable,
          withdrawBuilder: WithdrawBuildable,
-         transactionConfirmBuilder: TransactionConfirmBuildable) {
+         transactionConfirmBuilder: TransactionConfirmBuildable,
+         historyBuilder: HistoryBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
@@ -64,6 +68,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.addCardBuilder = addCardBuilder
         self.withdrawBuilder = withdrawBuilder
         self.transactionConfirmBuilder = transactionConfirmBuilder
+        self.historyBuilder = historyBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -87,7 +92,7 @@ extension HomeRouter: HomeRouting {
         case .gift:
             print("route to gift")
         case .history:
-            print("route to history")
+            self.routeToHistoryTab()
         case .account:
             self.routeToAccountTab()
         case .myProfile:
@@ -104,6 +109,15 @@ extension HomeRouter: HomeRouting {
         }
 
         self.viewController.embedViewController(self.dashboardRouter!.viewControllable)
+    }
+
+    func routeToHistoryTab() {
+        if self.historyRouter == nil {
+            self.historyRouter = self.historyBuilder.build(withListener: self.interactor)
+            attachChild(self.historyRouter!)
+        }
+
+        self.viewController.embedViewController(self.historyRouter!.viewControllable)
     }
 
     func routeToProfileTab() {

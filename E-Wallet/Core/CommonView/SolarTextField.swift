@@ -91,6 +91,13 @@ class SolarTextField: UIView {
     var rightTextFieldConstrant = NSLayoutConstraint()
     var leftTextFieldConstrant = NSLayoutConstraint()
     var rightButtonConstraint = NSLayoutConstraint()
+    var leftButtonWidthConstraint = NSLayoutConstraint()
+
+    var leftButtonWidth: CGFloat = 25 {
+        didSet {
+            self.leftButtonWidthConstraint.constant = leftButtonWidth
+        }
+    }
 
     var paddingRight: CGFloat = 0 {
         didSet {
@@ -180,11 +187,12 @@ class SolarTextField: UIView {
         self.leftButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.leftButton)
 
+        self.leftButtonWidthConstraint =             self.leftButton.widthAnchor.constraint(equalToConstant: 25)
+        self.leftButtonWidthConstraint.isActive = true
         NSLayoutConstraint.activate([
             self.leftButton.heightAnchor.constraint(equalToConstant: 25),
             self.leftButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.leftButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            self.leftButton.widthAnchor.constraint(equalToConstant: 80)
+            self.leftButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
         ])
         self.leftButton.isHidden = true
     }
