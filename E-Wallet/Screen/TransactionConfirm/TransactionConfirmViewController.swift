@@ -82,7 +82,7 @@ final class TransactionConfirmViewController: UIViewController, TransactionConfi
     // MARK: - Helpers
     func checkPurchasble() {
         var isPurchasable = true
-        if self.selectedCard == nil {
+        if self.selectedCard == nil && isShowPaymentMethodView {
             isPurchasable = self.viewModel.amount() <= self.paymentMethodView.balance
         }
 
