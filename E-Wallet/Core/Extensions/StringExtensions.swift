@@ -126,6 +126,6 @@ public extension String {
     }
 
     func toDouble() -> Double? {
-        return NumberFormatter().number(from: self)?.doubleValue
+        return Double(self)
     }
 }

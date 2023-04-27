@@ -42,6 +42,7 @@ class LoginByPasswordView: UIView {
         phoneNumberTextField.borderColor = .crayola
         phoneNumberTextField.textField.paddingLeft = 10
         phoneNumberTextField.cornerRadius = 12
+        phoneNumberTextField.leftButtonWidth = 80.0
         phoneNumberTextField.delegate = self
         self.becomeFirstResponder()
         return phoneNumberTextField

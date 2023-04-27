@@ -20,5 +20,6 @@ struct TransactionEntity: Codable {
     var amount: Double
     var currency: String
     var status: String
-    var time: String
+    var time: Date
+    var description: String
 }

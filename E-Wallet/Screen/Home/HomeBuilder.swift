@@ -39,6 +39,7 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let addCardBuilder = DIContainer.resolve(AddCardBuildable.self, agrument: component)
         let withdrawBuilder = DIContainer.resolve(WithdrawBuildable.self, agrument: component)
         let transactionConfirmBuilder = DIContainer.resolve(TransactionConfirmBuildable.self, agrument: component)
+        let historyBuilder = DIContainer.resolve(HistoryBuildable.self, agrument: component)
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
                           dashboardBuilder: dashboardBuilder,
@@ -48,6 +49,7 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
                           topUpBuilder: topUpBuilder,
                           addCardBuilder: addCardBuilder,
                           withdrawBuilder: withdrawBuilder,
-                          transactionConfirmBuilder: transactionConfirmBuilder)
+                          transactionConfirmBuilder: transactionConfirmBuilder,
+                          historyBuilder: historyBuilder)
     }
 }

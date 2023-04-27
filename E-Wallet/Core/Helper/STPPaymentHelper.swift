@@ -5,13 +5,14 @@
 //  Created by đào sơn on 17/04/2023.
 //
 
-enum PaymentType: String {
+enum PaymentType: String, CaseIterable {
     case electricity = "Electricity"
     case internet = "Internet"
     case water = "Water"
     case topUp = "Top Up"
     case withdraw = "Withdraw"
     case transfer = "Transfer"
+    case receive = "Receive"
 }
 
 import Foundation

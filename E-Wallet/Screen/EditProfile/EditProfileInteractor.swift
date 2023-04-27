@@ -76,9 +76,9 @@ extension EditProfileInteractor: EditProfilePresentableListener {
         return gender != "Gender"
     }
 
-    func editProfileWantToUpdate(userEntity: UserEntity, avatar: UIImage) {
+    func editProfileWantToUpdate(userEntity: UserEntity, avatar: UIImage?) {
         SVProgressHUD.show()
-        UserDatabase.shared.updateProfile(profile: userEntity) { successfully in
+        UserDatabase.shared.updateProfile(profile: userEntity, avatar: avatar) { successfully in
             SVProgressHUD.dismiss()
             self.presenter.bindUpdateResult(isSuccess: successfully == true)
         }

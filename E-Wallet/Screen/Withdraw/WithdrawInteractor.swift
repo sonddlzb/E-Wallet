@@ -70,7 +70,8 @@ extension WithdrawInteractor: WithdrawPresentableListener {
     func didTapWithdrawButton(card: Card, amount: Double) {
         let confirmData: [String: String] = ["Payment Type": "Withdraw",
                                              "Payment Methods": card.type.rawValue.capitalized,
-                                             "Amount": "$" + String(amount), "cardId": card.id]
+                                             "Amount": "$" + String(amount),
+                                             "cardId": card.id]
         self.listener?.withdrawWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 }

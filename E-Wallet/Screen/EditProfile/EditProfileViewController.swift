@@ -12,7 +12,7 @@ import DropDown
 
 protocol EditProfilePresentableListener: AnyObject {
     func editProfileWantToDismiss()
-    func editProfileWantToUpdate(userEntity: UserEntity, avatar: UIImage)
+    func editProfileWantToUpdate(userEntity: UserEntity, avatar: UIImage?)
     func isFullNameValid(fullName: String) -> Bool
     func isResidentIDValid(residentId: String) -> Bool
     func isDateOfBirthValid(dateOfBirth: String) -> Bool
@@ -45,6 +45,7 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
     private var dropDown = DropDown()
     weak var listener: EditProfilePresentableListener?
     private var viewModel: EditProfileViewModel!
+    private var isChangedAvatar = false
     var isEditable = false {
         didSet {
             self.fullNameTextField.isUserInteractionEnabled = isEditable
@@ -233,8 +234,13 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
                 return
             }
 
-            guard let image = self.avtImageView.image?.resize(to: CGSize(width: 100.0, height: 100.0)) else {
-                return
+            var avtImage: UIImage?
+            if isChangedAvatar {
+                guard let image = self.avtImageView.image?.resize(to: CGSize(width: 500.0, height: 500.0)) else {
+                    return
+                }
+
+                avtImage = image
             }
 
             let entity = UserEntity(fullName: self.fullNameTextField.text,
@@ -245,7 +251,7 @@ final class EditProfileViewController: UIViewController, EditProfileViewControll
                                     gender: self.genderLabel.text!,
                                     avtURL: "",
                                     password: "")
-            self.listener?.editProfileWantToUpdate(userEntity: entity, avatar: image)
+            self.listener?.editProfileWantToUpdate(userEntity: entity, avatar: avtImage)
         }
     }
 
@@ -264,6 +270,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.avtImageView.image = pickedImage
+            self.isChangedAvatar = true
         }
 
         picker.dismiss(animated: true, completion: nil)

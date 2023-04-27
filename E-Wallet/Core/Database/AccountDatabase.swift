@@ -12,6 +12,7 @@ import UIKit
 
 enum AccountError: Error {
     case insufficientBalance(String)
+    case invalidReceiver(String)
 }
 
 class AccountDatabase {
@@ -73,7 +74,8 @@ class AccountDatabase {
                                                                   amount: amount,
                                                                   currency: "$",
                                                                   status: PaymentStatus.completed.rawValue,
-                                                                  time: Date().formatDateTime())
+                                                                  time: Date(),
+                                                                  description: "Top Up transaction")
                         TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
                             if let error = error {
                                 print("Create transaction failed with error \(error.localizedDescription)")
@@ -117,7 +119,8 @@ class AccountDatabase {
                                                                   amount: amount,
                                                                   currency: "$",
                                                                   status: PaymentStatus.completed.rawValue,
-                                                                  time: Date().formatDateTime())
+                                                                  time: Date(),
+                                                                  description: "Withdraw transaction")
                         TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
                             if let error = error {
                                 print("Create transaction failed with error \(error.localizedDescription)")
@@ -150,6 +153,11 @@ class AccountDatabase {
 
     func transfer(selectedCard: Card?, amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        guard Auth.auth().currentUser?.phoneNumber != receiverPhoneNumber else {
+            completion(AccountError.invalidReceiver("You can not send money to your account"), nil)
             return
         }
 
@@ -196,32 +204,38 @@ class AccountDatabase {
                             return
                         }
 
-                        UserDatabase.shared.getUserIdBy(phoneNumber: receiverPhoneNumber) { receiverId in
-                            receiverID = receiverId
-                            AccountDatabase.shared.getAccountInforBy(userId: receiverId) { accountEntity in
-                                self.accountRef.child(receiverId).updateChildValues(["balance": accountEntity.balance + amount]) { error, _ in
+                        UserDatabase.shared.getUserBy(phoneNumber: receiverPhoneNumber) { receiver in
+                            guard let receiver = receiver else {
+                                completion(AccountError.invalidReceiver("Invalid receiver"), nil)
+                                return
+                            }
+
+                            receiverID = receiver.id
+                            AccountDatabase.shared.getAccountInforBy(userId: receiverID) { accountEntity in
+                                self.accountRef.child(receiverID).updateChildValues(["balance": accountEntity.balance + amount]) { error, _ in
                                     guard error == nil else {
                                         completion(error, nil)
                                         return
                                     }
-                                }
-                            }
-                        }
 
-                        let transactionEntity = TransactionEntity(type: PaymentType.transfer.rawValue,
-                                                                  senderId: userId,
-                                                                  receiverId: receiverID,
-                                                                  amount: amount,
-                                                                  currency: "$",
-                                                                  status: PaymentStatus.completed.rawValue,
-                                                                  time: Date().formatDateTime())
-                        TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
-                            if let error = error {
-                                print("Create transaction failed with error \(error.localizedDescription)")
-                            } else {
-                                print("Create transaction successfully")
-                                if let transactionId = transactionId {
-                                    completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                    let transactionEntity = TransactionEntity(type: PaymentType.transfer.rawValue,
+                                                                              senderId: userId,
+                                                                              receiverId: receiverID,
+                                                                              amount: amount,
+                                                                              currency: "$",
+                                                                              status: PaymentStatus.completed.rawValue,
+                                                                              time: Date(),
+                                                                              description: "Transfer money to \(receiver.fullName)")
+                                    TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
+                                        if let error = error {
+                                            print("Create transaction failed with error \(error.localizedDescription)")
+                                        } else {
+                                            print("Create transaction successfully")
+                                            if let transactionId = transactionId {
+                                                completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
