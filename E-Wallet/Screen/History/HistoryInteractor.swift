@@ -9,6 +9,8 @@ import RIBs
 import RxSwift
 
 protocol HistoryRouting: ViewableRouting {
+    func routeToTransactionDetails(transaction: Transaction, animated: Bool)
+    func dismissTransactionDetails()
 }
 
 protocol HistoryPresentable: Presentable {
@@ -71,5 +73,9 @@ extension HistoryInteractor: HistoryPresentableListener {
                 self.presenter.bind(viewModel: viewModel)
             }
         }
+    }
+
+    func didSelect(transaction: Transaction) {
+        self.router?.routeToTransactionDetails(transaction: transaction, animated: true)
     }
 }

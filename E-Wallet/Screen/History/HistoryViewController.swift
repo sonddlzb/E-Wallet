@@ -18,6 +18,7 @@ private struct Const {
 protocol HistoryPresentableListener: AnyObject {
     func reloadDataIfNeed(topic: String)
     func fetchTransactionsByKey(_ key: String, currentTopic: String)
+    func didSelect(transaction: Transaction)
 }
 
 final class HistoryViewController: UIViewController, HistoryViewControllable {
@@ -148,6 +149,10 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
 
         cell.bind(itemViewModel: self.viewModel.item(at: indexPath.row))
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.listener?.didSelect(transaction: self.viewModel.transaction(at: indexPath.row))
     }
 }
 

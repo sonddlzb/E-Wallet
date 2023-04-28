@@ -19,4 +19,8 @@ extension HomeInteractor: TransactionConfirmListener {
     func receiptWantToRouteToHome() {
         self.router?.routeBackToHome()
     }
+
+    func receiptWantToSeeDetails(transaction: Transaction) {
+        self.router?.receiptWantToSeeDetails(transaction: transaction)
+    }
 }

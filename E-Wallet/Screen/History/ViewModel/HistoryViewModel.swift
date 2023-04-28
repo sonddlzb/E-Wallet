@@ -38,4 +38,8 @@ struct HistoryViewModel: Equatable {
             }
         }
     }
+
+    func transaction(at index: Int) -> Transaction {
+        return self.listTransaction[index]
+    }
 }
