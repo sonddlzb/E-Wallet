@@ -25,6 +25,7 @@ protocol HomeRouting: ViewableRouting {
     func routeToTransactionConfirm(confirmData: [String: String], isShowPaymentMethodView: Bool)
     func dismissTransactionConfirm(animated: Bool)
     func routeBackToHome()
+    func receiptWantToSeeDetails(transaction: Transaction)
 }
 
 protocol HomePresentable: Presentable {

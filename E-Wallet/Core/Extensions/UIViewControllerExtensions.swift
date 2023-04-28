@@ -38,4 +38,22 @@ public extension UIViewController {
     func dismissCustomViewController() {
         dismiss(animated: true, completion: nil)
     }
+
+    func showToast(message: String, font: UIFont) {
+        let toastLabel = UILabel(frame: CGRect(x: 20, y: self.view.frame.size.height-100, width: self.view.frame.size.width-40, height: 40))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 8
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 3.0, delay: 0, options: .curveLinear, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
+    }
 }

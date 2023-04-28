@@ -92,5 +92,9 @@ extension DIConnector {
         DIContainer.register(HistoryBuildable.self) { _, args in
             return HistoryBuilder(dependency: args.get())
         }
+
+        DIContainer.register(TransactionDetailsBuildable.self) { _, args in
+            return TransactionDetailsBuilder(dependency: args.get())
+        }
     }
 }

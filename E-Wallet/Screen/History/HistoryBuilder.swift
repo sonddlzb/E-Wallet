@@ -31,6 +31,9 @@ final class HistoryBuilder: Builder<HistoryDependency>, HistoryBuildable {
         let viewController = HistoryViewController()
         let interactor = HistoryInteractor(presenter: viewController)
         interactor.listener = listener
-        return HistoryRouter(interactor: interactor, viewController: viewController)
+        let transactionDetailsBuilder = DIContainer.resolve(TransactionDetailsBuildable.self, agrument: component)
+        return HistoryRouter(interactor: interactor,
+                             viewController: viewController,
+                             transactionDetailsBuilder: transactionDetailsBuilder)
     }
 }

@@ -32,6 +32,7 @@ protocol TransactionConfirmListener: AnyObject {
     func transactionConfirmWantToDismiss()
     func selectCardWantToRouteToAddNewCard()
     func receiptWantToRouteToHome()
+    func receiptWantToSeeDetails(transaction: Transaction)
 }
 
 final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfirmPresentable> {

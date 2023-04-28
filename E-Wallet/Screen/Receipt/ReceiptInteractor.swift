@@ -19,6 +19,7 @@ protocol ReceiptPresentable: Presentable {
 
 protocol ReceiptListener: AnyObject {
     func receiptWantToRouteToHome()
+    func receiptWantToSeeDetails(transaction: Transaction)
 }
 
 final class ReceiptInteractor: PresentableInteractor<ReceiptPresentable>, ReceiptInteractable {
@@ -50,7 +51,6 @@ extension ReceiptInteractor: ReceiptPresentableListener {
     }
 
     func didTapSeeDetailsButton() {
-        self.listener?.receiptWantToRouteToHome()
-        // route to see details history
+        self.listener?.receiptWantToSeeDetails(transaction: self.viewModel.transaction)
     }
 }

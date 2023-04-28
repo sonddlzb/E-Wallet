@@ -12,4 +12,9 @@ extension TransactionConfirmInteractor: ReceiptListener {
         self.router?.dismissReceipt(animated: false)
         self.listener?.receiptWantToRouteToHome()
     }
+
+    func receiptWantToSeeDetails(transaction: Transaction) {
+        self.router?.dismissReceipt(animated: false)
+        self.listener?.receiptWantToSeeDetails(transaction: transaction)
+    }
 }

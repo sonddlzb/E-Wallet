@@ -271,4 +271,13 @@ extension HomeRouter: HomeRouting {
         self.dismissTopUp(animated: false)
         self.routeToDashboardTab()
     }
+
+    func receiptWantToSeeDetails(transaction: Transaction) {
+        self.dismissTransactionConfirm(animated: false)
+        self.dismissTransfer(animated: false)
+        self.dismissWithdraw(animated: false)
+        self.dismissTopUp(animated: false)
+        self.routeToHistoryTab()
+        self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
+    }
 }
