@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HistoryInteractable: Interactable, TransactionDetailsListener {
+protocol HistoryInteractable: Interactable, TransactionDetailsListener, FilterListener {
     var router: HistoryRouting? { get set }
     var listener: HistoryListener? { get set }
 }
@@ -20,10 +20,15 @@ final class HistoryRouter: ViewableRouter<HistoryInteractable, HistoryViewContro
     private var transactionDetailsRouter: TransactionDetailsRouting?
     private var transactionDetailsBuilder: TransactionDetailsBuildable
 
+    private var filterRouter: FilterRouting?
+    private var filterBuilder: FilterBuildable
+
     init(interactor: HistoryInteractable,
          viewController: HistoryViewControllable,
-         transactionDetailsBuilder: TransactionDetailsBuildable) {
+         transactionDetailsBuilder: TransactionDetailsBuildable,
+         filterBuilder: FilterBuildable) {
         self.transactionDetailsBuilder = transactionDetailsBuilder
+        self.filterBuilder = filterBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -50,5 +55,27 @@ extension HistoryRouter: HistoryRouting {
         self.detachChild(router)
         self.viewControllable.popToBefore(viewControllable: router.viewControllable)
         self.transactionDetailsRouter = nil
+    }
+
+    func routeToFilter(filterModel: FilterModel?) {
+        guard self.filterRouter == nil else {
+            return
+        }
+
+        let router = self.filterBuilder.build(withListener: self.interactor, filterModel: filterModel)
+        router.viewControllable.uiviewController.modalPresentationStyle = .overFullScreen
+        self.viewController.uiviewController.present(router.viewControllable.uiviewController, animated: true)
+        self.attachChild(router)
+        self.filterRouter = router
+    }
+
+    func dismissFilter() {
+        guard let router = self.filterRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.uiviewController.dismiss(animated: true)
+        self.filterRouter = nil
     }
 }

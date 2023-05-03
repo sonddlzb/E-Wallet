@@ -76,6 +76,12 @@ public extension String {
         return dateFormatter.date(from: self)
     }
 
+    func convertMonthAndYearToDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM yyyy"
+        return dateFormatter.date(from: self)
+    }
+
     func matches(regex: String) -> Bool {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }

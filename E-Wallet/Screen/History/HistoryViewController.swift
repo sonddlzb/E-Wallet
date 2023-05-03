@@ -19,6 +19,8 @@ protocol HistoryPresentableListener: AnyObject {
     func reloadDataIfNeed(topic: String)
     func fetchTransactionsByKey(_ key: String, currentTopic: String)
     func didSelect(transaction: Transaction)
+    func didTapFilter()
+    func dismissFilterMode()
 }
 
 final class HistoryViewController: UIViewController, HistoryViewControllable {
@@ -26,6 +28,7 @@ final class HistoryViewController: UIViewController, HistoryViewControllable {
     // MARK: - Outlets
     @IBOutlet private weak var searchTextField: SolarTextField!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var filterCheckedImageView: UIImageView!
     @IBOutlet private weak var topicTabBarView: TopicTabBarView!
 
     // MARK: - Variables
@@ -83,6 +86,10 @@ final class HistoryViewController: UIViewController, HistoryViewControllable {
     @objc func refreshCollectionView() {
         self.listener?.reloadDataIfNeed(topic: self.currentTopic)
     }
+
+    @IBAction func didTapFilterButton(_ sender: Any) {
+        self.listener?.didTapFilter()
+    }
 }
 
 // MARK: - SolarTextFieldDelegate
@@ -109,6 +116,7 @@ extension HistoryViewController {
 extension HistoryViewController: TopicTabBarViewDelegate, TopicTabBarViewDatasource {
     func topicTabBarView(_ topicTabBarView: TopicTabBarView, didSelect topic: String) {
         self.currentTopic = topic
+        self.listener?.dismissFilterMode()
         self.listener?.reloadDataIfNeed(topic: self.currentTopic)
         self.view.endEditing(true)
     }
@@ -133,6 +141,10 @@ extension HistoryViewController: HistoryPresentable {
 
     func stopLoadingEffect() {
         self.collectionView.refreshControl?.endRefreshing()
+    }
+
+    func bindFilterState(isInFilterMode: Bool) {
+        self.filterCheckedImageView.isHidden = !isInFilterMode
     }
 }
 

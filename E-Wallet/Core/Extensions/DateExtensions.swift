@@ -289,6 +289,20 @@ public extension Date {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: self)
     }
+
+    func getMonth(by value: Int) -> Date? {
+        return Calendar.current.date(byAdding: .month, value: value, to: self)
+    }
+
+    func monthName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
+        return dateFormatter.string(from: self) + " " + String(self.year)
+    }
+
+    func endOfMonth() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(month: 1, second: -1), to: self.startOfMonth)!
+    }
 }
 
 extension Date {

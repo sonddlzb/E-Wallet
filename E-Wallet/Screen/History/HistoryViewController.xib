@@ -20,6 +20,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HistoryViewController">
             <connections>
                 <outlet property="collectionView" destination="teO-EG-eJf" id="ra7-ve-bDn"/>
+                <outlet property="filterCheckedImageView" destination="L1i-IJ-ja0" id="28Y-fV-Gqa"/>
                 <outlet property="searchTextField" destination="GTU-wf-SkY" id="ORB-xK-E4a"/>
                 <outlet property="topicTabBarView" destination="MRU-lq-uoy" id="r25-xf-isX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
@@ -50,7 +51,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhE-jN-NoK">
                     <rect key="frame" x="0.0" y="110" width="414" height="45"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTU-wf-SkY" customClass="SolarTextField" customModule="HeliaHotelBooking" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTU-wf-SkY" customClass="SolarTextField" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="10" y="0.0" width="344" height="45"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <userDefinedRuntimeAttributes>
@@ -71,18 +72,30 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_filter" translatesAutoresizingMaskIntoConstraints="NO" id="1zM-pl-5K0">
                                     <rect key="frame" x="0.0" y="5" width="60" height="20"/>
                                 </imageView>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_check_crayola" translatesAutoresizingMaskIntoConstraints="NO" id="L1i-IJ-ja0">
+                                    <rect key="frame" x="37" y="5" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="L1i-IJ-ja0" secondAttribute="height" id="Ffp-FX-JnN"/>
+                                        <constraint firstAttribute="width" constant="15" id="SZu-Jj-2L4"/>
+                                    </constraints>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="Jxw-Lm-f7o" secondAttribute="bottom" id="AAa-LA-IEy"/>
                                 <constraint firstAttribute="trailing" secondItem="Jxw-Lm-f7o" secondAttribute="trailing" id="EFd-9X-zhw"/>
+                                <constraint firstItem="L1i-IJ-ja0" firstAttribute="top" secondItem="0rF-0b-Bb6" secondAttribute="top" constant="5" id="HZn-dF-ric"/>
                                 <constraint firstItem="Jxw-Lm-f7o" firstAttribute="top" secondItem="1zM-pl-5K0" secondAttribute="bottom" constant="3" id="Mxr-qz-nmN"/>
                                 <constraint firstAttribute="trailing" secondItem="1zM-pl-5K0" secondAttribute="trailing" id="NGl-xb-AQY"/>
                                 <constraint firstItem="1zM-pl-5K0" firstAttribute="leading" secondItem="0rF-0b-Bb6" secondAttribute="leading" id="ggb-9V-aPb"/>
                                 <constraint firstItem="Jxw-Lm-f7o" firstAttribute="leading" secondItem="0rF-0b-Bb6" secondAttribute="leading" id="riW-De-QrP"/>
                                 <constraint firstAttribute="width" constant="60" id="siL-Yx-UGw"/>
                                 <constraint firstItem="1zM-pl-5K0" firstAttribute="top" secondItem="0rF-0b-Bb6" secondAttribute="top" constant="5" id="yDe-zQ-qgI"/>
+                                <constraint firstAttribute="trailing" secondItem="L1i-IJ-ja0" secondAttribute="trailing" constant="8" id="zvo-fj-AiS"/>
                             </constraints>
+                            <connections>
+                                <action selector="didTapFilterButton:" destination="-1" eventType="touchUpInside" id="cXy-9o-IHV"/>
+                            </connections>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -148,6 +161,7 @@
         </view>
     </objects>
     <resources>
+        <image name="ic_check_crayola" width="96" height="96"/>
         <image name="ic_filter" width="100" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

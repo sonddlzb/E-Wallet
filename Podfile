@@ -30,6 +30,7 @@
    pod 'DropDown'
    pod 'Stripe' 
    pod 'CreditCardForm'
+   pod 'RangeSeekSlider'
 
    RxSwiftPod()
    RIBsPod()

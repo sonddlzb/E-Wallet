@@ -11,6 +11,8 @@ import RxSwift
 protocol HistoryRouting: ViewableRouting {
     func routeToTransactionDetails(transaction: Transaction, animated: Bool)
     func dismissTransactionDetails()
+    func routeToFilter(filterModel: FilterModel?)
+    func dismissFilter()
 }
 
 protocol HistoryPresentable: Presentable {
@@ -18,6 +20,7 @@ protocol HistoryPresentable: Presentable {
 
     func bind(viewModel: HistoryViewModel)
     func stopLoadingEffect()
+    func bindFilterState(isInFilterMode: Bool)
 }
 
 protocol HistoryListener: AnyObject {
@@ -27,7 +30,13 @@ final class HistoryInteractor: PresentableInteractor<HistoryPresentable>, Histor
 
     weak var router: HistoryRouting?
     weak var listener: HistoryListener?
-    private var viewModel = HistoryViewModel.makeEmpty()
+    var viewModel = HistoryViewModel.makeEmpty()
+    var previousFilterModel: FilterModel?
+    var isInFilterMode = false {
+        didSet {
+            self.presenter.bindFilterState(isInFilterMode: isInFilterMode)
+        }
+    }
 
     override init(presenter: HistoryPresentable) {
         super.init(presenter: presenter)
@@ -64,6 +73,10 @@ final class HistoryInteractor: PresentableInteractor<HistoryPresentable>, Histor
 // MARK: - HistoryPresentableListener
 extension HistoryInteractor: HistoryPresentableListener {
     func reloadDataIfNeed(topic: String) {
+        guard !self.isInFilterMode else {
+            return
+        }
+
         self.fetchTransactionsData(topic: topic)
     }
 
@@ -75,7 +88,15 @@ extension HistoryInteractor: HistoryPresentableListener {
         }
     }
 
+    func dismissFilterMode() {
+        self.isInFilterMode = false
+    }
+
     func didSelect(transaction: Transaction) {
         self.router?.routeToTransactionDetails(transaction: transaction, animated: true)
+    }
+
+    func didTapFilter() {
+        self.router?.routeToFilter(filterModel: self.previousFilterModel)
     }
 }
