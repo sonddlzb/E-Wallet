@@ -809,6 +809,7 @@ PODS:
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
+  - RangeSeekSlider (1.8.0)
   - Resolver (1.5.0)
   - RIBs (0.9.3):
     - RxRelay (~> 5.1)
@@ -855,6 +856,7 @@ DEPENDENCIES:
   - FirebaseRemoteConfig
   - FirebaseStorage
   - Kingfisher
+  - RangeSeekSlider
   - Resolver
   - RIBs (from `https://github.com/uber/RIBs/`, tag `v0.10.0`)
   - RxCocoa
@@ -898,6 +900,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
+    - RangeSeekSlider
     - Resolver
     - RxCocoa
     - RxRelay
@@ -955,6 +958,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
+  RangeSeekSlider: 650b11fa1edcb92e1e0ede797669d98622570fb5
   Resolver: 68984624572763018fd8ec7b8e3e8df0e3b6bba5
   RIBs: d4c4c7e7e4580f0bbe88bdc88b6c11704a738b7f
   RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
@@ -970,6 +974,6 @@ SPEC CHECKSUMS:
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
 
-PODFILE CHECKSUM: 7e5f9c1eeca7b6b646401d65ee2a8940b9414560
+PODFILE CHECKSUM: 50bf8b5c8f6d9a7bc95647dde2ef64856d01bc5a
 
 COCOAPODS: 1.12.1

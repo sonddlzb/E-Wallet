@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-Regular.otf">
+            <string>Outfit-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SelectionImageCell" customModule="E_Wallet" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="156" height="143"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="156" height="143"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z32-Ld-HDN">
+                        <rect key="frame" x="0.0" y="0.0" width="156" height="143"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oam-pV-ibV">
+                                <rect key="frame" x="60" y="33.666666666666664" width="36" height="35.999999999999993"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="0dy-Cm-ivA"/>
+                                    <constraint firstAttribute="width" secondItem="Oam-pV-ibV" secondAttribute="height" id="LGj-QU-t9J"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-2R-pT4">
+                                <rect key="frame" x="78" y="79.666666666666671" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7cQ-2R-pT4" firstAttribute="centerX" secondItem="z32-Ld-HDN" secondAttribute="centerX" id="4jI-Il-WKB"/>
+                            <constraint firstItem="Oam-pV-ibV" firstAttribute="centerY" secondItem="z32-Ld-HDN" secondAttribute="centerY" constant="-20" id="8AI-YN-NMQ"/>
+                            <constraint firstItem="Oam-pV-ibV" firstAttribute="centerX" secondItem="z32-Ld-HDN" secondAttribute="centerX" id="9qy-SW-XO4"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7cQ-2R-pT4" secondAttribute="trailing" constant="3" id="SgH-W2-D2W"/>
+                            <constraint firstItem="7cQ-2R-pT4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z32-Ld-HDN" secondAttribute="leading" constant="3" id="vki-BT-p6e"/>
+                            <constraint firstItem="7cQ-2R-pT4" firstAttribute="top" secondItem="Oam-pV-ibV" secondAttribute="bottom" constant="10" id="zNs-0S-xBY"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" systemColor="systemGray4Color"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="z32-Ld-HDN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2LV-VW-EVF"/>
+                <constraint firstAttribute="trailing" secondItem="z32-Ld-HDN" secondAttribute="trailing" id="So4-dk-QjU"/>
+                <constraint firstAttribute="bottom" secondItem="z32-Ld-HDN" secondAttribute="bottom" id="ddK-Oz-mac"/>
+                <constraint firstItem="z32-Ld-HDN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pCf-fI-yox"/>
+            </constraints>
+            <size key="customSize" width="156" height="143"/>
+            <connections>
+                <outlet property="containerView" destination="z32-Ld-HDN" id="sAq-uL-jIL"/>
+                <outlet property="imageView" destination="Oam-pV-ibV" id="61F-7H-mlr"/>
+                <outlet property="nameLabel" destination="7cQ-2R-pT4" id="fXB-iP-Ltf"/>
+            </connections>
+            <point key="canvasLocation" x="123.66412213740458" y="53.169014084507047"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

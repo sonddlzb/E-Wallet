@@ -96,4 +96,47 @@ class TransactionDatabase {
             }
         }
     }
+
+    func filterTransaction(filterModel: FilterModel, completion: @escaping (_ listTransactions: [Transaction]) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion([])
+            return
+        }
+
+        var listTransactions: [Transaction] = []
+        var query: Query = self.database.collection(DatabaseConst.transactionPath)
+        if filterModel.status != "All" {
+            query = query.whereField("status", isEqualTo: filterModel.status)
+        }
+
+        if filterModel.service != "All" {
+            query = query.whereField("type", isEqualTo: filterModel.service)
+        }
+
+        if filterModel.month != "All" {
+            if let startTime = filterModel.month.convertMonthAndYearToDate() {
+                query = query
+                    .whereField("time", isGreaterThan: startTime.timeIntervalSinceReferenceDate)
+                    .whereField("time", isLessThan: startTime.endOfMonth().timeIntervalSinceReferenceDate)
+            }
+        }
+
+        let querySender = query.whereField("senderId", isEqualTo: userId)
+        self.fetchTransactionBy(query: querySender) { senderTransactions in
+            listTransactions += senderTransactions
+
+            var queryReceiver = query.whereField("receiverId", isEqualTo: userId)
+            queryReceiver = queryReceiver.order(by: "time", descending: true)
+            self.fetchTransactionBy(query: queryReceiver) { receiverTransactions in
+                listTransactions += receiverTransactions
+                let filteredListTransactions = Array(Set(listTransactions).filter {
+                    $0.amount <= filterModel.endAmount && $0.amount >= filterModel.startAmount
+                }).sorted {
+                    return $0.time > $1.time
+                }
+
+                completion(filteredListTransactions)
+            }
+        }
+    }
 }

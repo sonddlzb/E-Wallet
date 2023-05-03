@@ -96,5 +96,9 @@ extension DIConnector {
         DIContainer.register(TransactionDetailsBuildable.self) { _, args in
             return TransactionDetailsBuilder(dependency: args.get())
         }
+
+        DIContainer.register(FilterBuildable.self) { _, args in
+            return FilterBuilder(dependency: args.get())
+        }
     }
 }

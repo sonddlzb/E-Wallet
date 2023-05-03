@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_others.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -7,10 +7,14 @@
 
 import Foundation
 
-public enum PaymentStatus: String {
+public enum PaymentStatus: String, CaseIterable {
     case pending
     case completed
     case failed
+
+    func name() -> String {
+        return self.rawValue.capitalized
+    }
 }
 
 struct TransactionEntity: Codable {
