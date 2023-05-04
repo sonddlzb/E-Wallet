@@ -100,5 +100,9 @@ extension DIConnector {
         DIContainer.register(FilterBuildable.self) { _, args in
             return FilterBuilder(dependency: args.get())
         }
+
+        DIContainer.register(GiftBuildable.self) { _, args in
+            return GiftBuilder(dependency: args.get())
+        }
     }
 }
