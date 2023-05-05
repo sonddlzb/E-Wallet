@@ -31,6 +31,9 @@ final class GiftBuilder: Builder<GiftDependency>, GiftBuildable {
         let viewController = GiftViewController()
         let interactor = GiftInteractor(presenter: viewController)
         interactor.listener = listener
-        return GiftRouter(interactor: interactor, viewController: viewController)
+        let voucherDetailsBuilder = DIContainer.resolve(VoucherDetailsBuildable.self, agrument: component)
+        return GiftRouter(interactor: interactor,
+                          viewController: viewController,
+                          voucherDetailsBuilder: voucherDetailsBuilder)
     }
 }
