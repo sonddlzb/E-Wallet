@@ -17,6 +17,7 @@ private struct Const {
 
 protocol GiftPresentableListener: AnyObject {
     func reloadDataIfNeed()
+    func didSelect(voucher: Voucher)
 }
 
 final class GiftViewController: UIViewController, GiftViewControllable {
@@ -78,6 +79,10 @@ extension GiftViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
         cell.bind(itemViewModel: self.viewModel.item(at: indexPath.row))
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.listener?.didSelect(voucher: self.viewModel.listVouchers[indexPath.row])
     }
 }
 

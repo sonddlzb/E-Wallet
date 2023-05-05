@@ -9,6 +9,8 @@ import RIBs
 import RxSwift
 
 protocol GiftRouting: ViewableRouting {
+    func routeToVoucherDetails(voucher: Voucher)
+    func dissmissVoucherDetails()
 }
 
 protocol GiftPresentable: Presentable {
@@ -62,5 +64,9 @@ final class GiftInteractor: PresentableInteractor<GiftPresentable>, GiftInteract
 extension GiftInteractor: GiftPresentableListener {
     func reloadDataIfNeed() {
         self.fetchVouchers()
+    }
+
+    func didSelect(voucher: Voucher) {
+        self.router?.routeToVoucherDetails(voucher: voucher)
     }
 }

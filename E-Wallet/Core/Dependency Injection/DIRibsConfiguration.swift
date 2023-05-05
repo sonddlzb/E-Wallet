@@ -104,5 +104,9 @@ extension DIConnector {
         DIContainer.register(GiftBuildable.self) { _, args in
             return GiftBuilder(dependency: args.get())
         }
+
+        DIContainer.register(VoucherDetailsBuildable.self) { _, args in
+            return VoucherDetailsBuilder(dependency: args.get())
+        }
     }
 }
