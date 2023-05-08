@@ -12,4 +12,5 @@ public struct DatabaseConst {
     static let cardPath = "cards"
     static let transactionPath = "transactions"
     static let voucherPath = "vouchers"
+    static let billPath = "bills"
 }

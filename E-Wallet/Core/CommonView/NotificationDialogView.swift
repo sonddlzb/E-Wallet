@@ -18,7 +18,8 @@ class NotificationDialogView: UIView {
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
-    @IBOutlet weak var mesageImage: UIImageView!
+    @IBOutlet private weak var okLabel: UILabel!
+    @IBOutlet private weak var mesageImage: UIImageView!
 
     // MARK: - ConstraintLayout
     @IBOutlet weak var mesageLeadingSuperViewLeadingConstraint: NSLayoutConstraint!
@@ -54,7 +55,7 @@ class NotificationDialogView: UIView {
         }
     }
 
-    func show(in view: UIView, title: String, message: String, image: UIImage?) {
+    func show(in view: UIView, title: String, message: String, image: UIImage?, color: UIColor? = nil) {
         self.alpha = 0
         self.titleLabel.text = title
         self.messageLabel.text = message
@@ -63,6 +64,11 @@ class NotificationDialogView: UIView {
         self.fitSuperviewConstraint()
         UIView.animate(withDuration: 0.25) {
             self.alpha = 1
+        }
+
+        if let color = color {
+            self.titleLabel.textColor = color
+            self.okLabel.backgroundColor = color
         }
     }
 

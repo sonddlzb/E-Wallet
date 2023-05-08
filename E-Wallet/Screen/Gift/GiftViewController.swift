@@ -18,6 +18,7 @@ private struct Const {
 protocol GiftPresentableListener: AnyObject {
     func reloadDataIfNeed()
     func didSelect(voucher: Voucher)
+    func didTapUseNow(itemViewModel: GiftItemViewModel)
 }
 
 final class GiftViewController: UIViewController, GiftViewControllable {
@@ -64,6 +65,13 @@ extension GiftViewController: GiftPresentable {
     func stopLoadingEffect() {
         self.collectionView.refreshControl?.endRefreshing()
     }
+
+    func bindNotReadyState(at voucher: Voucher) {
+        NotificationDialogView.loadView().show(in: self.view, title: "Your voucher is not ready!",
+                                               message: "From \(voucher.openTime.formatDate()) you can use this voucher to receiver discount from E-Wallet. Please come back later.",
+                                               image: UIImage(named: "ic_waiting"),
+                                               color: .crayola)
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -77,6 +85,7 @@ extension GiftViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return UICollectionViewCell()
         }
 
+        cell.delegate = self
         cell.bind(itemViewModel: self.viewModel.item(at: indexPath.row))
         return cell
     }
@@ -96,5 +105,12 @@ extension GiftViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return Const.cellSpacing
+    }
+}
+
+// MARK: - VoucherCellDelegate
+extension GiftViewController: VoucherCellDelegate {
+    func voucherCellDidTapUseNow(_ voucherCell: VoucherCell, itemViewModel: GiftItemViewModel) {
+        self.listener?.didTapUseNow(itemViewModel: itemViewModel)
     }
 }

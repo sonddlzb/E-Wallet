@@ -31,6 +31,7 @@ final class DashboardBuilder: Builder<DashboardDependency>, DashboardBuildable {
         let viewController = DashboardViewController()
         let interactor = DashboardInteractor(presenter: viewController)
         interactor.listener = listener
-        return DashboardRouter(interactor: interactor, viewController: viewController)
+        return DashboardRouter(interactor: interactor,
+                               viewController: viewController)
     }
 }

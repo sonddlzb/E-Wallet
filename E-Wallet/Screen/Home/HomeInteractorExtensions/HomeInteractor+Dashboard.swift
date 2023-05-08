@@ -19,4 +19,8 @@ extension HomeInteractor: DashboardListener {
     func dashboadWantToRouteToWithdraw() {
         self.router?.routeToWithdraw()
     }
+
+    func dashboardWantToRouteToEnterBill(serviceType: ServiceType) {
+        self.router?.routeToEnterBill(serviceType: serviceType)
+    }
 }

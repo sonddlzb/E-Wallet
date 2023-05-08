@@ -13,6 +13,7 @@ protocol DashboardPresentableListener: AnyObject {
     func routeToTransfer()
     func routeToTopUp()
     func routeToWithdraw()
+    func didSelect(serviceType: ServiceType)
 }
 
 final class DashboardViewController: UIViewController, DashboardViewControllable {
@@ -25,6 +26,7 @@ final class DashboardViewController: UIViewController, DashboardViewControllable
     @IBOutlet private weak var topPriceLabel: UILabel!
     @IBOutlet private weak var welcomeLabel: UILabel!
     @IBOutlet private weak var dashBoardBarView: DashboardBarView!
+    @IBOutlet private weak var serviceListView: ServiceListView!
 
     // MARK: - Variables
     weak var listener: DashboardPresentableListener?
@@ -37,6 +39,7 @@ final class DashboardViewController: UIViewController, DashboardViewControllable
         self.contentView.setupCornerRadius(topLeftRadius: 32.0, topRightRadius: 32.0, bottomLeftRadius: 0.0, bottomRightRadius: 0.0)
         topPriceLabel.isHidden = true
         self.dashBoardBarView.delegate = self
+        self.serviceListView.delegate = self
     }
 
     override func viewDidLayoutSubviews() {
@@ -100,5 +103,12 @@ extension DashboardViewController: DashboardBarViewDelegate {
         case .qrScan:
             print("Did select qrscan")
         }
+    }
+}
+
+// MARK: - ServiceListViewDelegate
+extension DashboardViewController: ServiceListViewDelegate {
+    func serviceListView(_ serviceListView: ServiceListView, didSelectAt serviceType: ServiceType) {
+        self.listener?.didSelect(serviceType: serviceType)
     }
 }

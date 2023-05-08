@@ -31,6 +31,7 @@
                 <outlet property="dashBoardBarView" destination="97U-ZV-TzC" id="wKq-vU-5Qd"/>
                 <outlet property="optionViewTopConstraintLayout" destination="yXu-mt-zye" id="4bK-El-yNz"/>
                 <outlet property="scrollView" destination="99o-j3-ZYL" id="Wpy-AM-8SG"/>
+                <outlet property="serviceListView" destination="eVr-Rd-wlI" id="woG-wX-toH"/>
                 <outlet property="topPriceLabel" destination="Wb5-xH-2zi" id="dsa-f4-lAK"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
                 <outlet property="welcomeLabel" destination="IeI-RT-HoU" id="5dc-Nz-iau"/>
@@ -49,7 +50,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-tE-N0d">
-                    <rect key="frame" x="0.0" y="48" width="414" height="50"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_hello" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Z-A9-7cf">
                             <rect key="frame" x="10" y="0.0" width="50" height="50"/>
@@ -86,7 +87,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99o-j3-ZYL">
-                    <rect key="frame" x="0.0" y="168" width="414" height="728"/>
+                    <rect key="frame" x="0.0" y="120" width="414" height="776"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQv-UX-RDr">
                             <rect key="frame" x="0.0" y="70" width="414" height="1000"/>
@@ -95,13 +96,13 @@
                                     <rect key="frame" x="20" y="70" width="374" height="280"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7J-c7-TVd">
-                                            <rect key="frame" x="0.0" y="0.0" width="105" height="21.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="104" height="23.333333333333332"/>
                                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVr-Rd-wlI" customClass="ServiceListView" customModule="E_Wallet" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="41.5" width="374" height="238.5"/>
+                                            <rect key="frame" x="0.0" y="43.3333333333333" width="374" height="236.66666666666663"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
                                     </subviews>
@@ -140,7 +141,7 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="pFq-BE-0D0"/>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLU-4r-1kQ">
-                    <rect key="frame" x="20" y="128" width="374" height="150"/>
+                    <rect key="frame" x="20" y="80" width="374" height="150"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97U-ZV-TzC" customClass="DashboardBarView" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="75" width="374" height="75"/>
@@ -158,7 +159,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="374" height="75"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQK-fF-ui4">
-                                    <rect key="frame" x="132" y="0.0" width="110" height="15"/>
+                                    <rect key="frame" x="132" y="0.0" width="110" height="16.333333333333332"/>
                                     <fontDescription key="fontDescription" name="Outfit-Light" family="Outfit" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>

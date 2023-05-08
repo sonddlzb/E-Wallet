@@ -108,5 +108,9 @@ extension DIConnector {
         DIContainer.register(VoucherDetailsBuildable.self) { _, args in
             return VoucherDetailsBuilder(dependency: args.get())
         }
+
+        DIContainer.register(EnterBillBuildable.self) { _, args in
+            return EnterBillBuilder(dependency: args.get())
+        }
     }
 }

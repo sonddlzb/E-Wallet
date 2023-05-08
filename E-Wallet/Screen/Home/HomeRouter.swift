@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -52,6 +52,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var giftRouter: GiftRouting?
     private var giftBuilder: GiftBuildable
 
+    private var enterBillRouter: EnterBillRouting?
+    private var enterBillBuilder: EnterBillBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -63,7 +66,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          withdrawBuilder: WithdrawBuildable,
          transactionConfirmBuilder: TransactionConfirmBuildable,
          historyBuilder: HistoryBuildable,
-         giftBuilder: GiftBuildable) {
+         giftBuilder: GiftBuildable,
+         enterBillBuilder: EnterBillBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
@@ -74,6 +78,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.transactionConfirmBuilder = transactionConfirmBuilder
         self.historyBuilder = historyBuilder
         self.giftBuilder = giftBuilder
+        self.enterBillBuilder = enterBillBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -293,5 +298,26 @@ extension HomeRouter: HomeRouting {
         self.dismissTopUp(animated: false)
         self.routeToHistoryTab()
         self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
+    }
+
+    func routeToEnterBill(serviceType: ServiceType) {
+        guard self.enterBillRouter == nil else {
+            return
+        }
+
+        let router = self.enterBillBuilder.build(withListener: self.interactor, serviceType: serviceType)
+        self.viewController.push(viewControllable: router.viewControllable)
+        self.attachChild(router)
+        self.enterBillRouter = router
+    }
+
+    func dismissEnterBill() {
+        guard let router = self.enterBillRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.enterBillRouter = nil
     }
 }

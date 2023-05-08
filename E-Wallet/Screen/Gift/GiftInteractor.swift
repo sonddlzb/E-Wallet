@@ -18,6 +18,7 @@ protocol GiftPresentable: Presentable {
 
     func bind(viewModel: GiftViewModel)
     func stopLoadingEffect()
+    func bindNotReadyState(at voucher: Voucher)
 }
 
 protocol GiftListener: AnyObject {
@@ -68,5 +69,12 @@ extension GiftInteractor: GiftPresentableListener {
 
     func didSelect(voucher: Voucher) {
         self.router?.routeToVoucherDetails(voucher: voucher)
+    }
+
+    func didTapUseNow(itemViewModel: GiftItemViewModel) {
+        guard itemViewModel.isReadyToUse() else {
+            self.presenter.bindNotReadyState(at: itemViewModel.voucher)
+            return
+        }
     }
 }

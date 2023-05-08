@@ -117,6 +117,18 @@ class SolarTextField: UIView {
         }
     }
 
+    var isValid: Bool = true {
+        didSet {
+            if self.textField.isEditing {
+                self.borderWidth = 1
+                self.borderColor = isValid ? .crayola : .systemRed
+            } else {
+                self.borderWidth = isValid ? 0 : 1
+                self.borderColor = isValid ? .crayola : .systemRed
+            }
+        }
+    }
+
     // MARK: - UI
     var textField = PaddingTextField()
     var rightButton = UIButton()
@@ -279,7 +291,7 @@ extension SolarTextField: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if isHighlightedWhenEditting {
+        if isHighlightedWhenEditting && self.isValid {
             self.borderWidth = 0
         }
 

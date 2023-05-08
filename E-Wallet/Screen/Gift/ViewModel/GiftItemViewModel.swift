@@ -22,4 +22,8 @@ struct GiftItemViewModel {
     func expirationDate() -> String {
         return "Expired in: " + voucher.expirationTime.formatDate()
     }
+
+    func isReadyToUse() -> Bool {
+        return self.voucher.openTime <= Date()
+    }
 }
