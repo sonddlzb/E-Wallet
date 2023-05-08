@@ -10,6 +10,7 @@ import RxSwift
 import SVProgressHUD
 
 protocol EnterBillRouting: ViewableRouting {
+    func routeToBillDetails(bill: Bill)
 }
 
 protocol EnterBillPresentable: Presentable {
@@ -56,7 +57,7 @@ extension EnterBillInteractor: EnterBillPresentableListener {
         BillDatabase.shared.getBillByCustomerId(customerId, serviceType: self.viewModel.serviceType) { bill in
             SVProgressHUD.dismiss()
             if let bill = bill {
-                print(bill)
+                self.router?.routeToBillDetails(bill: bill)
             } else {
                 DispatchQueue.main.async {
                     self.presenter.bindCheckBillFailedResult()

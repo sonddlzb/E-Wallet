@@ -112,5 +112,9 @@ extension DIConnector {
         DIContainer.register(EnterBillBuildable.self) { _, args in
             return EnterBillBuilder(dependency: args.get())
         }
+
+        DIContainer.register(BillDetailsBuildable.self) { _, args in
+            return BillDetailsBuilder(dependency: args.get())
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol EnterBillInteractable: Interactable {
+protocol EnterBillInteractable: Interactable, BillDetailsListener {
     var router: EnterBillRouting? { get set }
     var listener: EnterBillListener? { get set }
 }
@@ -15,10 +15,30 @@ protocol EnterBillInteractable: Interactable {
 protocol EnterBillViewControllable: ViewControllable {
 }
 
-final class EnterBillRouter: ViewableRouter<EnterBillInteractable, EnterBillViewControllable>, EnterBillRouting {
+final class EnterBillRouter: ViewableRouter<EnterBillInteractable, EnterBillViewControllable> {
+
+    private var billDetailsRouter: BillDetailsRouting?
+    private var billDetailsBuilder: BillDetailsBuildable
     
-    override init(interactor: EnterBillInteractable, viewController: EnterBillViewControllable) {
+    init(interactor: EnterBillInteractable,
+         viewController: EnterBillViewControllable,
+         billDetailsBuilder: BillDetailsBuildable) {
+        self.billDetailsBuilder = billDetailsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
+    }
+}
+
+// MARK: - EnterBillRouting
+extension EnterBillRouter: EnterBillRouting {
+    func routeToBillDetails(bill: Bill) {
+        guard self.billDetailsRouter == nil else {
+            return
+        }
+
+        let router = self.billDetailsBuilder.build(withListener: self.interactor, bill: bill)
+        self.attachChild(router)
+        self.viewControllable.push(viewControllable: router.viewControllable)
+        self.billDetailsRouter = router
     }
 }

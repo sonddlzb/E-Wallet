@@ -31,6 +31,9 @@ final class EnterBillBuilder: Builder<EnterBillDependency>, EnterBillBuildable {
         let viewController = EnterBillViewController()
         let interactor = EnterBillInteractor(presenter: viewController, serviceType: serviceType)
         interactor.listener = listener
-        return EnterBillRouter(interactor: interactor, viewController: viewController)
+        let billDetailsBuilder = DIContainer.resolve(BillDetailsBuildable.self, agrument: component)
+        return EnterBillRouter(interactor: interactor,
+                               viewController: viewController,
+                               billDetailsBuilder: billDetailsBuilder)
     }
 }
