@@ -58,4 +58,8 @@ struct VoucherDetailsViewModel {
             return "- Your bill's total value must be greater than $\(voucher.minValue)."
         }
     }
+
+    func isReadyToUse() -> Bool {
+        return self.voucher.openTime <= Date()
+    }
 }

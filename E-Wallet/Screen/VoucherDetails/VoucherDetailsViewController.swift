@@ -11,6 +11,7 @@ import UIKit
 
 protocol VoucherDetailsPresentableListener: AnyObject {
     func didTapBackButton()
+    func didTapUseNow()
 }
 
 final class VoucherDetailsViewController: UIViewController, VoucherDetailsViewControllable {
@@ -53,6 +54,7 @@ final class VoucherDetailsViewController: UIViewController, VoucherDetailsViewCo
         self.listener?.didTapBackButton()
     }
     @IBAction func didTapUseNow(_ sender: Any) {
+        self.listener?.didTapUseNow()
     }
 }
 
@@ -67,5 +69,12 @@ extension VoucherDetailsViewController: VoucherDetailsPresentable {
         self.serviceTypeLabel.text = viewModel.serviceTypeContent()
         self.minValueLabel.text = viewModel.minValueContent()
         self.iconImageView.image = viewModel.image()
+    }
+
+    func bindNotReadyToUseResult() {
+        NotificationDialogView.loadView().show(in: self.view, title: "Your voucher is not ready!",
+                                               message: "From \(self.viewModel.voucher.openTime.formatDate()) you can use this voucher to receiver discount from E-Wallet. Please come back later.",
+                                               image: UIImage(named: "ic_waiting"),
+                                               color: .crayola)
     }
 }

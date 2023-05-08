@@ -22,6 +22,7 @@ protocol DashboardListener: AnyObject {
     func dashboadWantToRouteToTransfer()
     func dashboadWantToRouteToTopUp()
     func dashboadWantToRouteToWithdraw()
+    func dashboardWantToRouteToEnterBill(serviceType: ServiceType)
 }
 
 final class DashboardInteractor: PresentableInteractor<DashboardPresentable> {
@@ -64,5 +65,11 @@ extension DashboardInteractor: DashboardPresentableListener {
 
     func routeToWithdraw() {
         self.listener?.dashboadWantToRouteToWithdraw()
+    }
+
+    func didSelect(serviceType: ServiceType) {
+        if serviceType == .electricity || serviceType == .internet || serviceType == .water || serviceType == .televison {
+            self.listener?.dashboardWantToRouteToEnterBill(serviceType: serviceType)
+        }
     }
 }

@@ -15,6 +15,7 @@ protocol VoucherDetailsPresentable: Presentable {
     var listener: VoucherDetailsPresentableListener? { get set }
 
     func bind(viewModel: VoucherDetailsViewModel)
+    func bindNotReadyToUseResult()
 }
 
 protocol VoucherDetailsListener: AnyObject {
@@ -47,5 +48,12 @@ final class VoucherDetailsInteractor: PresentableInteractor<VoucherDetailsPresen
 extension VoucherDetailsInteractor: VoucherDetailsPresentableListener {
     func didTapBackButton() {
         self.listener?.voucherDetailsWantToDismiss()
+    }
+
+    func didTapUseNow() {
+        guard self.viewModel.isReadyToUse() else {
+            self.presenter.bindNotReadyToUseResult()
+            return
+        }
     }
 }

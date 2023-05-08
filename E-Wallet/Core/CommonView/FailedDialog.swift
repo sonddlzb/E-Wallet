@@ -159,6 +159,24 @@ final class FailedDialog: UIView {
         }
     }
 
+    static func show(title: String, message: String, image: UIImage?) {
+        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
+              shared.superview == nil else {
+            return
+        }
+
+        shared.alpha = 0
+        window.addSubview(shared)
+        shared.fitSuperviewConstraint()
+        shared.titleLabel.text = title
+        shared.messageLabel.text = message
+        shared.imageView.image = image
+
+        UIView.animate(withDuration: 0.15) {
+            shared.alpha = 1
+        }
+    }
+
     static func dismiss() {
         shared.dismiss()
     }
