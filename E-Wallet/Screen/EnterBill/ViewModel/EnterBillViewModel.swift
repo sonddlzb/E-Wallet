@@ -12,7 +12,7 @@ struct EnterBillViewModel {
     var serviceType: ServiceType
 
     func name() -> String {
-        return serviceType.rawValue.capitalized
+        return serviceType.rawValue.uppercased()
     }
 
     func image() -> UIImage? {
