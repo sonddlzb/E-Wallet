@@ -11,11 +11,13 @@ import UIKit
 
 protocol BillDetailsPresentableListener: AnyObject {
     func didTapCheckout()
+    func didTapBackButton()
 }
 
 final class BillDetailsViewController: UIViewController, BillDetailsViewControllable {
 
     // MARK: - Outlets
+    @IBOutlet private weak var checkoutContainerView: UIView!
     @IBOutlet private weak var supplierLabel: UILabel!
     @IBOutlet private weak var customerIDLabel: UILabel!
     @IBOutlet private weak var customerNameLabel: UILabel!
@@ -23,6 +25,7 @@ final class BillDetailsViewController: UIViewController, BillDetailsViewControll
     @IBOutlet private weak var billTypeLabel: UILabel!
     @IBOutlet private weak var periodLabel: UILabel!
     @IBOutlet private weak var amountLabel: UILabel!
+    @IBOutlet private weak var paidAlreadyLabel: UILabel!
 
     // MARK: - Variables
     weak var listener: BillDetailsPresentableListener?
@@ -31,6 +34,10 @@ final class BillDetailsViewController: UIViewController, BillDetailsViewControll
     // MARK: - Actions
     @IBAction func didTapCheckoutButton(_ sender: Any) {
         self.listener?.didTapCheckout()
+    }
+
+    @IBAction func didTapBackButton(_ sender: Any) {
+        self.listener?.didTapBackButton()
     }
 }
 
@@ -46,5 +53,7 @@ extension BillDetailsViewController: BillDetailsPresentable {
         self.billTypeLabel.text = viewModel.billType()
         self.periodLabel.text = viewModel.period()
         self.amountLabel.text = viewModel.amount()
+        self.checkoutContainerView.isHidden = !self.viewModel.isAbleToCheckout()
+        self.paidAlreadyLabel.isHidden = self.viewModel.isAbleToCheckout()
     }
 }

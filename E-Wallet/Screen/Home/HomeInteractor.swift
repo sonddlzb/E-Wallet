@@ -32,6 +32,8 @@ protocol HomeRouting: ViewableRouting {
 
 protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
+
+    func selectHistoryTab()
 }
 
 protocol HomeListener: AnyObject {

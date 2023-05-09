@@ -11,4 +11,8 @@ extension HomeInteractor: EnterBillListener {
     func enterBillWantToDismiss() {
         self.router?.dismissEnterBill()
     }
+
+    func billDetailsWantToRouteToTransactionConfirn(confirmData: [String: String]) {
+        self.router?.routeToTransactionConfirm(confirmData: confirmData, isShowPaymentMethodView: true)
+    }
 }

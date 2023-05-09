@@ -16,6 +16,7 @@ protocol TransactionDetailsPresentable: Presentable {
 
     func bind(viewModel: TransactionDetailsViewModel)
     func bindCopyResult(isSuccess: Bool)
+    func bind(viewModel: BillDetailsViewModel)
 }
 
 protocol TransactionDetailsListener: AnyObject {
@@ -37,10 +38,24 @@ final class TransactionDetailsInteractor: PresentableInteractor<TransactionDetai
     override func didBecomeActive() {
         super.didBecomeActive()
         self.presenter.bind(viewModel: self.viewModel)
+        var billTypes: [PaymentType] = [.electricity, .internet, .water, .televison]
+        if billTypes.contains(self.viewModel.transaction.type) {
+            self.fetchBillData()
+        }
     }
 
     override func willResignActive() {
         super.willResignActive()
+    }
+
+    func fetchBillData() {
+        BillDatabase.shared.getBillById(self.viewModel.transaction.receiverId) { bill in
+            if let bill = bill {
+                DispatchQueue.main.async {
+                    self.presenter.bind(viewModel: BillDetailsViewModel(bill: bill))
+                }
+            }
+        }
     }
 }
 

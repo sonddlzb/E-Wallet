@@ -15,6 +15,9 @@
         <array key="Outfit-Medium.otf">
             <string>Outfit-Medium</string>
         </array>
+        <array key="Outfit-Regular.otf">
+            <string>Outfit-Regular</string>
+        </array>
         <array key="Outfit-SemiBold.otf">
             <string>Outfit-SemiBold</string>
         </array>
@@ -25,8 +28,10 @@
                 <outlet property="addressLabel" destination="OYw-g0-gTC" id="dCQ-Vz-J7D"/>
                 <outlet property="amountLabel" destination="9xM-bp-VTn" id="eIB-vn-6wr"/>
                 <outlet property="billTypeLabel" destination="f3u-KV-gEs" id="uVk-zf-2bu"/>
+                <outlet property="checkoutContainerView" destination="Xcw-Ac-K16" id="ulu-Z9-nTk"/>
                 <outlet property="customerIDLabel" destination="6rl-zh-FEl" id="eet-X8-kBX"/>
                 <outlet property="customerNameLabel" destination="OQl-I7-l8o" id="Hfg-R0-qoQ"/>
+                <outlet property="paidAlreadyLabel" destination="uRz-aG-C6T" id="tPl-5g-ST4"/>
                 <outlet property="periodLabel" destination="QhX-i0-tq1" id="aHk-kA-zGC"/>
                 <outlet property="supplierLabel" destination="yXI-Fe-hge" id="sVd-hy-MDT"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
@@ -63,6 +68,9 @@
                                 <constraint firstAttribute="bottom" secondItem="pzA-ps-2yG" secondAttribute="bottom" constant="10" id="c5a-Te-8jX"/>
                                 <constraint firstItem="pzA-ps-2yG" firstAttribute="top" secondItem="Cge-zS-y1e" secondAttribute="top" constant="10" id="vA4-nV-RUH"/>
                             </constraints>
+                            <connections>
+                                <action selector="didTapBackButton:" destination="-1" eventType="touchUpInside" id="TO4-z3-0Hf"/>
+                            </connections>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.25490196079999999" green="0.1019607843" blue="0.4823529412" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -332,12 +340,20 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid Already" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRz-aG-C6T">
+                            <rect key="frame" x="161.5" y="651" width="91" height="17"/>
+                            <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                            <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="x9q-cq-aqd" firstAttribute="top" secondItem="aDF-W6-d9W" secondAttribute="bottom" constant="20" id="3Oo-z9-5dy"/>
+                        <constraint firstItem="uRz-aG-C6T" firstAttribute="top" secondItem="F1X-cP-GBy" secondAttribute="bottom" constant="20" id="8J1-gY-E9d"/>
                         <constraint firstAttribute="trailing" secondItem="F1X-cP-GBy" secondAttribute="trailing" constant="20" id="EDI-6m-cJC"/>
                         <constraint firstItem="F1X-cP-GBy" firstAttribute="leading" secondItem="W5O-p2-78u" secondAttribute="leading" constant="20" id="LBP-Ac-fwQ"/>
+                        <constraint firstItem="uRz-aG-C6T" firstAttribute="centerX" secondItem="W5O-p2-78u" secondAttribute="centerX" id="Ofo-j4-FNh"/>
                         <constraint firstItem="F1X-cP-GBy" firstAttribute="top" secondItem="x9q-cq-aqd" secondAttribute="bottom" constant="10" id="SGX-dF-u0w"/>
                         <constraint firstItem="x9q-cq-aqd" firstAttribute="leading" secondItem="W5O-p2-78u" secondAttribute="leading" constant="20" id="V8p-uI-mam"/>
                         <constraint firstItem="aDF-W6-d9W" firstAttribute="leading" secondItem="W5O-p2-78u" secondAttribute="leading" constant="20" id="cvE-9X-5wj"/>
