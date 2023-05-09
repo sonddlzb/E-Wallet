@@ -21,6 +21,7 @@ extension HomeInteractor: TransactionConfirmListener {
     }
 
     func receiptWantToSeeDetails(transaction: Transaction) {
+        self.presenter.selectHistoryTab()
         self.router?.receiptWantToSeeDetails(transaction: transaction)
     }
 }

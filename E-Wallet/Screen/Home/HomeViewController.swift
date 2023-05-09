@@ -14,7 +14,7 @@ protocol HomePresentableListener: AnyObject {
     func reloadCurrentTabData()
 }
 
-final class HomeViewController: UIViewController, HomePresentable {
+final class HomeViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var contentView: UIView!
@@ -62,5 +62,12 @@ extension HomeViewController: HomeViewControllable {
 
         self.addChild(viewController.uiviewController)
         self.currentViewController = viewController
+    }
+}
+
+// MARK: - HomePresentable
+extension HomeViewController: HomePresentable {
+    func selectHistoryTab() {
+        self.homeTabBar.setSelectedTab(.history)
     }
 }

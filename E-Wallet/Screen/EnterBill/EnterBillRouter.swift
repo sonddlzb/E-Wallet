@@ -41,4 +41,14 @@ extension EnterBillRouter: EnterBillRouting {
         self.viewControllable.push(viewControllable: router.viewControllable)
         self.billDetailsRouter = router
     }
+
+    func dismissBillDetails() {
+        guard let router = self.billDetailsRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.billDetailsRouter = nil
+    }
 }

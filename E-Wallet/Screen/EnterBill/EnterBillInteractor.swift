@@ -11,6 +11,7 @@ import SVProgressHUD
 
 protocol EnterBillRouting: ViewableRouting {
     func routeToBillDetails(bill: Bill)
+    func dismissBillDetails()
 }
 
 protocol EnterBillPresentable: Presentable {
@@ -22,6 +23,7 @@ protocol EnterBillPresentable: Presentable {
 
 protocol EnterBillListener: AnyObject {
     func enterBillWantToDismiss()
+    func billDetailsWantToRouteToTransactionConfirn(confirmData: [String: String])
 }
 
 final class EnterBillInteractor: PresentableInteractor<EnterBillPresentable>, EnterBillInteractable {

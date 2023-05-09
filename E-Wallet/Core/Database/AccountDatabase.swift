@@ -244,4 +244,100 @@ class AccountDatabase {
             }
         }
     }
+
+    func handlePayment(selectedCard: Card?, billId: String, paymentType: PaymentType, amount: Double, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+        if let card = selectedCard {
+            STPPaymentHelper.shared.handlePayment(card: card, price: amount, paymentType: .topUp, completion: {[weak self] error in
+                if let error = error {
+                    completion(error, nil)
+                    return
+                } else {
+                    self?.topUp(amount: amount) { error, transaction in
+                        if let error = error {
+                            completion(error, nil)
+                            return
+                        } else {
+                            self?.handlePaymentWithBalance(billId: billId, paymentType: paymentType, amount: amount, completion: completion)
+                        }
+                    }
+                }
+            })
+        } else {
+            self.handlePaymentWithBalance(billId: billId, paymentType: paymentType, amount: amount, completion: completion)
+        }
+    }
+
+    func handlePaymentWithBalance(billId: String, paymentType: PaymentType, amount: Double, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.accountRef.child(userId).getData { error, snapshot in
+            if let error = error {
+                completion(error, nil)
+            } else {
+                if let dict = snapshot?.value as? [String: Any], let balance = dict["balance"] as? Double {
+                    guard balance >= amount else {
+                        completion(AccountError.insufficientBalance("Your balance is not enough"), nil)
+                        return
+                    }
+
+                    self.accountRef.child(userId).updateChildValues(["balance": balance - amount]) { error, _ in
+                        guard error == nil else {
+                            BillDatabase.shared.updateBillStatus(billId: billId, billStatus: .processing) { isSuccess in
+                                print("Set bill status to processing \(isSuccess)")
+                                if isSuccess {
+                                    let transactionEntity = TransactionEntity(type: paymentType.rawValue,
+                                                                              senderId: userId,
+                                                                              receiverId: billId,
+                                                                              amount: amount,
+                                                                              currency: "$",
+                                                                              status: PaymentStatus.pending.rawValue,
+                                                                              time: Date(),
+                                                                              description: "\(paymentType.rawValue.capitalized) transaction")
+                                    TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
+                                        if let error = error {
+                                            print("Create transaction failed with error \(error.localizedDescription)")
+                                        } else {
+                                            print("Create transaction successfully")
+                                            if let transactionId = transactionId {
+                                                completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            completion(error, nil)
+                            return
+                        }
+
+                        BillDatabase.shared.updateBillStatus(billId: billId, billStatus: .purchased) { isSuccess in
+                            print("Set bill status to purchased \(isSuccess)")
+                            if isSuccess {
+                                let transactionEntity = TransactionEntity(type: paymentType.rawValue,
+                                                                          senderId: userId,
+                                                                          receiverId: billId,
+                                                                          amount: amount,
+                                                                          currency: "$",
+                                                                          status: PaymentStatus.completed.rawValue,
+                                                                          time: Date(),
+                                                                          description: "\(paymentType.rawValue.capitalized) transaction")
+                                TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
+                                    if let error = error {
+                                        print("Create transaction failed with error \(error.localizedDescription)")
+                                    } else {
+                                        print("Create transaction successfully")
+                                        if let transactionId = transactionId {
+                                            completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

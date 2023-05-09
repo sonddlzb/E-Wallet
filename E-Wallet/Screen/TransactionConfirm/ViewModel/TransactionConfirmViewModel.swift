@@ -55,4 +55,8 @@ struct TransactionConfirmViewModel {
     func cardId() -> String {
         return self.confirmData["cardId"] ?? ""
     }
+
+    func billId() -> String {
+        return self.confirmData["Bill ID"] ?? ""
+    }
 }

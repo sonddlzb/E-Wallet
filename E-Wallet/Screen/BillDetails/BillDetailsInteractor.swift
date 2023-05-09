@@ -18,6 +18,8 @@ protocol BillDetailsPresentable: Presentable {
 }
 
 protocol BillDetailsListener: AnyObject {
+    func billDetailsWantToRouteToTransactionConfirn(confirmData: [String: String])
+    func billDetailsWantToDismiss()
 }
 
 final class BillDetailsInteractor: PresentableInteractor<BillDetailsPresentable>, BillDetailsInteractable {
@@ -45,6 +47,18 @@ final class BillDetailsInteractor: PresentableInteractor<BillDetailsPresentable>
 // MARK: - BillDetailsPresentableListener
 extension BillDetailsInteractor: BillDetailsPresentableListener {
     func didTapCheckout() {
-        // handle checkout
+        let confirmData = ["Service": self.viewModel.supplier(),
+                           "Customer ID": self.viewModel.customerId(),
+                           "Customer Name": self.viewModel.customerName(),
+                           "Address": self.viewModel.address(),
+                           "Payment cycle": self.viewModel.period(),
+                           "Amount": self.viewModel.amount(),
+                           "Bill ID": self.viewModel.bill.id,
+                           "Payment Type": self.viewModel.billType()]
+        self.listener?.billDetailsWantToRouteToTransactionConfirn(confirmData: confirmData)
+    }
+
+    func didTapBackButton() {
+        self.listener?.billDetailsWantToDismiss()
     }
 }

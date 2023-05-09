@@ -9,6 +9,7 @@ enum PaymentType: String, CaseIterable {
     case electricity = "Electricity"
     case internet = "Internet"
     case water = "Water"
+    case televison = "TV"
     case topUp = "Top Up"
     case withdraw = "Withdraw"
     case transfer = "Transfer"

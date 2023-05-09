@@ -31,10 +31,14 @@ struct BillDetailsViewModel {
     }
 
     func period() -> String {
-        return self.billType() + "'s fee " + bill.period
+        return bill.period
     }
 
     func amount() -> String {
         return "$" + String(bill.amount)
+    }
+
+    func isAbleToCheckout() -> Bool {
+        return self.bill.status == .unpurchased
     }
 }
