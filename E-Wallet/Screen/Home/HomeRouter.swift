@@ -288,6 +288,7 @@ extension HomeRouter: HomeRouting {
         self.dismissTransfer(animated: false)
         self.dismissWithdraw(animated: false)
         self.dismissTopUp(animated: false)
+        self.dismissEnterBill(animated: false)
         self.routeToDashboardTab()
     }
 
@@ -311,13 +312,13 @@ extension HomeRouter: HomeRouting {
         self.enterBillRouter = router
     }
 
-    func dismissEnterBill() {
+    func dismissEnterBill(animated: Bool) {
         guard let router = self.enterBillRouter else {
             return
         }
 
         self.detachChild(router)
-        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.enterBillRouter = nil
     }
 }

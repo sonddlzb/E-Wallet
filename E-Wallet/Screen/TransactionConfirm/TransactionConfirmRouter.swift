@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol TransactionConfirmInteractable: Interactable, SelectCardListener, EnterPasswordListener, ReceiptListener {
+protocol TransactionConfirmInteractable: Interactable, SelectCardListener, EnterPasswordListener, ReceiptListener, GiftApplyListener {
     var router: TransactionConfirmRouting? { get set }
     var listener: TransactionConfirmListener? { get set }
 
@@ -27,14 +27,19 @@ final class TransactionConfirmRouter: ViewableRouter<TransactionConfirmInteracta
     private var receiptRouter: ReceiptRouting?
     private var receiptBuilder: ReceiptBuildable
 
+    private var giftApplyRouter: GiftApplyRouting?
+    private var giftApplyBuilder: GiftApplyBuildable
+
     init(interactor: TransactionConfirmInteractable,
          viewController: TransactionConfirmViewControllable,
          selectCardBuilder: SelectCardBuildable,
          enterPasswordBuilder: EnterPasswordBuildable,
-         receiptBuilder: ReceiptBuildable) {
+         receiptBuilder: ReceiptBuildable,
+         giftApplyBuilder: GiftApplyBuildable) {
         self.selectCardBuilder = selectCardBuilder
         self.enterPasswordBuilder = enterPasswordBuilder
         self.receiptBuilder = receiptBuilder
+        self.giftApplyBuilder = giftApplyBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -112,5 +117,26 @@ extension TransactionConfirmRouter: TransactionConfirmRouting {
         self.detachChild(router)
         self.viewControllable.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.receiptRouter = nil
+    }
+
+    func routeToGiftApply(paymentType: PaymentType, amount: Double) {
+        guard self.giftApplyRouter == nil else {
+            return
+        }
+
+        let router = self.giftApplyBuilder.build(withListener: interactor, paymentType: paymentType, amount: amount)
+        self.attachChild(router)
+        self.viewController.push(viewControllable: router.viewControllable)
+        self.giftApplyRouter = router
+    }
+
+    func dismissGiftApply() {
+        guard let router = self.giftApplyRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.giftApplyRouter = nil
     }
 }

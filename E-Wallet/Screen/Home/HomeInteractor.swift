@@ -27,7 +27,7 @@ protocol HomeRouting: ViewableRouting {
     func routeBackToHome()
     func receiptWantToSeeDetails(transaction: Transaction)
     func routeToEnterBill(serviceType: ServiceType)
-    func dismissEnterBill()
+    func dismissEnterBill(animated: Bool)
 }
 
 protocol HomePresentable: Presentable {

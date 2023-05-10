@@ -1,27 +1,27 @@
 //
-//  GiftRouter.swift
+//  GiftApplyRouter.swift
 //  E-Wallet
 //
-//  Created by đào sơn on 04/05/2023.
+//  Created by đào sơn on 09/05/2023.
 //
 
 import RIBs
 
-protocol GiftInteractable: Interactable, VoucherDetailsListener {
-    var router: GiftRouting? { get set }
-    var listener: GiftListener? { get set }
+protocol GiftApplyInteractable: Interactable, VoucherDetailsListener {
+    var router: GiftApplyRouting? { get set }
+    var listener: GiftApplyListener? { get set }
 }
 
-protocol GiftViewControllable: ViewControllable {
+protocol GiftApplyViewControllable: ViewControllable {
 }
 
-final class GiftRouter: ViewableRouter<GiftInteractable, GiftViewControllable> {
+final class GiftApplyRouter: ViewableRouter<GiftApplyInteractable, GiftApplyViewControllable> {
 
     private var voucherDetailsRouter: VoucherDetailsRouting?
     private var voucherDetailsBuilder: VoucherDetailsBuildable
 
-    init(interactor: GiftInteractable,
-         viewController: GiftViewControllable,
+    init(interactor: GiftApplyInteractable,
+         viewController: GiftApplyViewControllable,
          voucherDetailsBuilder: VoucherDetailsBuildable) {
         self.voucherDetailsBuilder = voucherDetailsBuilder
         super.init(interactor: interactor, viewController: viewController)
@@ -29,26 +29,25 @@ final class GiftRouter: ViewableRouter<GiftInteractable, GiftViewControllable> {
     }
 }
 
-// MARK: - GiftRouting
-extension GiftRouter: GiftRouting {
+extension GiftApplyRouter: GiftApplyRouting {
     func routeToVoucherDetails(voucher: Voucher) {
         guard self.voucherDetailsRouter == nil else {
             return
         }
 
-        let router = self.voucherDetailsBuilder.build(withListener: self.interactor, voucher: voucher, isFromGift: true)
+        let router = self.voucherDetailsBuilder.build(withListener: self.interactor, voucher: voucher, isFromGift: false)
         self.attachChild(router)
         self.viewControllable.push(viewControllable: router.viewControllable)
         self.voucherDetailsRouter = router
     }
 
-    func dissmissVoucherDetails() {
+    func dismissVoucherDetails(animated: Bool) {
         guard let router = self.voucherDetailsRouter else {
             return
         }
 
         self.detachChild(router)
-        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.voucherDetailsRouter = nil
     }
 }

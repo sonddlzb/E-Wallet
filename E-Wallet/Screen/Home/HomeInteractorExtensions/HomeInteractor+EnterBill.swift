@@ -9,7 +9,7 @@ import Foundation
 
 extension HomeInteractor: EnterBillListener {
     func enterBillWantToDismiss() {
-        self.router?.dismissEnterBill()
+        self.router?.dismissEnterBill(animated: true)
     }
 
     func billDetailsWantToRouteToTransactionConfirn(confirmData: [String: String]) {
