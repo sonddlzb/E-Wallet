@@ -15,4 +15,8 @@ extension HomeInteractor: ProfileListener {
     func profileWantToReloadUserInfor() {
         self.fetchUserInfor()
     }
+
+    func profileWantToRouteToGift() {
+        self.router?.routeToTab(homeTab: .gift)
+    }
 }

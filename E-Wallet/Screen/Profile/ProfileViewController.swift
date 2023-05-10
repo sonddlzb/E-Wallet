@@ -17,6 +17,7 @@ private struct Const {
 protocol ProfilePresentableListener: AnyObject {
     func didTapSignOut()
     func didTapEditProfile()
+    func didSelect(option: ProfileOption)
 }
 
 final class ProfileViewController: UIViewController, ProfileViewControllable {
@@ -74,6 +75,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 
         cell.bind(profileOption: ProfileOption.allCases[indexPath.row])
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.listener?.didSelect(option: ProfileOption.allCases[indexPath.row])
     }
 }
 
