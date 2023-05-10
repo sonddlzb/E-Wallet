@@ -25,6 +25,7 @@ protocol ProfilePresentable: Presentable {
 protocol ProfileListener: AnyObject {
     func profileDidSignOut()
     func profileWantToReloadUserInfor()
+    func profileWantToRouteToGift()
 }
 
 final class ProfileInteractor: PresentableInteractor<ProfilePresentable> {
@@ -75,6 +76,14 @@ extension ProfileInteractor: ProfilePresentableListener {
         }
 
         self.router?.routeToEditProfile(userEntity: self.homeViewModel.userEntity)
+    }
+
+    func didSelect(option: ProfileOption) {
+        switch option {
+        case .voucher:
+            self.listener?.profileWantToRouteToGift()
+        default: print("not handle yet")
+        }
     }
 }
 
