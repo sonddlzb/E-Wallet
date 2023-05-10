@@ -18,6 +18,8 @@ protocol TransactionConfirmRouting: ViewableRouting {
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
     func routeToReceipt(transaction: Transaction)
     func dismissReceipt(animated: Bool)
+    func routeToGiftApply(paymentType: PaymentType, amount: Double)
+    func dismissGiftApply()
 }
 
 protocol TransactionConfirmPresentable: Presentable {
@@ -26,6 +28,7 @@ protocol TransactionConfirmPresentable: Presentable {
     func bind(cardViewModel: CardViewModel, balance: Double)
     func bindCardSelectedResult(at indexPath: IndexPath)
     func bind(viewModel: TransactionConfirmViewModel)
+    func bind(voucher: Voucher)
     func bindPaymentResult(isSuccess: Bool, message: String)
 }
 
@@ -43,6 +46,7 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
     var cardViewModel = CardViewModel.makeEmpty()
     private var balance = 0.0
     var viewModel = TransactionConfirmViewModel.makeEmpty()
+    var voucher: Voucher?
 
     init(presenter: TransactionConfirmPresentable, confirmData: [String: String]) {
         self.viewModel = TransactionConfirmViewModel(confirmData: confirmData)
@@ -88,6 +92,10 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
                     print("transfer failed! \(error.localizedDescription)")
                     self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                 } else {
+                    if let voucherId = self?.voucher?.id {
+                        VoucherDatabase.shared.removeVoucher(voucherId: voucherId)
+                    }
+
                     print("transfer successfully")
                     self?.presenter.bindPaymentResult(isSuccess: true, message: "Your money has been transfered successfully")
                     if let transaction = transaction {
@@ -117,6 +125,10 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
                             self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                         } else {
                             DispatchQueue.main.async {
+                                if let voucherId = self?.voucher?.id {
+                                    VoucherDatabase.shared.removeVoucher(voucherId: voucherId)
+                                }
+
                                 self?.presenter.bindPaymentResult(isSuccess: true, message: "Your top-up payment was handled successfully")
                                 if let transaction = transaction {
                                     self?.router?.routeToReceipt(transaction: transaction)
@@ -148,6 +160,10 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
                             if let error = error {
                                 self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                             } else {
+                                if let voucherId = self?.voucher?.id {
+                                    VoucherDatabase.shared.removeVoucher(voucherId: voucherId)
+                                }
+
                                 self?.presenter.bindPaymentResult(isSuccess: true, message: "Your withdraw payment was handled successfully")
                                 if let transaction = transaction {
                                     self?.router?.routeToReceipt(transaction: transaction)
@@ -162,12 +178,17 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
 
     func handleBillPayment() {
         if let paymentType = self.viewModel.paymentType() {
-            AccountDatabase.shared.handlePayment(selectedCard: self.viewModel.selectedCard, billId: self.viewModel.billId(), paymentType: paymentType, amount: self.viewModel.amount()) { [weak self] error, transaction in
+            AccountDatabase.shared.handlePayment(selectedCard: self.viewModel.selectedCard, billId: self.viewModel.billId(), paymentType: paymentType, amount: self.viewModel.amount() - self.viewModel.discount) { [weak self] error, transaction in
                 DispatchQueue.main.async {
                     SVProgressHUD.dismiss()
                     if let error = error {
                         self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                     } else {
+                        // not remove voucher for test purpose
+//                        if let voucherId = self?.voucher?.id {
+//                            VoucherDatabase.shared.removeVoucher(voucherId: voucherId)
+//                        }
+
                         self?.presenter.bindPaymentResult(isSuccess: true, message: "Your bill payment was handled successfully")
                         if let transaction = transaction {
                             self?.router?.routeToReceipt(transaction: transaction)
@@ -192,6 +213,17 @@ extension TransactionConfirmInteractor: TransactionConfirmPresentableListener {
     func showPasswordAuthentication(selectedCard: Card?) {
         self.viewModel.selectedCard = selectedCard
         self.router?.presentPassword()
+    }
+
+    func showDiscount() {
+        if let paymentType = self.viewModel.paymentType() {
+            self.router?.routeToGiftApply(paymentType: paymentType, amount: self.viewModel.amount())
+        }
+    }
+
+    func removeDiscount() {
+        self.viewModel.discount = 0.0
+        self.presenter.bind(viewModel: self.viewModel)
     }
 }
 

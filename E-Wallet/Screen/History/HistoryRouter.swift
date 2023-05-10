@@ -53,7 +53,7 @@ extension HistoryRouter: HistoryRouting {
         }
 
         self.detachChild(router)
-        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.viewControllable.popToRoot()
         self.transactionDetailsRouter = nil
     }
 

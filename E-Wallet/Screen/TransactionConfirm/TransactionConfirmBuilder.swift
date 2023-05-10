@@ -38,10 +38,12 @@ final class TransactionConfirmBuilder: Builder<TransactionConfirmDependency>, Tr
         let selectCardBuilder = DIContainer.resolve(SelectCardBuildable.self, agrument: component)
         let enterPasswordBuilder = DIContainer.resolve(EnterPasswordBuildable.self, agrument: component)
         let receiptBuilder = DIContainer.resolve(ReceiptBuildable.self, agrument: component)
+        let giftApplyBuilder = DIContainer.resolve(GiftApplyBuildable.self, agrument: component)
         return TransactionConfirmRouter(interactor: interactor,
                                         viewController: viewController,
                                         selectCardBuilder: selectCardBuilder,
                                         enterPasswordBuilder: enterPasswordBuilder,
-                                        receiptBuilder: receiptBuilder)
+                                        receiptBuilder: receiptBuilder,
+                                        giftApplyBuilder: giftApplyBuilder)
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 struct TransactionConfirmViewModel {
     var confirmData: [String: String]
     var selectedCard: Card?
+    var discount = 0.0
 
     static func makeEmpty() -> TransactionConfirmViewModel {
         return TransactionConfirmViewModel(confirmData: [:])

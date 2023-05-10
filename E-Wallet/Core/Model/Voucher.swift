@@ -12,7 +12,7 @@ enum DiscountType: String {
     case number
 }
 
-class Voucher {
+class Voucher: Equatable {
     var id: String
     var description: String
     var discountType: DiscountType
@@ -48,5 +48,9 @@ class Voucher {
         self.maxDiscount = entity.maxDiscount
         self.userId = entity.userId
         self.serviceTypes = entity.serviceTypes.map {ServiceType(rawValue: $0) ?? .others}
+    }
+
+    static func == (lhs: Voucher, rhs: Voucher) -> Bool {
+        return lhs.id == rhs.id
     }
 }

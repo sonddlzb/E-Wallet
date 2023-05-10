@@ -20,6 +20,7 @@ protocol VoucherDetailsPresentable: Presentable {
 
 protocol VoucherDetailsListener: AnyObject {
     func voucherDetailsWantToDismiss()
+    func voucherDetailsWantTransactionConfirmToUse(voucher: Voucher)
 }
 
 final class VoucherDetailsInteractor: PresentableInteractor<VoucherDetailsPresentable>, VoucherDetailsInteractable {
@@ -27,8 +28,10 @@ final class VoucherDetailsInteractor: PresentableInteractor<VoucherDetailsPresen
     weak var router: VoucherDetailsRouting?
     weak var listener: VoucherDetailsListener?
     var viewModel: VoucherDetailsViewModel
+    var isFromGift: Bool
 
-    init(presenter: VoucherDetailsPresentable, voucher: Voucher) {
+    init(presenter: VoucherDetailsPresentable, voucher: Voucher, isFromGift: Bool) {
+        self.isFromGift = isFromGift
         self.viewModel = VoucherDetailsViewModel(voucher: voucher)
         super.init(presenter: presenter)
         presenter.listener = self
@@ -54,6 +57,12 @@ extension VoucherDetailsInteractor: VoucherDetailsPresentableListener {
         guard self.viewModel.isReadyToUse() else {
             self.presenter.bindNotReadyToUseResult()
             return
+        }
+
+        if !self.isFromGift {
+            self.listener?.voucherDetailsWantTransactionConfirmToUse(voucher: self.viewModel.voucher)
+        } else {
+            // handle later
         }
     }
 }

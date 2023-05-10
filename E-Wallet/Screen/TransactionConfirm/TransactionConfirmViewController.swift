@@ -21,6 +21,8 @@ protocol TransactionConfirmPresentableListener: AnyObject {
     func didTapBackButton()
     func showSelectCard(selectedCard: Card?)
     func showPasswordAuthentication(selectedCard: Card?)
+    func showDiscount()
+    func removeDiscount()
 }
 
 final class TransactionConfirmViewController: UIViewController, TransactionConfirmViewControllable {
@@ -38,6 +40,7 @@ final class TransactionConfirmViewController: UIViewController, TransactionConfi
     private var selectedCard: Card?
     private var viewModel = TransactionConfirmViewModel.makeEmpty()
     private var isShowPaymentMethodView = true
+    private var voucher: Voucher?
 
     // MARK: - Lifecycle
     init(isShowPaymentMethodView: Bool) {
@@ -124,6 +127,11 @@ extension TransactionConfirmViewController: TransactionConfirmPresentable {
             FailedDialog.show(title: "Payment failed!", message: message)
         }
     }
+
+    func bind(voucher: Voucher) {
+        self.voucher = voucher
+        self.collectionView.reloadData()
+    }
 }
 
 // MARK: - PaymentMethodViewDelegate
@@ -158,7 +166,12 @@ extension TransactionConfirmViewController: UICollectionViewDelegate, UICollecti
             return UICollectionReusableView()
         }
 
-        footerView.bind(amount: self.viewModel.amount(), discount: 0.0)
+        footerView.bind(amount: self.viewModel.amount(), discount: self.viewModel.discount)
+        if let voucher = self.voucher {
+            footerView.bind(voucher: voucher)
+        }
+
+        footerView.delegate = self
         return footerView
     }
 }
@@ -186,5 +199,16 @@ extension TransactionConfirmViewController: UICollectionViewDelegateFlowLayout {
 extension TransactionConfirmViewController: STPAuthenticationContext {
     func authenticationPresentingViewController() -> UIViewController {
         return self
+    }
+}
+
+// MARK: - TransactionFooterViewDelagate
+extension TransactionConfirmViewController: TransactionFooterViewDelagate {
+    func transactionFooterViewDidSelectDiscount(_ transactionFooterView: TransactionFooterView) {
+        self.listener?.showDiscount()
+    }
+
+    func transactionFooterViewDidSelectCancel(_ transactionFooterView: TransactionFooterView) {
+        self.listener?.removeDiscount()
     }
 }
