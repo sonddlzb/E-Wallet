@@ -25,6 +25,7 @@ protocol EnterPasswordListener: AnyObject {
     func enterPasswordDidConfirmPasswordSuccessfully(password: String)
     func enterPasswordWantToAuthenticateOldUser(password: String)
     func enterPasswordDidAuthenticateOldUserSuccess()
+    func enterPasswordWantToEndLoginSession()
 }
 
 final class EnterPasswordInteractor: PresentableInteractor<EnterPasswordPresentable> {
@@ -37,11 +38,12 @@ final class EnterPasswordInteractor: PresentableInteractor<EnterPasswordPresenta
     init(presenter: EnterPasswordPresentable,
          isNewUser: Bool,
          isConfirmPassword: Bool,
-         password: String) {
-        self.viewModel = EnterPasswordViewModel(isNewUser: isNewUser, isConfirmPassword: isConfirmPassword)
+         password: String, isForceToEnterPassword: Bool) {
+        self.viewModel = EnterPasswordViewModel(isNewUser: isNewUser, isConfirmPassword: isConfirmPassword, isForceToEnterPassword: isForceToEnterPassword)
         self.viewModel.password = password
         super.init(presenter: presenter)
         presenter.listener = self
+        self.presenter.bind(viewModel: self.viewModel)
     }
 
     override func didBecomeActive() {
@@ -85,7 +87,7 @@ extension EnterPasswordInteractor: EnterPasswordInteractable {
         }
 
         if chances <= 0 {
-            self.enterPasswordWantToDissmiss()
+            self.listener?.enterPasswordWantToEndLoginSession()
             return
         }
 

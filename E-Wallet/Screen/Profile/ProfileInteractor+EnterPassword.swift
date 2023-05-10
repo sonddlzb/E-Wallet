@@ -1,14 +1,14 @@
 //
-//  SignInInteractor+EnterPassword.swift
+//  ProfileInteractor+EnterPassword.swift
 //  E-Wallet
 //
-//  Created by đào sơn on 07/04/2023.
+//  Created by đào sơn on 11/05/2023.
 //
 
 import Foundation
 import SVProgressHUD
 
-extension SignInInteractor: EnterPasswordListener {
+extension ProfileInteractor: EnterPasswordListener {
     func enterPasswordWantToDissmiss() {
         self.router?.dismissEnterPassword()
     }
@@ -25,10 +25,20 @@ extension SignInInteractor: EnterPasswordListener {
     }
 
     func enterPasswordDidConfirmPasswordSuccessfully(password: String) {
-        self.password = password
         self.router?.dismissEnterPassword()
-        print("Create new account successfully with password \(password)")
-        self.router?.routeToFillProfile()
+        SVProgressHUD.show()
+        UserDatabase.shared.updatePassword(newPassword: password) { error in
+            SVProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.presenter.bindChangePasswordResult(isSuccess: false,
+                                                            message: error.localizedDescription)
+                } else {
+                    self.presenter.bindChangePasswordResult(isSuccess: true,
+                                                            message: "Your password was changed successfully!")
+                }
+            }
+        }
     }
 
     func enterPasswordWantToAuthenticateOldUser(password: String) {
@@ -36,7 +46,8 @@ extension SignInInteractor: EnterPasswordListener {
         UserDatabase.shared.checkPassword(password: password) { isSuccess in
             SVProgressHUD.dismiss()
             if isSuccess {
-                self.userDefaults.saveValidPasswordStatus()
+                let userDefaults = UserDefaults.standard
+                userDefaults.saveValidPasswordStatus()
             }
 
             DispatchQueue.main.async {
@@ -46,10 +57,14 @@ extension SignInInteractor: EnterPasswordListener {
     }
 
     func enterPasswordDidAuthenticateOldUserSuccess() {
-        self.listener?.routeToHome()
+        self.router?.dismissEnterPassword()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            self.router?.routeToEnterPassword(isNewUser: true, isConfirmPassword: false, password: "")
+        })
     }
 
     func enterPasswordWantToEndLoginSession() {
         self.router?.dismissEnterPassword()
+        self.listener?.profileDidSignOut()
     }
 }

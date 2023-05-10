@@ -275,4 +275,29 @@ class UserDatabase {
             }
         }
     }
+
+    func updatePassword(newPassword: String, completion: @escaping (_ error: Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.database.collection(DatabaseConst.userPath).document(userId).updateData(["password": newPassword]) { error in
+            completion(error)
+        }
+    }
+
+    func checkValidUser(completion: @escaping (_ isValidUser: Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.database.collection(DatabaseConst.userPath).document(userId).getDocument { document, error in
+            guard error == nil, document?.data() != nil else {
+                completion(false)
+                return
+            }
+
+            completion(true)
+        }
+    }
 }

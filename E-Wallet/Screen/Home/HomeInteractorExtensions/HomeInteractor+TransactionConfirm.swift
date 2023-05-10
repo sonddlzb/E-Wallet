@@ -24,4 +24,9 @@ extension HomeInteractor: TransactionConfirmListener {
         self.presenter.selectHistoryTab()
         self.router?.receiptWantToSeeDetails(transaction: transaction)
     }
+
+    func transactionConfirmWantToEndLoginSession() {
+        UserDefaults.standard.removeValidPasswordStatus()
+        self.listener?.routeToSignIn()
+    }
 }

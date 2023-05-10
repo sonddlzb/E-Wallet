@@ -843,6 +843,7 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SwiftLint (0.50.3)
   - TLLogging (1.0.4)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - CreditCardForm
@@ -865,6 +866,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftLint
   - TLLogging
+  - Toast-Swift
 
 SPEC REPOS:
   trunk:
@@ -914,6 +916,7 @@ SPEC REPOS:
     - SVProgressHUD
     - SwiftLint
     - TLLogging
+    - Toast-Swift
 
 EXTERNAL SOURCES:
   RIBs:
@@ -973,7 +976,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 50bf8b5c8f6d9a7bc95647dde2ef64856d01bc5a
+PODFILE CHECKSUM: ba18d1c23d26c35bff77c76f85929ad3d9e0ab13
 
 COCOAPODS: 1.12.1

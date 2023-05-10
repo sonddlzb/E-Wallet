@@ -32,8 +32,10 @@ final class ProfileBuilder: Builder<ProfileDependency>, ProfileBuildable {
         let interactor = ProfileInteractor(presenter: viewController)
         interactor.listener = listener
         let editProfileBuilder = DIContainer.resolve(EditProfileBuildable.self, agrument: component)
+        let enterPasswordBuilder = DIContainer.resolve(EnterPasswordBuildable.self, agrument: component)
         return ProfileRouter(interactor: interactor,
                              viewController: viewController,
-                             editProfileBuilder: editProfileBuilder)
+                             editProfileBuilder: editProfileBuilder,
+                             enterPasswordBuilder: enterPasswordBuilder)
     }
 }

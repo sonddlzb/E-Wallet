@@ -99,7 +99,7 @@ extension TransactionDetailsViewController: TransactionDetailsPresentable {
     }
 
     func bindCopyResult(isSuccess: Bool) {
-        self.showToast(message: isSuccess ? "Transaction code was copied to your clipboard" : "Something went wrong. Try again!", font: Outfit.regularFont(size: 16.0))
+        self.view.makeToast(isSuccess ? "Transaction code was copied to your clipboard" : "Something went wrong. Try again!")
     }
 
     func bind(viewModel: BillDetailsViewModel) {

@@ -9,6 +9,7 @@ import Foundation
 
 extension HomeInteractor: ProfileListener {
     func profileDidSignOut() {
+        UserDefaults.standard.removeValidPasswordStatus()
         self.listener?.routeToSignIn()
     }
 

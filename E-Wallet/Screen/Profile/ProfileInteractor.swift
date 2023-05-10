@@ -13,6 +13,9 @@ protocol ProfileRouting: ViewableRouting {
     func routeToEditProfile(userEntity: UserEntity)
     func dismissEditProfile()
     func bind(homeViewModel: HomeViewModel)
+    func routeToEnterPassword(isNewUser: Bool, isConfirmPassword: Bool, password: String)
+    func dismissEnterPassword()
+    func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
 }
 
 protocol ProfilePresentable: Presentable {
@@ -20,6 +23,7 @@ protocol ProfilePresentable: Presentable {
 
     func bindSignOutFailedResult(message: String)
     func bind(homeViewModel: HomeViewModel)
+    func bindChangePasswordResult(isSuccess: Bool, message: String)
 }
 
 protocol ProfileListener: AnyObject {
@@ -82,6 +86,8 @@ extension ProfileInteractor: ProfilePresentableListener {
         switch option {
         case .voucher:
             self.listener?.profileWantToRouteToGift()
+        case .changePassword:
+            self.router?.routeToEnterPassword(isNewUser: false, isConfirmPassword: false, password: "")
         default: print("not handle yet")
         }
     }

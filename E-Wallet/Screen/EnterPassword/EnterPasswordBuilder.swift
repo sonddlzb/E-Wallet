@@ -20,7 +20,8 @@ protocol EnterPasswordBuildable: Buildable {
     func build(withListener listener: EnterPasswordListener,
                isNewUser: Bool,
                isConfirmPassword: Bool,
-               password: String) -> EnterPasswordRouting
+               password: String,
+               isForceToEnterPassword: Bool) -> EnterPasswordRouting
 }
 
 final class EnterPasswordBuilder: Builder<EnterPasswordDependency>, EnterPasswordBuildable {
@@ -32,13 +33,15 @@ final class EnterPasswordBuilder: Builder<EnterPasswordDependency>, EnterPasswor
     func build(withListener listener: EnterPasswordListener,
                isNewUser: Bool,
                isConfirmPassword: Bool,
-               password: String) -> EnterPasswordRouting {
+               password: String,
+               isForceToEnterPassword: Bool) -> EnterPasswordRouting {
         let component = EnterPasswordComponent(dependency: dependency)
         let viewController = EnterPasswordViewController()
         let interactor = EnterPasswordInteractor(presenter: viewController,
                                                  isNewUser: isNewUser,
                                                  isConfirmPassword: isConfirmPassword,
-                                                 password: password)
+                                                 password: password,
+                                                 isForceToEnterPassword: isForceToEnterPassword)
         interactor.listener = listener
         return EnterPasswordRouter(interactor: interactor, viewController: viewController)
     }

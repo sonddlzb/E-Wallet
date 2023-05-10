@@ -11,4 +11,5 @@ struct EnterPasswordViewModel {
     var isNewUser = false
     var isConfirmPassword = false
     var password = ""
+    var isForceToEnterPassword = true
 }
