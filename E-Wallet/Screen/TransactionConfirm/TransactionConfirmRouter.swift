@@ -77,7 +77,7 @@ extension TransactionConfirmRouter: TransactionConfirmRouting {
             return
         }
 
-        let router = self.enterPasswordBuilder.build(withListener: interactor, isNewUser: false, isConfirmPassword: false, password: "")
+        let router = self.enterPasswordBuilder.build(withListener: interactor, isNewUser: false, isConfirmPassword: false, password: "", isForceToEnterPassword: false)
         self.attachChild(router)
         self.viewController.uiviewController.presentCustomViewController(router.viewControllable.uiviewController)
         self.enterPasswordRouter = router

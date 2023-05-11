@@ -69,7 +69,8 @@ extension SignInRouter: SignInRouting {
         let router = self.enterPasswordBuilder.build(withListener: self.interactor,
                                                      isNewUser: isNewUser,
                                                      isConfirmPassword: isConfirmPassword,
-                                                     password: password)
+                                                     password: password,
+                                                     isForceToEnterPassword: true)
         self.viewController.uiviewController.presentCustomViewController(router.viewControllable.uiviewController)
         self.attachChild(router)
         self.enterPasswordRouter = router

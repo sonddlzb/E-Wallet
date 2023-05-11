@@ -46,4 +46,8 @@ extension TransactionConfirmInteractor: EnterPasswordListener {
         default: print("not handle yet")
         }
     }
+
+    func enterPasswordWantToEndLoginSession() {
+        self.listener?.transactionConfirmWantToEndLoginSession()
+    }
 }

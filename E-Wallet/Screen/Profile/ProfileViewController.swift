@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import Toast_Swift
 
 private struct Const {
     static let cellSpacing = 12.0
@@ -114,5 +115,9 @@ extension ProfileViewController: ProfilePresentable {
         self.imageView.setImage(with: self.homeViewModel.avtURL(), indicator: .activity)
         self.nameLabel.text = self.homeViewModel.name()
         self.phoneNumberLabel.text = self.homeViewModel.phoneNumber()
+    }
+
+    func bindChangePasswordResult(isSuccess: Bool, message: String) {
+        self.view.makeToast(message)
     }
 }

@@ -31,6 +31,7 @@
    pod 'Stripe' 
    pod 'CreditCardForm'
    pod 'RangeSeekSlider'
+   pod 'Toast-Swift'
 
    RxSwiftPod()
    RIBsPod()

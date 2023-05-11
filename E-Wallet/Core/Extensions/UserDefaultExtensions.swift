@@ -37,4 +37,12 @@ public extension UserDefaults {
             self.setValue(true, forKey: UserDefaultsConst.validatePassword + userId)
         }
     }
+
+    func removeValidPasswordStatus() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        self.removeObject(forKey: UserDefaultsConst.validatePassword + userId)
+    }
 }

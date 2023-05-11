@@ -73,13 +73,19 @@ extension EnterPasswordViewController: EnterPasswordPresentable {
         var title = ""
         if self.viewModel.isConfirmPassword {
             title = "Confirm your password"
-            self.cancelButton.isHidden = true
+            if self.viewModel.isForceToEnterPassword {
+                self.cancelButton.isHidden = true
+            }
         } else if self.viewModel.isNewUser {
             title = "Create your password"
-            self.cancelButton.isHidden = true
+            if self.viewModel.isForceToEnterPassword {
+                self.cancelButton.isHidden = true
+            }
         } else {
             title = "Enter your password"
-            self.cancelButton.isHidden = false
+            if self.viewModel.isForceToEnterPassword {
+                self.cancelButton.isHidden = false
+            }
         }
 
         self.passwordView.bind(title: title)

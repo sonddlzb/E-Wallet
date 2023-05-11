@@ -13,11 +13,17 @@ extension RootInteractor: SplashListener {
         if self.userDefaults.launchCount() == 1 {
             self.router?.routeToIntroduction()
         } else {
-            if Auth.auth().currentUser == nil || !self.userDefaults.isValidatePassword() {
-                Auth.auth().currentUser?.delete()
-                self.router?.routeToSignIn()
-            } else {
-                self.router?.routeToHome()
+            UserDatabase.shared.checkValidUser { [weak self] isValidUser in
+                if isValidUser {
+                    if Auth.auth().currentUser == nil || !(self?.userDefaults.isValidatePassword() ?? true) {
+                        self?.router?.routeToSignIn()
+                    } else {
+                        self?.router?.routeToHome()
+                    }
+                } else {
+                    Auth.auth().currentUser?.delete()
+                    self?.router?.routeToSignIn()
+                }
             }
         }
 
