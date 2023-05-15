@@ -9,7 +9,7 @@ import Foundation
 
 extension HomeInteractor: DashboardListener {
     func dashboadWantToRouteToTransfer() {
-        self.router?.routeToTransfer()
+        self.router?.routeToTransfer(phoneNumber: nil)
     }
 
     func dashboadWantToRouteToTopUp() {
@@ -22,5 +22,9 @@ extension HomeInteractor: DashboardListener {
 
     func dashboardWantToRouteToEnterBill(serviceType: ServiceType) {
         self.router?.routeToEnterBill(serviceType: serviceType)
+    }
+
+    func dashboardWantToRouteToQR() {
+        self.router?.routeToQR()
     }
 }

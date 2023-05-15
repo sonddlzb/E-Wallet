@@ -14,6 +14,7 @@ protocol DashboardPresentableListener: AnyObject {
     func routeToTopUp()
     func routeToWithdraw()
     func didSelect(serviceType: ServiceType)
+    func routeToQR()
 }
 
 final class DashboardViewController: UIViewController, DashboardViewControllable {
@@ -101,7 +102,7 @@ extension DashboardViewController: DashboardBarViewDelegate {
         case .withdraw:
             self.listener?.routeToWithdraw()
         case .qrScan:
-            print("Did select qrscan")
+            self.listener?.routeToQR()
         }
     }
 }

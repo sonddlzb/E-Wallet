@@ -604,6 +604,8 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.24)
   - CreditCardForm (0.2.0)
   - DropDown (2.3.13)
+  - EFQRCode (6.2.1):
+    - swift_qrcodejs (~> 2.2.2)
   - Firebase (10.6.0):
     - Firebase/Core (= 10.6.0)
   - Firebase/Core (10.6.0):
@@ -848,6 +850,7 @@ PODS:
 DEPENDENCIES:
   - CreditCardForm
   - DropDown
+  - EFQRCode
   - Firebase
   - Firebase/Crashlytics
   - FirebaseAuth
@@ -874,6 +877,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - CreditCardForm
     - DropDown
+    - EFQRCode
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -933,6 +937,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   CreditCardForm: bba4aad545236f97f2dc45ea3bed0cb57d5e0e99
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  EFQRCode: a4d39ec3466b68dffa71de3b5caef7c9ceefdc53
   Firebase: f13680471b021937f2230ea8503c7809d8c29806
   FirebaseABTesting: cec558d2e670053b1e862c98cfecae64aecfd629
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
@@ -978,6 +983,6 @@ SPEC CHECKSUMS:
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: ba18d1c23d26c35bff77c76f85929ad3d9e0ab13
+PODFILE CHECKSUM: 5af5fd3e00da59dc76d3031bb01e70f24f3722a9
 
 COCOAPODS: 1.12.1

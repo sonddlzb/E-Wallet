@@ -72,6 +72,11 @@ class NotificationDialogView: UIView {
         }
     }
 
+    func show(in view: UIView, title: String, message: String, image: UIImage?, color: UIColor? = nil, okTitle: String) {
+        self.show(in: view, title: title, message: message, image: image, color: color)
+        self.okLabel.text = okTitle
+    }
+
     func dismiss() {
         UIView.animate(withDuration: 0.25) {
             self.alpha = 0

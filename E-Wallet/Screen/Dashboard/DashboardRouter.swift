@@ -18,7 +18,7 @@ protocol DashboardViewControllable: ViewControllable {
 }
 
 final class DashboardRouter: ViewableRouter<DashboardInteractable, DashboardViewControllable> {
-
+    
     override init(interactor: DashboardInteractable,
          viewController: DashboardViewControllable) {
         super.init(interactor: interactor, viewController: viewController)

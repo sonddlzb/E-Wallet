@@ -138,6 +138,17 @@ extension TransferViewController: TransferPresentable {
             self.present(contactPicker, animated: true, completion: nil)
         }
     }
+
+    func bind(phoneNumber: String) {
+        self.loadViewIfNeeded()
+        self.phoneNumberTextField.text = phoneNumber.formatPhoneNumber()
+        self.listener?.getNameBy(phoneNumber: phoneNumber.formatPhoneNumber(), completion: { name in
+            if !name.isEmpty {
+                self.nameLabel.text = name
+                self.phoneNumberHeighConstraint.constant = 55.0
+            }
+        })
+    }
 }
 
 // MARK: - CNContactPickerDelegate
@@ -151,6 +162,11 @@ extension TransferViewController: CNContactPickerDelegate {
                     self.nameLabel.text = name
                     self.phoneNumberHeighConstraint.constant = 58.0
                     self.phoneNumberTextField.resignFirstResponder()
+                } else {
+                    if self.nameLabel.text?.isEmpty == false {
+                        self.nameLabel.text = ""
+                        self.phoneNumberHeighConstraint.constant = 55.0
+                    }
                 }
             })
         }
