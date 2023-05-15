@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener, QRListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -55,6 +55,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var enterBillRouter: EnterBillRouting?
     private var enterBillBuilder: EnterBillBuildable
 
+    private var qrRouter: QRRouting?
+    private var qrBuilder: QRBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -67,7 +70,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          transactionConfirmBuilder: TransactionConfirmBuildable,
          historyBuilder: HistoryBuildable,
          giftBuilder: GiftBuildable,
-         enterBillBuilder: EnterBillBuildable) {
+         enterBillBuilder: EnterBillBuildable,
+         qrBuilder: QRBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
@@ -79,6 +83,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.historyBuilder = historyBuilder
         self.giftBuilder = giftBuilder
         self.enterBillBuilder = enterBillBuilder
+        self.qrBuilder = qrBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -158,12 +163,12 @@ extension HomeRouter: HomeRouting {
         self.withdrawRouter?.bind(homeViewModel: viewModel)
     }
 
-    func routeToTransfer() {
+    func routeToTransfer(phoneNumber: String?) {
         guard self.transferRouter == nil else {
             return
         }
 
-        let router = self.transferBuilder.build(withListener: self.interactor)
+        let router = self.transferBuilder.build(withListener: self.interactor, phoneNumber: phoneNumber)
         self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
         self.attachChild(router)
         self.transferRouter = router
@@ -320,5 +325,26 @@ extension HomeRouter: HomeRouting {
         self.detachChild(router)
         self.viewControllable.popToBefore(viewControllable: router.viewControllable, animated: animated)
         self.enterBillRouter = nil
+    }
+
+    func routeToQR() {
+        guard self.qrRouter == nil else {
+            return
+        }
+
+        let router = self.qrBuilder.build(withListener: self.interactor)
+        self.viewController.push(viewControllable: router.viewControllable)
+        self.attachChild(router)
+        self.qrRouter = router
+    }
+
+    func dismissQR() {
+        guard let router = self.qrRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.qrRouter = nil
     }
 }

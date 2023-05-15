@@ -88,6 +88,7 @@ extension RootRouter: RootRouting {
         let navigationController = BaseNavigationController(rootViewController: router.viewControllable.uiviewController)
         window.rootViewController = navigationController
         attachChild(router)
+        self.splashRouter = nil
         self.homeRouter = router
     }
 
@@ -96,6 +97,7 @@ extension RootRouter: RootRouting {
         let navigationController = BaseNavigationController(rootViewController: router.viewControllable.uiviewController)
         window.rootViewController = navigationController
         attachChild(router)
+        self.splashRouter = nil
         self.introductionRouter = router
     }
 

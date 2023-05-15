@@ -13,7 +13,7 @@ protocol HomeRouting: ViewableRouting {
     func dashboardWantToReloadData()
     func routeToTab(homeTab: HomeTab)
     func bindDataToHomeTab(viewModel: HomeViewModel)
-    func routeToTransfer()
+    func routeToTransfer(phoneNumber: String?)
     func dismissTransfer(animated: Bool)
     func routeToTopUp()
     func dismissTopUp(animated: Bool)
@@ -28,6 +28,8 @@ protocol HomeRouting: ViewableRouting {
     func receiptWantToSeeDetails(transaction: Transaction)
     func routeToEnterBill(serviceType: ServiceType)
     func dismissEnterBill(animated: Bool)
+    func routeToQR()
+    func dismissQR()
 }
 
 protocol HomePresentable: Presentable {

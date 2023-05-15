@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-Light.otf">
+            <string>Outfit-Light</string>
+        </array>
+        <array key="Outfit-Regular.otf">
+            <string>Outfit-Regular</string>
+        </array>
+        <array key="Outfit-SemiBold.otf">
+            <string>Outfit-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyQRViewController">
+            <connections>
+                <outlet property="imageView" destination="wF9-jB-nP1" id="38l-EN-v1U"/>
+                <outlet property="nameLabel" destination="wD6-YA-hR4" id="yIH-7U-eUR"/>
+                <outlet property="phoneNumberLabel" destination="g9B-KZ-hhj" id="Mrk-MX-7ZF"/>
+                <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wF9-jB-nP1">
+                    <rect key="frame" x="62" y="145" width="290" height="290"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="wF9-jB-nP1" secondAttribute="height" id="tQa-Yc-D8T"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QR CODE TO RECEIVE MONEY ON E_WALLET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbn-Rt-MIQ">
+                    <rect key="frame" x="40" y="98" width="334" height="17"/>
+                    <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wD6-YA-hR4">
+                    <rect key="frame" x="207" y="465" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-KZ-hhj">
+                    <rect key="frame" x="207" y="468" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" name="Outfit-Light" family="Outfit" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="wF9-jB-nP1" firstAttribute="top" secondItem="Sbn-Rt-MIQ" secondAttribute="bottom" constant="30" id="3NW-zP-bf8"/>
+                <constraint firstItem="wF9-jB-nP1" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.7" id="8Qf-pu-oK1"/>
+                <constraint firstItem="g9B-KZ-hhj" firstAttribute="top" secondItem="wD6-YA-hR4" secondAttribute="bottom" constant="3" id="CdW-g5-MeB"/>
+                <constraint firstItem="wF9-jB-nP1" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="HJE-OF-hOz"/>
+                <constraint firstItem="g9B-KZ-hhj" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="O5R-Rx-eDg"/>
+                <constraint firstItem="Sbn-Rt-MIQ" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="fyW-PQ-UMZ"/>
+                <constraint firstItem="Sbn-Rt-MIQ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="raw-hf-Qir"/>
+                <constraint firstItem="wD6-YA-hR4" firstAttribute="top" secondItem="wF9-jB-nP1" secondAttribute="bottom" constant="30" id="u5i-8Y-znt"/>
+                <constraint firstItem="wD6-YA-hR4" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="x6m-Ag-PMf"/>
+            </constraints>
+            <point key="canvasLocation" x="-394" y="74"/>
+        </view>
+    </objects>
+</document>

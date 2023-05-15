@@ -120,5 +120,17 @@ extension DIConnector {
         DIContainer.register(GiftApplyBuildable.self) { _, args in
             return GiftApplyBuilder(dependency: args.get())
         }
+
+        DIContainer.register(ScannerBuildable.self) { _, args in
+            return ScannerBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(QRBuildable.self) { _, args in
+            return QRBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(MyQRBuildable.self) { _, args in
+            return MyQRBuilder(dependency: args.get())
+        }
     }
 }

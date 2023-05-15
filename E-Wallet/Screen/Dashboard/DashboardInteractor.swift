@@ -23,6 +23,7 @@ protocol DashboardListener: AnyObject {
     func dashboadWantToRouteToTopUp()
     func dashboadWantToRouteToWithdraw()
     func dashboardWantToRouteToEnterBill(serviceType: ServiceType)
+    func dashboardWantToRouteToQR()
 }
 
 final class DashboardInteractor: PresentableInteractor<DashboardPresentable> {
@@ -71,5 +72,9 @@ extension DashboardInteractor: DashboardPresentableListener {
         if serviceType == .electricity || serviceType == .internet || serviceType == .water || serviceType == .televison {
             self.listener?.dashboardWantToRouteToEnterBill(serviceType: serviceType)
         }
+    }
+
+    func routeToQR() {
+        self.listener?.dashboardWantToRouteToQR()
     }
 }

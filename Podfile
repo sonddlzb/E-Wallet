@@ -32,6 +32,7 @@
    pod 'CreditCardForm'
    pod 'RangeSeekSlider'
    pod 'Toast-Swift'
+   pod 'EFQRCode'
 
    RxSwiftPod()
    RIBsPod()

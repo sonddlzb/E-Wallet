@@ -16,6 +16,7 @@ protocol TransferPresentable: Presentable {
     var listener: TransferPresentableListener? { get set }
 
     func openContactsVC()
+    func bind(phoneNumber: String)
 }
 
 protocol TransferListener: AnyObject {
@@ -27,14 +28,19 @@ final class TransferInteractor: PresentableInteractor<TransferPresentable>, Tran
 
     weak var router: TransferRouting?
     weak var listener: TransferListener?
+    private var phoneNumber: String?
 
-    override init(presenter: TransferPresentable) {
+    init(presenter: TransferPresentable, phoneNumber: String?) {
+        self.phoneNumber = phoneNumber
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
     override func didBecomeActive() {
         super.didBecomeActive()
+        if let phoneNumber = self.phoneNumber {
+            self.presenter.bind(phoneNumber: phoneNumber)
+        }
     }
 
     override func willResignActive() {
