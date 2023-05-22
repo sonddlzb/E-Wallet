@@ -23,6 +23,7 @@ import FirebaseAuth
 class STPPaymentHelper {
     static let shared = STPPaymentHelper()
     unowned var viewController: UIViewController!
+    private let server = "https://stripe-et34.onrender.com"
 
     func handlePayment(card: Card,
                        price: Double,
@@ -61,7 +62,7 @@ class STPPaymentHelper {
                              price: Double,
                              paymentType: PaymentType,
                              completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "http://localhost:3020/create-payment-intent") else {
+        guard let url = URL(string: self.server + "/create-payment-intent") else {
             completion(.failure(NSError(domain: "Unknown error", code: 0, userInfo: nil)))
             return
         }
