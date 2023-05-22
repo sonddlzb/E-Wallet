@@ -132,5 +132,9 @@ extension DIConnector {
         DIContainer.register(MyQRBuildable.self) { _, args in
             return MyQRBuilder(dependency: args.get())
         }
+
+        DIContainer.register(ExpenseBuildable.self) { _, args in
+            return ExpenseBuilder(dependency: args.get())
+        }
     }
 }

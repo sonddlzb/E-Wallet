@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener {
+protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener, ExpenseListener {
     var router: ProfileRouting? { get set }
     var listener: ProfileListener? { get set }
 
@@ -24,12 +24,17 @@ final class ProfileRouter: ViewableRouter<ProfileInteractable, ProfileViewContro
     private var enterPasswordRouter: EnterPasswordRouting?
     private var enterPasswordBuilder: EnterPasswordBuildable
 
+    private var expenseRouter: ExpenseRouting?
+    private var expenseBuilder: ExpenseBuildable
+
     init(interactor: ProfileInteractable,
          viewController: ProfileViewControllable,
          editProfileBuilder: EditProfileBuildable,
-         enterPasswordBuilder: EnterPasswordBuildable) {
+         enterPasswordBuilder: EnterPasswordBuildable,
+         expenseBuilder: ExpenseBuildable) {
         self.enterPasswordBuilder = enterPasswordBuilder
         self.editProfileBuilder = editProfileBuilder
+        self.expenseBuilder = expenseBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -88,5 +93,26 @@ extension ProfileRouter: ProfileRouting {
 
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool) {
         self.enterPasswordRouter?.bindSignInResult(isSuccess: isSuccess)
+    }
+
+    func routeToExpense() {
+        guard self.expenseRouter == nil else {
+            return
+        }
+
+        let router = self.expenseBuilder.build(withListener: self.interactor)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: true)
+        self.attachChild(router)
+        self.expenseRouter = router
+    }
+
+    func dismissExpense() {
+        guard let router = self.expenseRouter else {
+            return
+        }
+
+        detachChild(router)
+        self.viewController.popToBefore(viewControllable: router.viewControllable)
+        self.expenseRouter = nil
     }
 }

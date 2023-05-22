@@ -16,6 +16,8 @@ protocol ProfileRouting: ViewableRouting {
     func routeToEnterPassword(isNewUser: Bool, isConfirmPassword: Bool, password: String)
     func dismissEnterPassword()
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
+    func routeToExpense()
+    func dismissExpense()
 }
 
 protocol ProfilePresentable: Presentable {
@@ -88,6 +90,8 @@ extension ProfileInteractor: ProfilePresentableListener {
             self.listener?.profileWantToRouteToGift()
         case .changePassword:
             self.router?.routeToEnterPassword(isNewUser: false, isConfirmPassword: false, password: "")
+        case .expenseManagement:
+            self.router?.routeToExpense()
         default: print("not handle yet")
         }
     }

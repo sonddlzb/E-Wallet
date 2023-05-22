@@ -33,6 +33,7 @@
    pod 'RangeSeekSlider'
    pod 'Toast-Swift'
    pod 'EFQRCode'
+   pod 'Charts'
 
    RxSwiftPod()
    RIBsPod()
