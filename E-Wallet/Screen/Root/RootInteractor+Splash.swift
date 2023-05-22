@@ -11,9 +11,11 @@ import FirebaseAuth
 extension RootInteractor: SplashListener {
     func splashWantToDismiss() {
         if self.userDefaults.launchCount() == 1 {
+            self.router?.dismissSplash()
             self.router?.routeToIntroduction()
         } else {
             UserDatabase.shared.checkValidUser { [weak self] isValidUser in
+                self?.router?.dismissSplash()
                 if isValidUser {
                     if Auth.auth().currentUser == nil || !(self?.userDefaults.isValidatePassword() ?? true) {
                         self?.router?.routeToSignIn()
@@ -26,7 +28,5 @@ extension RootInteractor: SplashListener {
                 }
             }
         }
-
-        self.router?.dismissSplash()
     }
 }
