@@ -15,6 +15,7 @@ private struct Const {
     static let contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 20.0)
     static let cellHeight = 70.0
     static let cellSpacing = 6.0
+    static let footerHeight = 520.0
 }
 
 protocol ExpensePresentableListener: AnyObject {
@@ -24,14 +25,15 @@ protocol ExpensePresentableListener: AnyObject {
 final class ExpenseViewController: UIViewController, ExpenseViewControllable {
 
     // MARK: - Outlets
-    @IBOutlet private weak var expenseBarView: ExpenseBarView!
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var chartView: BarChartView!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var expenseBarView: ExpenseBarView!
+    @IBOutlet private weak var expenseBarTopConstraint: NSLayoutConstraint!
 
     // MARK: - Variables
     weak var listener: ExpensePresentableListener?
     var viewModel = ExpenseViewModel.makeEmpty()
+    private var headerView: ExpenseHeaderView?
+    private var isOnExpenseMode: Bool = true
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -41,11 +43,7 @@ final class ExpenseViewController: UIViewController, ExpenseViewControllable {
 
     // MARK: - Config
     private func config() {
-        self.configExpenseBarView()
         self.configCollectionView()
-    }
-
-    private func configExpenseBarView() {
         self.expenseBarView.delegate = self
     }
 
@@ -56,64 +54,12 @@ final class ExpenseViewController: UIViewController, ExpenseViewControllable {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.registerCell(type: HistoryCell.self)
-    }
-
-    private func bindChartData() {
-        self.viewModel.fetchListMonthsTotalMoney { monthlyData in
-            var barEntries: [BarChartDataEntry] = []
-            let currencyFormatter = NumberFormatter()
-            currencyFormatter.numberStyle = .currency
-            currencyFormatter.currencySymbol = "$"
-            currencyFormatter.maximumFractionDigits = 2
-            for index in 0..<monthlyData.count {
-                let entry = BarChartDataEntry(x: Double(index), y: monthlyData[index])
-                barEntries.append(entry)
-            }
-
-            let barDataSet = BarChartDataSet(entries: barEntries, label: "Total Expense")
-            let barData = BarChartData(dataSet: barDataSet)
-
-            self.chartView.data = barData
-            self.chartView.xAxis.labelPosition = .bottom
-            self.chartView.xAxis.labelCount = monthlyData.count
-            self.chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: self.viewModel.listMonths())
-            self.chartView.leftAxis.valueFormatter = (DefaultAxisValueFormatter(formatter: currencyFormatter))
-            self.chartView.rightAxis.valueFormatter = (DefaultAxisValueFormatter(formatter: currencyFormatter))
-            self.chartView.barData?.setValueFormatter(DefaultValueFormatter(formatter: currencyFormatter))
-
-            self.chartView.xAxis.drawGridLinesEnabled = false
-            self.chartView.leftAxis.drawGridLinesEnabled = false
-            self.chartView.rightAxis.drawGridLinesEnabled = false
-            self.chartView.xAxis.axisMinimum = -0.5
-            self.chartView.tintColor = .crayola
-            self.chartView.legend.yEntrySpace = 10.0
-            self.chartView.delegate = self
-
-            self.chartView.notifyDataSetChanged()
-        }
+        self.collectionView.register(ExpenseHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ExpenseHeaderView")
     }
 
     // MARK: - Actions
     @IBAction func didTapBackButton(_ sender: Any) {
         self.listener?.didTapBack()
-    }
-}
-
-// MARK: - ChartViewDelegate
-extension ExpenseViewController: ChartViewDelegate {
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print("select entry \(entry)")
-    }
-}
-
-// MARK: - ExpenseBarViewDelegate
-extension ExpenseViewController: ExpenseBarViewDelegate {
-    func expenseBarViewDidSelectExpense(_ expenseBarView: ExpenseBarView) {
-        self.collectionView.reloadData()
-    }
-
-    func expenseBarViewDidSelectIncome(_ expenseBarView: ExpenseBarView) {
-        self.collectionView.reloadData()
     }
 }
 
@@ -124,12 +70,23 @@ extension ExpenseViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
 
-        cell.bind(itemViewModel: self.expenseBarView.isOnExpenseMode ? self.viewModel.expenseItem(at: indexPath.row) : self.viewModel.incomeItem(at: indexPath.row))
+        cell.bind(itemViewModel: self.isOnExpenseMode ? self.viewModel.expenseItem(at: indexPath.row) : self.viewModel.incomeItem(at: indexPath.row))
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.expenseBarView.isOnExpenseMode ? self.viewModel.numberOfExpenseTransactions() : self.viewModel.numberOfIncomeTransactions()
+        return self.isOnExpenseMode ? self.viewModel.numberOfExpenseTransactions() : self.viewModel.numberOfIncomeTransactions()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let footerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ExpenseHeaderView", for: indexPath) as? ExpenseHeaderView else {
+            return UICollectionReusableView()
+        }
+
+        footerView.bind(viewModel: self.viewModel)
+
+        footerView.delegate = self
+        return footerView
     }
 }
 
@@ -139,7 +96,7 @@ extension ExpenseViewController: ExpensePresentable {
         self.viewModel = viewModel
         self.loadViewIfNeeded()
         self.collectionView.reloadData()
-        self.bindChartData()
+        self.headerView?.bind(viewModel: viewModel)
     }
 }
 
@@ -153,5 +110,38 @@ extension ExpenseViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return Const.cellSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = self.collectionView.frame.width - Const.contentInset.left - Const.contentInset.right
+        let height = Const.footerHeight
+        return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: - ExpenseHeaderViewDelegate
+extension ExpenseViewController: ExpenseHeaderViewDelegate {
+    func expenseHeaderView(_ expenseHeaderView: ExpenseHeaderView, didSelect entry: Charts.ChartDataEntry) {
+        print("select entry \(entry)")
+    }
+}
+
+// MARK: - ExpenseBarViewDelegate
+extension ExpenseViewController: ExpenseBarViewDelegate {
+    func expenseBarViewDidSelectExpense(_ expenseBarView: ExpenseBarView) {
+        self.isOnExpenseMode = true
+        self.collectionView.reloadData()
+    }
+
+    func expenseBarViewDidSelectIncome(_ expenseBarView: ExpenseBarView) {
+        self.isOnExpenseMode = false
+        self.collectionView.reloadData()
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension ExpenseViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.expenseBarTopConstraint.constant = max(0.0, 450.0 - scrollView.contentOffset.y)
     }
 }
