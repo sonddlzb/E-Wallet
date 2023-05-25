@@ -31,6 +31,9 @@ final class ExpenseBuilder: Builder<ExpenseDependency>, ExpenseBuildable {
         let viewController = ExpenseViewController()
         let interactor = ExpenseInteractor(presenter: viewController)
         interactor.listener = listener
-        return ExpenseRouter(interactor: interactor, viewController: viewController)
+        let expenseDetailsBuilder = DIContainer.resolve(ExpenseDetailsBuildable.self, agrument: component)
+        return ExpenseRouter(interactor: interactor,
+                             viewController: viewController,
+                             expenseDetailsBuilder: expenseDetailsBuilder)
     }
 }

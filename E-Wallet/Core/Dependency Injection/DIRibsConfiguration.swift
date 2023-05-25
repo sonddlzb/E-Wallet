@@ -136,5 +136,9 @@ extension DIConnector {
         DIContainer.register(ExpenseBuildable.self) { _, args in
             return ExpenseBuilder(dependency: args.get())
         }
+
+        DIContainer.register(ExpenseDetailsBuildable.self) { _, args in
+            return ExpenseDetailsBuilder(dependency: args.get())
+        }
     }
 }

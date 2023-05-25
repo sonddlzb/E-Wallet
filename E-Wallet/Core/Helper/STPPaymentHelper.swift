@@ -13,7 +13,6 @@ enum PaymentType: String, CaseIterable {
     case topUp = "Top Up"
     case withdraw = "Withdraw"
     case transfer = "Transfer"
-    case receive = "Receive"
 }
 
 import Foundation

@@ -20,6 +20,7 @@ private struct Const {
 
 protocol ExpensePresentableListener: AnyObject {
     func didTapBack()
+    func didSelectColumnAt(startDate: Date)
 }
 
 final class ExpenseViewController: UIViewController, ExpenseViewControllable {
@@ -121,8 +122,8 @@ extension ExpenseViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - ExpenseHeaderViewDelegate
 extension ExpenseViewController: ExpenseHeaderViewDelegate {
-    func expenseHeaderView(_ expenseHeaderView: ExpenseHeaderView, didSelect entry: Charts.ChartDataEntry) {
-        print("select entry \(entry)")
+    func expenseHeaderView(_ expenseHeaderView: ExpenseHeaderView, didSelect startDate: Date) {
+        self.listener?.didSelectColumnAt(startDate: startDate)
     }
 }
 

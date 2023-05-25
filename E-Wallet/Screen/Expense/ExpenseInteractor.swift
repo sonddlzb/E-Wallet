@@ -9,6 +9,8 @@ import RIBs
 import RxSwift
 
 protocol ExpenseRouting: ViewableRouting {
+    func routeToExpenseDetails(startDate: Date)
+    func dismissExpenseDetails()
 }
 
 protocol ExpensePresentable: Presentable {
@@ -52,6 +54,10 @@ final class ExpenseInteractor: PresentableInteractor<ExpensePresentable>, Expens
 }
 
 extension ExpenseInteractor: ExpensePresentableListener {
+    func didSelectColumnAt(startDate: Date) {
+        self.router?.routeToExpenseDetails(startDate: startDate)
+    }
+
     func didTapBack() {
         self.listener?.expenseWantToDismiss()
     }
