@@ -22,6 +22,7 @@ protocol TransferPresentable: Presentable {
 protocol TransferListener: AnyObject {
     func transferWantToDismiss()
     func transferWantToRouteToTransactionConfirm(confirmData: [String: String])
+    func transferWantToRouteToQRScanner()
 }
 
 final class TransferInteractor: PresentableInteractor<TransferPresentable>, TransferInteractable {
@@ -80,5 +81,9 @@ extension TransferInteractor: TransferPresentableListener {
                                              "Name": name,
                                              "Amount": "$" + String(amount)]
         self.listener?.transferWantToRouteToTransactionConfirm(confirmData: confirmData)
+    }
+
+    func didSelectQR() {
+        self.listener?.transferWantToRouteToQRScanner()
     }
 }

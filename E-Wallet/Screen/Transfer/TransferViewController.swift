@@ -16,6 +16,7 @@ protocol TransferPresentableListener: AnyObject {
     func openContacts()
     func getNameBy(phoneNumber: String, completion: @escaping (_ name: String) -> Void)
     func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double)
+    func didSelectQR()
 }
 
 final class TransferViewController: UIViewController, TransferViewControllable {
@@ -71,6 +72,10 @@ final class TransferViewController: UIViewController, TransferViewControllable {
     // MARK: - Actions
     @IBAction func backButtonDidTap(_ sender: Any) {
         self.listener?.transferWantToDismiss()
+    }
+
+    @IBAction func didTapQRButton(_ sender: Any) {
+        self.listener?.didSelectQR()
     }
 
     @IBAction func transferButtonDidTap(_ sender: Any) {
