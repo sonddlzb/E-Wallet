@@ -10,6 +10,7 @@ private struct Const {
 }
 
 import Foundation
+import FirebaseAuth
 
 struct ExpenseViewModel {
     var listTransactions: [Transaction]
@@ -19,14 +20,22 @@ struct ExpenseViewModel {
     }
 
     func listExpenseTransactions() -> [Transaction] {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return []
+        }
+        
         return self.listTransactions.filter {
-            $0.type != .receive && $0.type != .topUp
+            !(($0.type == .transfer && $0.receiverId == userId) || $0.type == .topUp)
         }
     }
 
     func listIncomeTransactions() -> [Transaction] {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return []
+        }
+
         return self.listTransactions.filter {
-            $0.type == .receive || $0.type == .topUp
+            ($0.type == .transfer && $0.receiverId == userId) || $0.type == .topUp
         }
     }
 

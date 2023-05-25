@@ -9,7 +9,7 @@ import Foundation
 import Charts
 
 protocol ExpenseHeaderViewDelegate: AnyObject {
-    func expenseHeaderView(_ expenseHeaderView: ExpenseHeaderView, didSelect entry: ChartDataEntry)
+    func expenseHeaderView(_ expenseHeaderView: ExpenseHeaderView, didSelect startDate: Date)
 }
 
 class ExpenseHeaderView: UICollectionReusableView {
@@ -17,6 +17,7 @@ class ExpenseHeaderView: UICollectionReusableView {
     private var chartView: BarChartView!
 
     weak var delegate: ExpenseHeaderViewDelegate?
+    private var viewModel = ExpenseViewModel.makeEmpty()
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -99,6 +100,8 @@ class ExpenseHeaderView: UICollectionReusableView {
 // MARK: - ChartViewDelegate
 extension ExpenseHeaderView: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        self.delegate?.expenseHeaderView(self, didSelect: entry)
+        if let month = self.viewModel.listMonths()[safe: Int(entry.x)], let startDate = month.convertMonthAndYearToDate() {
+            self.delegate?.expenseHeaderView(self, didSelect: startDate)
+        }
     }
 }
