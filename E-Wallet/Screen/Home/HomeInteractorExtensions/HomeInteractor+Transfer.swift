@@ -15,4 +15,8 @@ extension HomeInteractor: TransferListener {
     func transferWantToRouteToTransactionConfirm(confirmData: [String: String]) {
         self.router?.routeToTransactionConfirm(confirmData: confirmData, isShowPaymentMethodView: true)
     }
+
+    func transferWantToRouteToQRScanner() {
+        self.router?.routeToQR()
+    }
 }
