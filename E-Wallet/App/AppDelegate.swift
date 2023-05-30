@@ -11,9 +11,10 @@ import FirebaseAuth
 import FirebaseRemoteConfig
 import SVProgressHUD
 import Stripe
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow!
     var rootRouter: RootRouting?
@@ -26,7 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.configSVProgressHUD()
         self.configStripe()
         self.configRemoteConfig()
+        self.configNotification()
         return true
+    }
+
+    private func configNotification() {
+        UNUserNotificationCenter.current().delegate = self
+        let localNotificationHelper = LocalNotificationHelper()
+        localNotificationHelper.notifications = [
+            RemindNotification(id: "reminder-1", title: "Hey, someone want to connect with you in E-Wallet", datetime: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date().addingTimeInterval(60.0)))
+        ]
+
+        localNotificationHelper.schedule()
     }
 
     private func configWindow() {
@@ -52,5 +64,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func configStripe() {
         STPAPIClient.shared.publishableKey = StripeConst.publishableKey
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let id = response.notification.request.identifier
+        print("Received notification with ID = \(id)")
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let id = notification.request.identifier
+        print("Received notification with ID = \(id)")
+        completionHandler([.sound, .alert])
     }
 }

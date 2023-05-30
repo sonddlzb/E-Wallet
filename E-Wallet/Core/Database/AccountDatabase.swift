@@ -149,7 +149,8 @@ class AccountDatabase {
             completion(entity)
         }) { error in
             print(error.localizedDescription)
-        }    }
+        }
+    }
 
     func transfer(selectedCard: Card?, amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
@@ -233,6 +234,12 @@ class AccountDatabase {
                                             print("Create transaction successfully")
                                             if let transactionId = transactionId {
                                                 completion(nil, Transaction(id: transactionId, entity: transactionEntity))
+                                                UserDatabase.shared.getUserBy(id: userId) { userEntity in
+                                                    if let userEntity = userEntity {
+                                                        let notificationEntity = NotificationMessageEntity(title: "Receive money from \(userEntity.fullName)", message: "You have received $\(transactionEntity.amount) from \(userEntity.fullName). Check your balance now", time: Date().timeIntervalSinceReferenceDate, transactionId: transactionId, type: "Transfer")
+                                                        NotificationDatabase.shared.addNewNotification(receiverId: receiverID, notificationEntity: notificationEntity)
+                                                    }
+                                                }
                                             }
                                         }
                                     }

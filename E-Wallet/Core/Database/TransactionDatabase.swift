@@ -139,4 +139,24 @@ class TransactionDatabase {
             }
         }
     }
+
+    func fetchTransactionBy(id: String, completion: @escaping (_ transaction: Transaction?) -> Void) {
+        self.database.collection(DatabaseConst.transactionPath).document(id).getDocument { document, error in
+            guard error == nil, let document = document else {
+                completion(nil)
+                return
+            }
+
+            let transactionId = document.documentID
+            guard let transactionData = try? JSONSerialization
+                .data(withJSONObject: document.data(), options: []) else {
+                completion(nil)
+                return
+            }
+
+            if let transactionEntity = try? JSONDecoder().decode(TransactionEntity.self, from: transactionData) {
+                completion(Transaction(id: transactionId, entity: transactionEntity))
+            }
+        }
+    }
 }

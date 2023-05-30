@@ -807,11 +807,15 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
+  - MarqueeLabel (4.3.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - NotificationBannerSwift (3.2.0):
+    - MarqueeLabel (~> 4.3.0)
+    - SnapKit (~> 5.6.0)
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
@@ -826,6 +830,7 @@ PODS:
   - RxRelay (5.1.3):
     - RxSwift (~> 5)
   - RxSwift (5.1.3)
+  - SnapKit (5.6.0)
   - Stripe (23.5.1):
     - StripeApplePay (= 23.5.1)
     - StripeCore (= 23.5.1)
@@ -866,6 +871,7 @@ DEPENDENCIES:
   - FirebaseRemoteConfig
   - FirebaseStorage
   - Kingfisher
+  - NotificationBannerSwift
   - RangeSeekSlider
   - Resolver
   - RIBs (from `https://github.com/uber/RIBs/`, tag `v0.10.0`)
@@ -910,7 +916,9 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - Libuv-gRPC
+    - MarqueeLabel
     - nanopb
+    - NotificationBannerSwift
     - PromisesObjC
     - PromisesSwift
     - RangeSeekSlider
@@ -918,6 +926,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - SnapKit
     - Stripe
     - StripeApplePay
     - StripeCore
@@ -972,7 +981,9 @@ SPEC CHECKSUMS:
   Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
+  MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  NotificationBannerSwift: 437e135298d297fcb03f3eec4466f45cdb128d3d
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RangeSeekSlider: 650b11fa1edcb92e1e0ede797669d98622570fb5
@@ -981,6 +992,7 @@ SPEC CHECKSUMS:
   RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Stripe: d3dc7e6a9ac47a75ddb28ca9622f0e96c63398c9
   StripeApplePay: b72a579021ed2d859a1be070ae6f3bad4eea2624
   StripeCore: a6511a9b7481571dca38608e2d1fe2b56a753975
@@ -993,6 +1005,6 @@ SPEC CHECKSUMS:
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 59311b84137794a60d2dac72c734506c49762107
+PODFILE CHECKSUM: c94527fbc7a6acb3cdc8fd2f91b09e6ae0544505
 
 COCOAPODS: 1.12.1
