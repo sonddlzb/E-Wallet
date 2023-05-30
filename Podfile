@@ -34,7 +34,7 @@
    pod 'Toast-Swift'
    pod 'EFQRCode'
    pod 'Charts'
-
+   pod 'NotificationBannerSwift'
    RxSwiftPod()
    RIBsPod()
  end

@@ -8,10 +8,12 @@
 import RIBs
 import RxSwift
 import UIKit
+import NotificationBannerSwift
 
 protocol HomePresentableListener: AnyObject {
     func homeTabBarItemDidSelect(didSelect homeTab: HomeTab)
     func reloadCurrentTabData()
+    func didSelectNotification()
 }
 
 final class HomeViewController: UIViewController {
@@ -85,5 +87,16 @@ extension HomeViewController: HomeViewControllable {
 extension HomeViewController: HomePresentable {
     func selectHistoryTab() {
         self.homeTabBar.setSelectedTab(.history)
+    }
+
+    func showNotification(message: NotificationMessage) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            let banner = FloatingNotificationBanner(title: message.title, subtitle: message.message, style: .success)
+            banner.onTap = { [weak self] in
+                self?.listener?.didSelectNotification()
+            }
+
+            banner.show(cornerRadius: 9, shadowColor: UIColor(red: 0.431, green: 0.459, blue: 0.494, alpha: 1), shadowBlurRadius: 8, shadowEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 0, right: 4))
+        })
     }
 }

@@ -7,6 +7,7 @@
 
 import RIBs
 import RxSwift
+import UserNotifications
 
 protocol HomeRouting: ViewableRouting {
     func getCurrentTabType() -> HomeTab
@@ -30,12 +31,14 @@ protocol HomeRouting: ViewableRouting {
     func dismissEnterBill(animated: Bool)
     func routeToQR()
     func dismissQR()
+    func openTransactionDetails(transaction: Transaction)
 }
 
 protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
 
     func selectHistoryTab()
+    func showNotification(message: NotificationMessage)
 }
 
 protocol HomeListener: AnyObject {
@@ -47,6 +50,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     weak var router: HomeRouting?
     weak var listener: HomeListener?
     private var viewModel: HomeViewModel!
+    var message: NotificationMessage?
 
     override init(presenter: HomePresentable) {
         super.init(presenter: presenter)
@@ -57,6 +61,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         super.didBecomeActive()
         self.router?.routeToTab(homeTab: .dashboard)
         self.fetchUserInfor()
+        self.subscribeNotification()
     }
 
     override func willResignActive() {
@@ -71,6 +76,21 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                     self.router?.bindDataToHomeTab(viewModel: self.viewModel)
                 }
             }
+        }
+    }
+
+    func subscribeNotification() {
+        NotificationDatabase.shared.subscribeNotification { message in
+            guard let message = message else {
+                return
+            }
+
+            self.message = message
+            guard Date().timeIntervalSinceReferenceDate - message.time.timeIntervalSinceReferenceDate < 10.0 else {
+                return
+            }
+
+            self.presenter.showNotification(message: message)
         }
     }
 }
@@ -89,6 +109,20 @@ extension HomeInteractor: HomePresentableListener {
             case .history: print("did select history ")
             case .account: print("did select account")
             case .myProfile: print("did select my profile")
+            }
+        }
+    }
+
+    func didSelectNotification() {
+        guard let message = self.message else {
+            return
+        }
+
+        TransactionDatabase.shared.fetchTransactionBy(id: message.transactionId) { [weak self] transaction in
+            if let transaction = transaction {
+                DispatchQueue.main.async {
+                    self?.router?.openTransactionDetails(transaction: transaction)
+                }
             }
         }
     }

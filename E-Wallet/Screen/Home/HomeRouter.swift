@@ -347,4 +347,9 @@ extension HomeRouter: HomeRouting {
         self.viewControllable.popToBefore(viewControllable: router.viewControllable)
         self.qrRouter = nil
     }
+
+    func openTransactionDetails(transaction: Transaction) {
+        self.routeToTab(homeTab: .history)
+        self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
+    }
 }
