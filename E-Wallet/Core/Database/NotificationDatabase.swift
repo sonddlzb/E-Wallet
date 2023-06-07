@@ -34,4 +34,27 @@ class NotificationDatabase {
             }
         }
     }
+
+    func fetchAllNotification(completion: @escaping (_ listNotifications: [NotificationMessage]) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion([])
+            return
+        }
+
+        self.notificationRef.child(userId).getData { error, data in
+            guard error == nil, let data = data else {
+                completion([])
+                return
+            }
+
+            var listNotifications: [NotificationMessage] = []
+            if let notifications = data.value as? NSDictionary {
+                for dict in notifications.allValues.compactMap {$0 as? [String: Any] } {
+                    listNotifications.append(NotificationMessage(dict: dict))
+                }
+            }
+
+            completion(listNotifications)
+        }
+    }
 }

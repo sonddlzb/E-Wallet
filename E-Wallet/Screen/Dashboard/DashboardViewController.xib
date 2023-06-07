@@ -50,8 +50,38 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-tE-N0d">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="50"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cod-iY-h2S" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                            <rect key="frame" x="359" y="15" width="35" height="35"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_notification" translatesAutoresizingMaskIntoConstraints="NO" id="5ep-MV-Tz3">
+                                    <rect key="frame" x="0.0" y="5" width="35" height="25"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="5ep-MV-Tz3" secondAttribute="bottom" constant="5" id="5Ck-3A-hT3"/>
+                                <constraint firstItem="5ep-MV-Tz3" firstAttribute="top" secondItem="cod-iY-h2S" secondAttribute="top" constant="5" id="PE8-HC-ip2"/>
+                                <constraint firstAttribute="trailing" secondItem="5ep-MV-Tz3" secondAttribute="trailing" id="QOe-lx-mNb"/>
+                                <constraint firstAttribute="width" secondItem="cod-iY-h2S" secondAttribute="height" id="ql2-Pu-dvz"/>
+                                <constraint firstItem="5ep-MV-Tz3" firstAttribute="leading" secondItem="cod-iY-h2S" secondAttribute="leading" id="zSm-7W-7eW"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.30196078431372547" green="0.086274509803921567" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didTapNotificationButton:" destination="-1" eventType="touchUpInside" id="h0v-D7-bwF"/>
+                            </connections>
+                        </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_hello" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Z-A9-7cf">
                             <rect key="frame" x="10" y="0.0" width="50" height="50"/>
                             <constraints>
@@ -77,17 +107,20 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="IeI-RT-HoU" secondAttribute="bottom" constant="6" id="2kq-jL-yzz"/>
+                        <constraint firstAttribute="trailing" secondItem="cod-iY-h2S" secondAttribute="trailing" constant="20" id="BsD-dR-Pmk"/>
                         <constraint firstAttribute="trailing" secondItem="Wb5-xH-2zi" secondAttribute="trailing" constant="10" id="D3c-2F-4Ao"/>
+                        <constraint firstItem="cod-iY-h2S" firstAttribute="top" secondItem="tT5-tE-N0d" secondAttribute="top" constant="15" id="VaT-fw-Kdx"/>
                         <constraint firstItem="IeI-RT-HoU" firstAttribute="leading" secondItem="Y6Z-A9-7cf" secondAttribute="trailing" id="b1v-1b-adv"/>
                         <constraint firstAttribute="bottom" secondItem="Y6Z-A9-7cf" secondAttribute="bottom" id="cZb-HQ-bKr"/>
                         <constraint firstAttribute="height" constant="50" id="lYl-sm-ZhA"/>
                         <constraint firstAttribute="bottom" secondItem="Wb5-xH-2zi" secondAttribute="bottom" constant="6" id="oMa-TF-tMx"/>
                         <constraint firstItem="Y6Z-A9-7cf" firstAttribute="leading" secondItem="tT5-tE-N0d" secondAttribute="leading" constant="10" id="sb1-Gh-OiL"/>
+                        <constraint firstAttribute="bottom" secondItem="cod-iY-h2S" secondAttribute="bottom" id="u8y-VC-sT2"/>
                         <constraint firstItem="Y6Z-A9-7cf" firstAttribute="top" secondItem="tT5-tE-N0d" secondAttribute="top" id="ul5-Yp-FVZ"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99o-j3-ZYL">
-                    <rect key="frame" x="0.0" y="120" width="414" height="776"/>
+                    <rect key="frame" x="0.0" y="168" width="414" height="728"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQv-UX-RDr">
                             <rect key="frame" x="0.0" y="70" width="414" height="1000"/>
@@ -96,13 +129,13 @@
                                     <rect key="frame" x="20" y="70" width="374" height="280"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7J-c7-TVd">
-                                            <rect key="frame" x="0.0" y="0.0" width="104" height="23.333333333333332"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="105" height="21.5"/>
                                             <fontDescription key="fontDescription" name="Outfit-Bold" family="Outfit" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVr-Rd-wlI" customClass="ServiceListView" customModule="E_Wallet" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="43.3333333333333" width="374" height="236.66666666666663"/>
+                                            <rect key="frame" x="0.0" y="41.5" width="374" height="238.5"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
                                     </subviews>
@@ -141,7 +174,7 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="pFq-BE-0D0"/>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLU-4r-1kQ">
-                    <rect key="frame" x="20" y="80" width="374" height="150"/>
+                    <rect key="frame" x="20" y="128" width="374" height="150"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97U-ZV-TzC" customClass="DashboardBarView" customModule="E_Wallet" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="75" width="374" height="75"/>
@@ -159,7 +192,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="374" height="75"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQK-fF-ui4">
-                                    <rect key="frame" x="132" y="0.0" width="110" height="16.333333333333332"/>
+                                    <rect key="frame" x="132" y="0.0" width="110" height="15"/>
                                     <fontDescription key="fontDescription" name="Outfit-Light" family="Outfit" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -216,6 +249,7 @@
     </objects>
     <resources>
         <image name="ic_hello" width="500" height="500"/>
+        <image name="ic_notification" width="96" height="96"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

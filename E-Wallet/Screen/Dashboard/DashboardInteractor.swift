@@ -10,6 +10,8 @@ import RxSwift
 
 protocol DashboardRouting: ViewableRouting {
     func bind(homeViewModel: HomeViewModel)
+    func routeToNotifications()
+    func dismissNotifications()
 }
 
 protocol DashboardPresentable: Presentable {
@@ -76,5 +78,9 @@ extension DashboardInteractor: DashboardPresentableListener {
 
     func routeToQR() {
         self.listener?.dashboardWantToRouteToQR()
+    }
+
+    func didTapNotification() {
+        self.router?.routeToNotifications()
     }
 }
