@@ -15,6 +15,7 @@ protocol DashboardPresentableListener: AnyObject {
     func routeToWithdraw()
     func didSelect(serviceType: ServiceType)
     func routeToQR()
+    func didTapNotification()
 }
 
 final class DashboardViewController: UIViewController, DashboardViewControllable {
@@ -46,6 +47,10 @@ final class DashboardViewController: UIViewController, DashboardViewControllable
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.contentView.setupCornerRadius(topLeftRadius: 32.0, topRightRadius: 32.0, bottomLeftRadius: 0.0, bottomRightRadius: 0.0)
+    }
+    // MARK: - Actions
+    @IBAction func didTapNotificationButton(_ sender: Any) {
+        self.listener?.didTapNotification()
     }
 
     // MARK: - Helpers

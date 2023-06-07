@@ -31,7 +31,9 @@ final class DashboardBuilder: Builder<DashboardDependency>, DashboardBuildable {
         let viewController = DashboardViewController()
         let interactor = DashboardInteractor(presenter: viewController)
         interactor.listener = listener
+        let notificationsBuilder = DIContainer.resolve(NotificationsBuildable.self, agrument: component)
         return DashboardRouter(interactor: interactor,
-                               viewController: viewController)
+                               viewController: viewController,
+                               notificationsBuilder: notificationsBuilder)
     }
 }

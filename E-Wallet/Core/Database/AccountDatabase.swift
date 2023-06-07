@@ -339,7 +339,7 @@ class AccountDatabase {
                                         print("Create transaction successfully")
                                         if let transactionId = transactionId {
                                             completion(nil, Transaction(id: transactionId, entity: transactionEntity))
-                                            let notificationEntity = NotificationMessageEntity(title: "Successful bill payment", message: "Cỏngatulation. You have paid $\(transactionEntity.amount) for your \(transactionEntity.type) bill. Check it now", time: Date().timeIntervalSinceReferenceDate, transactionId: transactionId, type: transactionEntity.type)
+                                            let notificationEntity = NotificationMessageEntity(title: "Successful bill payment", message: "Congratulation. You have paid $\(transactionEntity.amount) for your \(transactionEntity.type) bill. Check it now", time: Date().timeIntervalSinceReferenceDate, transactionId: transactionId, type: transactionEntity.type)
                                             NotificationDatabase.shared.addNewNotification(receiverId: userId, notificationEntity: notificationEntity)
                                         }
                                     }
