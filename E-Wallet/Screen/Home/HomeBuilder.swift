@@ -34,7 +34,6 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let dashboardBuilder = DIContainer.resolve(DashboardBuildable.self, agrument: component)
         let profileBuilder = DIContainer.resolve(ProfileBuildable.self, agrument: component)
         let transferBuilder = DIContainer.resolve(TransferBuildable.self, agrument: component)
-        let accountBuilder = DIContainer.resolve(AccountBuildable.self, agrument: component)
         let topUpBuilder = DIContainer.resolve(TopUpBuildable.self, agrument: component)
         let addCardBuilder = DIContainer.resolve(AddCardBuildable.self, agrument: component)
         let withdrawBuilder = DIContainer.resolve(WithdrawBuildable.self, agrument: component)
@@ -43,12 +42,12 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let giftBuilder = DIContainer.resolve(GiftBuildable.self, agrument: component)
         let enterBillBuilder = DIContainer.resolve(EnterBillBuildable.self, agrument: component)
         let qrBuilder = DIContainer.resolve(QRBuildable.self, agrument: component)
+        let chatBuilder = DIContainer.resolve(ChatBuildable.self, agrument: component)
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
                           dashboardBuilder: dashboardBuilder,
                           profileBuilder: profileBuilder,
                           transferBuilder: transferBuilder,
-                          accountBuilder: accountBuilder,
                           topUpBuilder: topUpBuilder,
                           addCardBuilder: addCardBuilder,
                           withdrawBuilder: withdrawBuilder,
@@ -56,6 +55,7 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
                           historyBuilder: historyBuilder,
                           giftBuilder: giftBuilder,
                           enterBillBuilder: enterBillBuilder,
-                          qrBuilder: qrBuilder)
+                          qrBuilder: qrBuilder,
+                          chatBuilder: chatBuilder)
     }
 }

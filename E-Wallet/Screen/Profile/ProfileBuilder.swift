@@ -34,10 +34,12 @@ final class ProfileBuilder: Builder<ProfileDependency>, ProfileBuildable {
         let editProfileBuilder = DIContainer.resolve(EditProfileBuildable.self, agrument: component)
         let enterPasswordBuilder = DIContainer.resolve(EnterPasswordBuildable.self, agrument: component)
         let expenseBuilder = DIContainer.resolve(ExpenseBuildable.self, agrument: component)
+        let accountBuilder = DIContainer.resolve(AccountBuildable.self, agrument: component)
         return ProfileRouter(interactor: interactor,
                              viewController: viewController,
                              editProfileBuilder: editProfileBuilder,
                              enterPasswordBuilder: enterPasswordBuilder,
-                             expenseBuilder: expenseBuilder)
+                             expenseBuilder: expenseBuilder,
+                             accountBuilder: accountBuilder)
     }
 }

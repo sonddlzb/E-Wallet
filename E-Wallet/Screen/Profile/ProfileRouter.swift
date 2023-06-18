@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener, ExpenseListener {
+protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener, ExpenseListener, AccountListener {
     var router: ProfileRouting? { get set }
     var listener: ProfileListener? { get set }
 
@@ -27,14 +27,19 @@ final class ProfileRouter: ViewableRouter<ProfileInteractable, ProfileViewContro
     private var expenseRouter: ExpenseRouting?
     private var expenseBuilder: ExpenseBuildable
 
+    private var accountRouter: AccountRouting?
+    private var accountBuilder: AccountBuildable
+
     init(interactor: ProfileInteractable,
          viewController: ProfileViewControllable,
          editProfileBuilder: EditProfileBuildable,
          enterPasswordBuilder: EnterPasswordBuildable,
-         expenseBuilder: ExpenseBuildable) {
+         expenseBuilder: ExpenseBuildable,
+         accountBuilder: AccountBuildable) {
         self.enterPasswordBuilder = enterPasswordBuilder
         self.editProfileBuilder = editProfileBuilder
         self.expenseBuilder = expenseBuilder
+        self.accountBuilder = accountBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -114,5 +119,30 @@ extension ProfileRouter: ProfileRouting {
         detachChild(router)
         self.viewController.popToBefore(viewControllable: router.viewControllable)
         self.expenseRouter = nil
+    }
+
+    func routeToAccount() {
+        guard self.accountRouter == nil else {
+            return
+        }
+
+        let router = self.accountBuilder.build(withListener: self.interactor)
+        self.attachChild(router)
+        self.viewControllable.push(viewControllable: router.viewControllable)
+        self.accountRouter = router
+    }
+
+    func dismissAccount() {
+        guard let router = self.accountRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.accountRouter = nil
+    }
+
+    func reloadCardData() {
+        self.accountRouter?.reloadData()
     }
 }

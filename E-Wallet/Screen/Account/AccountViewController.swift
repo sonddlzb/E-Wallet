@@ -18,6 +18,7 @@ private struct Const {
 protocol AccountPresentableListener: AnyObject {
     func routeToAddCard()
     func didSelectCard(_ card: Card)
+    func didTapBack()
 }
 
 final class AccountViewController: UIViewController, AccountViewControllable {
@@ -49,6 +50,10 @@ final class AccountViewController: UIViewController, AccountViewControllable {
 
     @IBAction func didTapAddCardButton(_ sender: Any) {
         self.listener?.routeToAddCard()
+    }
+
+    @IBAction func didTapBackButton(_ sender: Any) {
+        self.listener?.didTapBack()
     }
 }
 

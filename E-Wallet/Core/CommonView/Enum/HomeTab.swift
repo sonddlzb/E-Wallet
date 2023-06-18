@@ -11,7 +11,7 @@ public enum HomeTab: String, CaseIterable {
     case dashboard = "Dashboard"
     case gift = "Gift"
     case history = "History"
-    case account = "Account"
+    case chat = "Chat"
     case myProfile = "My Profile"
 
     func getItemName() -> String {

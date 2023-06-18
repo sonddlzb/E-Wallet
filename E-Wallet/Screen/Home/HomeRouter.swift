@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, AccountListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener, QRListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener, QRListener, ChatListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -30,9 +30,6 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
 
     private var transferRouter: TransferRouting?
     private var transferBuilder: TransferBuildable
-
-    private var accountRouter: AccountRouting?
-    private var accountBuilder: AccountBuildable
 
     private var topUpRouter: TopUpRouting?
     private var topUpBuilder: TopUpBuildable
@@ -58,12 +55,14 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var qrRouter: QRRouting?
     private var qrBuilder: QRBuildable
 
+    private var chatRouter: ChatRouting?
+    private var chatBuilder: ChatBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
          profileBuilder: ProfileBuildable,
          transferBuilder: TransferBuildable,
-         accountBuilder: AccountBuildable,
          topUpBuilder: TopUpBuildable,
          addCardBuilder: AddCardBuildable,
          withdrawBuilder: WithdrawBuildable,
@@ -71,11 +70,11 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          historyBuilder: HistoryBuildable,
          giftBuilder: GiftBuildable,
          enterBillBuilder: EnterBillBuildable,
-         qrBuilder: QRBuildable) {
+         qrBuilder: QRBuildable,
+         chatBuilder: ChatBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
-        self.accountBuilder = accountBuilder
         self.topUpBuilder = topUpBuilder
         self.addCardBuilder = addCardBuilder
         self.withdrawBuilder = withdrawBuilder
@@ -84,6 +83,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.giftBuilder = giftBuilder
         self.enterBillBuilder = enterBillBuilder
         self.qrBuilder = qrBuilder
+        self.chatBuilder = chatBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -108,8 +108,8 @@ extension HomeRouter: HomeRouting {
             self.routeToGiftTab()
         case .history:
             self.routeToHistoryTab()
-        case .account:
-            self.routeToAccountTab()
+        case .chat:
+            self.routeToChatTab()
         case .myProfile:
             self.routeToProfileTab()
         }
@@ -184,13 +184,13 @@ extension HomeRouter: HomeRouting {
         self.transferRouter = nil
     }
 
-    func routeToAccountTab() {
-        if self.accountRouter == nil {
-            self.accountRouter = self.accountBuilder.build(withListener: self.interactor)
-            attachChild(self.accountRouter!)
+    func routeToChatTab() {
+        if self.chatRouter == nil {
+            self.chatRouter = self.chatBuilder.build(withListener: self.interactor)
+            attachChild(self.chatRouter!)
         }
 
-        self.viewController.embedViewController(self.accountRouter!.viewControllable)
+        self.viewController.embedViewController(self.chatRouter!.viewControllable)
     }
 
     func routeToTopUp() {
@@ -260,9 +260,9 @@ extension HomeRouter: HomeRouting {
     }
 
     func reloadCardData() {
-        self.accountRouter?.reloadData()
         self.topUpRouter?.reloadData()
         self.transactionConfirmRouter?.reloadData()
+        self.profileRouter?.reloadCardData()
     }
 
     func routeToTransactionConfirm(confirmData: [String: String], isShowPaymentMethodView: Bool) {
