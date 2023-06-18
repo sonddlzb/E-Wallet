@@ -14,4 +14,5 @@ public struct DatabaseConst {
     static let voucherPath = "vouchers"
     static let billPath = "bills"
     static let notificationPath = "notifications"
+    static let messagePath = "message"
 }

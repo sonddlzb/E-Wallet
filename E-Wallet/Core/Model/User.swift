@@ -7,7 +7,11 @@
 
 import Foundation
 
-class User {
+class User: Hashable {
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.id == rhs.id
+    }
+
     var id: String
     var fullName: String
     var residentId: String
@@ -28,5 +32,9 @@ class User {
         self.gender = entity.gender
         self.avtURL = entity.avtURL
         self.password = entity.password
+    }
+
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
     }
 }

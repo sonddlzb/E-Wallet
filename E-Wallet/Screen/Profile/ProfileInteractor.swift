@@ -18,6 +18,9 @@ protocol ProfileRouting: ViewableRouting {
     func bindAuthenticationResultToEnterPassword(isSuccess: Bool)
     func routeToExpense()
     func dismissExpense()
+    func routeToAccount()
+    func dismissAccount()
+    func reloadCardData()
 }
 
 protocol ProfilePresentable: Presentable {
@@ -32,6 +35,7 @@ protocol ProfileListener: AnyObject {
     func profileDidSignOut()
     func profileWantToReloadUserInfor()
     func profileWantToRouteToGift()
+    func profileWantToRouteToAddCard()
 }
 
 final class ProfileInteractor: PresentableInteractor<ProfilePresentable> {
@@ -92,6 +96,8 @@ extension ProfileInteractor: ProfilePresentableListener {
             self.router?.routeToEnterPassword(isNewUser: false, isConfirmPassword: false, password: "")
         case .expenseManagement:
             self.router?.routeToExpense()
+        case .paymentManagement:
+            self.router?.routeToAccount()
         default: print("not handle yet")
         }
     }

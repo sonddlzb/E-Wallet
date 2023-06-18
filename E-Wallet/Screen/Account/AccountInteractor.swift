@@ -22,6 +22,7 @@ protocol AccountPresentable: Presentable {
 
 protocol AccountListener: AnyObject {
     func routeToAddCard()
+    func accountWantToDismiss()
 }
 
 final class AccountInteractor: PresentableInteractor<AccountPresentable> {
@@ -60,6 +61,10 @@ extension AccountInteractor: AccountPresentableListener {
 
     func didSelectCard(_ card: Card) {
         self.router?.routeToCardDetails(card)
+    }
+
+    func didTapBack() {
+        self.listener?.accountWantToDismiss()
     }
 }
 

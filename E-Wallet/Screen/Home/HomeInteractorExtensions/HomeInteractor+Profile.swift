@@ -20,4 +20,8 @@ extension HomeInteractor: ProfileListener {
     func profileWantToRouteToGift() {
         self.router?.routeToTab(homeTab: .gift)
     }
+
+    func profileWantToRouteToAddCard() {
+        self.router?.routeToAddCard()
+    }
 }

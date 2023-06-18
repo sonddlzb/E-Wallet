@@ -107,7 +107,7 @@ extension HomeInteractor: HomePresentableListener {
             case .dashboard: self.router?.dashboardWantToReloadData()
             case .gift: print("did select gift")
             case .history: print("did select history ")
-            case .account: print("did select account")
+            case .chat: print("did select chat")
             case .myProfile: print("did select my profile")
             }
         }
