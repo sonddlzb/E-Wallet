@@ -15,6 +15,7 @@ private struct Const {
 }
 
 protocol ChatPresentableListener: AnyObject {
+    func reloadData()
 }
 
 final class ChatViewController: UIViewController, ChatViewControllable {
@@ -31,6 +32,11 @@ final class ChatViewController: UIViewController, ChatViewControllable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.listener?.reloadData()
     }
 
     private func config() {

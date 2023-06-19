@@ -9,8 +9,9 @@ import Foundation
 
 enum MessageStatus: String {
     case sent
-    case seen
-    case notsent
+    case sendAndSeen
+    case receive
+    case receiveAndSeen
 }
 
 enum MessageType: String {
@@ -30,8 +31,9 @@ class Message {
     var type: MessageType
     var mediaLink: String
     var sendTime: Date
+    var repliedId: String
 
-    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date) {
+    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date, repliedId: String) {
         self.id = id
         self.content = content
         self.senderId = senderId
@@ -40,16 +42,18 @@ class Message {
         self.type = type
         self.mediaLink = mediaLink
         self.sendTime = sendTime
+        self.repliedId = repliedId
     }
 
-    init(id: String, entity: MessageEntity) {
+    init(id: String, senderId: String, receiverId: String, entity: MessageEntity) {
         self.id = id
         self.content = entity.content
-        self.senderId = entity.senderId
-        self.receiverId = entity.receiverId
-        self.status = MessageStatus(rawValue: entity.status) ?? .notsent
+        self.senderId = senderId
+        self.receiverId = receiverId
+        self.status = MessageStatus(rawValue: entity.status) ?? .sent
         self.type = MessageType(rawValue: entity.type) ?? .text
         self.mediaLink = entity.mediaLink
-        self.sendTime = entity.sendTime.convertToDate() ?? Date()
+        self.sendTime = entity.sendTime
+        self.repliedId = entity.repliedId
     }
 }

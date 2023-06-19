@@ -288,6 +288,7 @@ class UserDatabase {
 
     func checkValidUser(completion: @escaping (_ isValidUser: Bool) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
             return
         }
 

@@ -20,7 +20,7 @@ protocol ChatPresentable: Presentable {
 protocol ChatListener: AnyObject {
 }
 
-final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteractable, ChatPresentableListener {
+final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteractable {
 
     weak var router: ChatRouting?
     weak var listener: ChatListener?
@@ -44,24 +44,48 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteract
         var listRecentMessages: [Message] = []
         var listRecentUsers: [User] = []
         var listRecentUsersTemp: [User] = []
+        var listRecentUsersTempSorted: [User] = []
         MessageDatabase.shared.getListRecentMessages { recentMessagesDict in
-            for (recentUser, recentMessage) in recentMessagesDict {
-                listRecentMessages.append(recentMessage)
-                listRecentUsersTemp.append(recentUser)
-            }
-
-            listRecentMessages = listRecentMessages.sorted {
-                $0.sendTime > $1.sendTime
-            }
-
-            for (index, recentUser) in listRecentUsersTemp.enumerated() {
-                if recentUser.id == listRecentMessages[index].senderId || recentUser.id == listRecentMessages[index].receiverId {
-                    listRecentUsers.append(recentUser)
+            DispatchQueue.main.async {
+                for (recentUser, recentMessage) in recentMessagesDict {
+                    listRecentMessages.append(recentMessage)
+                    listRecentUsersTemp.append(recentUser)
                 }
-            }
 
-            self.viewModel = ChatViewModel(listNewestMessages: listRecentMessages, listTalkers: listRecentUsers)
-            self.presenter.bind(viewModel: self.viewModel)
+                listRecentMessages = listRecentMessages.sorted {
+                    $0.sendTime > $1.sendTime
+                }
+
+                for message in listRecentMessages {
+                    let index = listRecentUsersTemp.firstIndex {
+                        $0.id == message.senderId || $0.id == message.receiverId
+                    }
+
+                    if let index = index {
+                        listRecentUsersTempSorted.append(listRecentUsersTemp[index])
+                    }
+                }
+
+                for (index, recentUser) in listRecentUsersTempSorted.enumerated() {
+                    if recentUser.id == listRecentMessages[safe: index]?.senderId || recentUser.id == listRecentMessages[safe: index]?.receiverId {
+                        listRecentUsers.append(recentUser)
+                    }
+                }
+
+                self.viewModel = ChatViewModel(listNewestMessages: listRecentMessages, listTalkers: listRecentUsers)
+                self.presenter.bind(viewModel: self.viewModel)
+            }
         }
+
+        MessageDatabase.shared.getListRecentTalkers { listTalkers in
+            print("Recently has \(listTalkers.count) people")
+        }
+    }
+}
+
+// MARK: - ChatPresentableListener
+extension ChatInteractor: ChatPresentableListener {
+    func reloadData() {
+        self.fetchRecentChatData()
     }
 }

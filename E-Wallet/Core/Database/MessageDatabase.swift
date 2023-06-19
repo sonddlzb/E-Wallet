@@ -14,55 +14,87 @@ class MessageDatabase {
     private var messageRef = Database.database().reference().child(DatabaseConst.messagePath)
     static var shared = MessageDatabase()
 
-    func getListRecentMessages(completion: @escaping (_ recentMessagesDict: [User: Message]) -> Void) {
+    func getListRecentTalkers(completion: @escaping (_ listRecentTalkers: [User]) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
-            completion([:])
+            completion([])
             return
         }
 
         self.messageRef.child(userId).observe(.value) { dataSnapshot in
-            var listRecentMessages: [Message] = []
-            var userDict: [String: Date] = [:]
-            if let listMessagesDict = dataSnapshot.value as? NSDictionary {
-                for key in listMessagesDict.allKeys {
-                    if let messageDict = listMessagesDict.object(forKey: key) as? NSDictionary {
-                        let messageEntity = MessageEntity(dict: messageDict)
-                        let messageObject = Message(id: key as? String ?? "", entity: messageEntity)
-                        if let newestDate = userDict[messageObject.id] {
-                            if newestDate < messageObject.sendTime {
-                                listRecentMessages.append(messageObject)
-                                userDict[messageObject.id] = messageObject.sendTime
+            var listRecentTalkers: [User] = []
+            if let listUsersDict = dataSnapshot.value as? NSDictionary {
+                for userId in listUsersDict.allKeys {
+                    if let userId = userId as? String {
+                        UserDatabase.shared.getUserBy(id: userId) { userEntity in
+                            if let userEntity = userEntity {
+                                listRecentTalkers.append(User(id: userId, entity: userEntity))
+                                if listRecentTalkers.count == listUsersDict.count {
+                                    completion(listRecentTalkers)
+                                }
                             }
-                        } else {
-                            listRecentMessages.append(messageObject)
-                            userDict[messageObject.id] = messageObject.sendTime
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func getNewestMessageOf(talker: User, completion: @escaping (_ message: Message?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(nil)
+            return
+        }
+
+        self.messageRef.child(userId).child(talker.id).getData { error, dataSnapshot in
+            guard error == nil, let dataSnapshot = dataSnapshot else {
+                completion(nil)
+                return
+            }
+
+            var newestMessage: Message?
+            if let talkerDict = dataSnapshot.value as? NSDictionary {
+                if let messagesDict = talkerDict[talker.id] as? NSDictionary {
+                    for key in messagesDict.allKeys {
+                        if let messageId = key as? String {
+                            if let messageDict = messagesDict.object(forKey: key) as? NSDictionary {
+                                let messageEntity = MessageEntity(dict: messageDict)
+                                var senderId = ""
+                                var receiverId = ""
+                                if messageEntity.type == "sent" || messageEntity.type == "sentAndSeen" {
+                                    senderId = userId
+                                    receiverId = talker.id
+                                } else {
+                                    senderId = talker.id
+                                    receiverId = userId
+                                }
+
+                                let messageObject = Message(id: messageId, senderId: senderId, receiverId: receiverId, entity: messageEntity)
+                                if newestMessage != nil {
+                                    if newestMessage!.sendTime.timeIntervalSinceReferenceDate < messageObject.sendTime.timeIntervalSinceReferenceDate {
+                                        newestMessage = messageObject
+                                        }
+                                } else {
+                                    newestMessage = messageObject
+                                }
+                            }
                         }
                     }
                 }
             }
 
-            listRecentMessages = listRecentMessages.sorted {
-                $0.sendTime > $1.sendTime
-            }
+            completion(newestMessage)
+        }
+    }
 
-            var recentMessagesDict: [User: Message] = [:]
-            for message in listRecentMessages {
-                if message.receiverId == userId {
-                    UserDatabase.shared.getUserBy(id: message.senderId) { userEntity in
-                        if let userEntity = userEntity {
-                            recentMessagesDict[User(id: message.senderId, entity: userEntity)] = message
-                            if recentMessagesDict.count == listRecentMessages.count {
-                                completion(recentMessagesDict)
-                            }
-                        }
-                    }
-                } else {
-                    UserDatabase.shared.getUserBy(id: message.receiverId) { userEntity in
-                        if let userEntity = userEntity {
-                            recentMessagesDict[User(id: message.receiverId, entity: userEntity)] = message
-                            if recentMessagesDict.count == listRecentMessages.count {
-                                completion(recentMessagesDict)
-                            }
+    func getListRecentMessages(completion: @escaping (_ recentMessagesDict: [User: Message]) -> Void) {
+        var recentMessagesDict: [User: Message] = [:]
+        self.getListRecentTalkers { listTalkers in
+            for talker in listTalkers {
+                self.getNewestMessageOf(talker: talker) { message in
+                    if let message = message {
+                        recentMessagesDict[talker] = message
+                        if recentMessagesDict.count == listTalkers.count {
+                            completion(recentMessagesDict)
                         }
                     }
                 }
