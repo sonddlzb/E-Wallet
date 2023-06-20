@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 extension HomeInteractor: ChatDetailsListener {
     func chatDetailsWantToDismiss() {

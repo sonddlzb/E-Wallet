@@ -23,6 +23,13 @@ class ChatCell: UICollectionViewCell {
         self.imageView.setImage(with: itemViewModel.avatarURL(), indicator: .activity)
         self.nameLabel.text = itemViewModel.name()
         self.dateLabel.text = itemViewModel.recentTime()
-        self.recentLabel.text = itemViewModel.recentMessage()
+
+        switch itemViewModel.newestMessage.type {
+        case .text: self.recentLabel.text = itemViewModel.recentMessage()
+        case .sendMoney: self.recentLabel.text = "Transfer money"
+        case .video: print("not handled yet")
+        case .image: print("not handled yet")
+        case .requestMoney: print("not handled yet")
+        }
     }
 }

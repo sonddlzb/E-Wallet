@@ -14,14 +14,18 @@ struct MessageEntity: Codable {
     var mediaLink: String
     var sendTime: Date
     var repliedId: String
+    var amount: Double = 0.0
+    var transactionId: String = ""
 
-    init(content: String, status: String, type: String, mediaLink: String, sendTime: Date, repliedId: String) {
+    init(content: String, status: String, type: String, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "") {
         self.content = content
         self.status = status
         self.type = type
         self.mediaLink = mediaLink
         self.sendTime = sendTime
         self.repliedId = repliedId
+        self.amount = amount
+        self.transactionId = transactionId
     }
 
     init(dict: NSDictionary) {
@@ -32,5 +36,7 @@ struct MessageEntity: Codable {
         let sendTime = dict["sendTime"] as? Double ?? 0.0
         self.sendTime = Date(timeIntervalSinceReferenceDate: sendTime)
         self.repliedId = dict["repliedId"] as? String ?? ""
+        self.amount = dict["amount"] as? Double ?? 0.0
+        self.transactionId = dict["transactionId"] as? String ?? ""
     }
 }
