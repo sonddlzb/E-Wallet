@@ -26,4 +26,8 @@ struct ChatViewModel {
     func message(at index: Int) -> Message {
         return self.listNewestMessages[index]
     }
+
+    func talker(at index: Int) -> User {
+        return self.listTalkers[index]
+    }
 }

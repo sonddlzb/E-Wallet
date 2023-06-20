@@ -10,8 +10,8 @@ import Foundation
 enum MessageStatus: String {
     case sent
     case sendAndSeen
-    case receive
-    case receiveAndSeen
+    case received
+    case receivedAndSeen
 }
 
 enum MessageType: String {

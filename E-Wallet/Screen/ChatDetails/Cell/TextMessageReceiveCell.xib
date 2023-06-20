@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-Regular.otf">
+            <string>Outfit-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TextMessageReceiveCell" customModule="E_Wallet" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="287" height="83"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="83"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ot6-f7-jgA">
+                        <rect key="frame" x="0.0" y="0.0" width="287" height="83"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35M-8U-Kac">
+                                <rect key="frame" x="10" y="5" width="198" height="73"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdfsdfdsfsdfsdfdsfsdfdsfdsfdsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdffd" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAX-k2-feB">
+                                        <rect key="frame" x="10" y="4" width="178" height="65"/>
+                                        <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="20"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="FAX-k2-feB" firstAttribute="leading" secondItem="35M-8U-Kac" secondAttribute="leading" constant="10" id="MrN-JG-Wn8"/>
+                                    <constraint firstItem="FAX-k2-feB" firstAttribute="top" secondItem="35M-8U-Kac" secondAttribute="top" constant="4" id="NBI-Pc-PR0"/>
+                                    <constraint firstAttribute="trailing" secondItem="FAX-k2-feB" secondAttribute="trailing" constant="10" id="NEf-V3-mT5"/>
+                                    <constraint firstAttribute="bottom" secondItem="FAX-k2-feB" secondAttribute="bottom" constant="4" id="omj-YO-W75"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="35M-8U-Kac" firstAttribute="leading" secondItem="Ot6-f7-jgA" secondAttribute="leading" constant="10" id="B7v-LP-SiJ"/>
+                            <constraint firstItem="35M-8U-Kac" firstAttribute="width" relation="lessThanOrEqual" secondItem="Ot6-f7-jgA" secondAttribute="width" multiplier="0.7" id="K0d-jl-nzu"/>
+                            <constraint firstAttribute="bottom" secondItem="35M-8U-Kac" secondAttribute="bottom" constant="5" id="k3P-r4-Tbt"/>
+                            <constraint firstItem="35M-8U-Kac" firstAttribute="top" secondItem="Ot6-f7-jgA" secondAttribute="top" constant="5" id="qfW-zf-oda"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Ot6-f7-jgA" secondAttribute="trailing" id="FJ4-aN-Yvp"/>
+                <constraint firstItem="Ot6-f7-jgA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="G4h-Qg-zAi"/>
+                <constraint firstItem="Ot6-f7-jgA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="P4N-HM-heQ"/>
+                <constraint firstAttribute="bottom" secondItem="Ot6-f7-jgA" secondAttribute="bottom" id="aQM-mP-iEk"/>
+            </constraints>
+            <size key="customSize" width="287" height="83"/>
+            <connections>
+                <outlet property="contentContainerView" destination="35M-8U-Kac" id="QTY-ZS-iVD"/>
+                <outlet property="contentLabel" destination="FAX-k2-feB" id="8Oz-hG-eNt"/>
+            </connections>
+            <point key="canvasLocation" x="252.67175572519082" y="13.028169014084508"/>
+        </collectionViewCell>
+    </objects>
+</document>
