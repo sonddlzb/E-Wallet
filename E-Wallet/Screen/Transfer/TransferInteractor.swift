@@ -75,11 +75,12 @@ extension TransferInteractor: TransferPresentableListener {
         }
     }
 
-    func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double) {
+    func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double, message: String) {
         let confirmData: [String: String] = ["Payment Type": "Transfer",
                                              "Phone number": phoneNumber.formatPhoneNumber(),
                                              "Name": name,
-                                             "Amount": "$" + String(amount)]
+                                             "Amount": "$" + String(amount),
+                                             "message": message]
         self.listener?.transferWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 

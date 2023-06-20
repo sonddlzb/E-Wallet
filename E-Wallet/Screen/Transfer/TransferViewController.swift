@@ -15,7 +15,7 @@ protocol TransferPresentableListener: AnyObject {
     func transferWantToDismiss()
     func openContacts()
     func getNameBy(phoneNumber: String, completion: @escaping (_ name: String) -> Void)
-    func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double)
+    func routeToTransactionConfirm(phoneNumber: String, name: String, amount: Double, message: String)
     func didSelectQR()
 }
 
@@ -85,7 +85,7 @@ final class TransferViewController: UIViewController, TransferViewControllable {
         }
 
         if let amount = self.moneyTextField.text?.convertMoneyToNumber() {
-            self.listener?.routeToTransactionConfirm(phoneNumber: phoneNumberTextField.text, name: name, amount: amount)
+            self.listener?.routeToTransactionConfirm(phoneNumber: phoneNumberTextField.text, name: name, amount: amount, message: self.messageTextView.text)
         }
     }
 

@@ -13,4 +13,12 @@ struct ChatDetailsItemViewModel {
     func content() -> String {
         return message.content
     }
+
+    func amount() -> String {
+        return String(message.amount)
+    }
+
+    func transactionId() -> String {
+        return message.transactionId
+    }
 }

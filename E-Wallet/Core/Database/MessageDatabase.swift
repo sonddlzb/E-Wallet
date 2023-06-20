@@ -148,12 +148,16 @@ class MessageDatabase {
         let messageSendEntity = MessageEntity(content: content, status: MessageStatus.sent.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
         let messageReceiveEntity = MessageEntity(content: content, status: MessageStatus.received.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
 
-        self.messageRef.child(userId).child(receiverId).childByAutoId().setValue(messageSendEntity.dict) { error, _ in
+        self.sendMessage(senderId: userId, receiverId: receiverId, sendEntity: messageSendEntity, receiveEntity: messageSendEntity, completion: completion)
+    }
+
+    func sendMessage(senderId: String, receiverId: String, sendEntity: MessageEntity, receiveEntity: MessageEntity, completion: @escaping (_ isSuccess: Bool) -> Void) {
+        self.messageRef.child(senderId).child(receiverId).childByAutoId().setValue(sendEntity.dict) { error, _ in
             if let error = error {
                 print("Failed to send message: \(error)")
                 completion(false)
             } else {
-                self.messageRef.child(receiverId).child(userId).childByAutoId().setValue(messageReceiveEntity.dict) { error, _ in
+                self.messageRef.child(receiverId).child(senderId).childByAutoId().setValue(receiveEntity.dict) { error, _ in
                     if let error = error {
                         print("Failed to send message: \(error)")
                         completion(false)
@@ -163,5 +167,18 @@ class MessageDatabase {
                 }
             }
         }
+    }
+
+    func sendTransferMoneyMessage(transactionId: String, amount: Double, message: String, to receiverId: String, completion: @escaping (_ isSuccess: Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+
+        let sendTime = Date()
+        let messageSendEntity = MessageEntity(content: message, status: MessageStatus.sent.rawValue, type: MessageType.sendMoney.rawValue, mediaLink: "", sendTime: sendTime, repliedId: "", amount: amount, transactionId: transactionId)
+        let messageReceiveEntity = MessageEntity(content: message, status: MessageStatus.received.rawValue, type: MessageType.sendMoney.rawValue, mediaLink: "", sendTime: sendTime, repliedId: "", amount: amount, transactionId: transactionId)
+
+        self.sendMessage(senderId: userId, receiverId: receiverId, sendEntity: messageSendEntity, receiveEntity: messageReceiveEntity, completion: completion)
     }
 }

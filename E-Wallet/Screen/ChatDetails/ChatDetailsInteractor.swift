@@ -7,8 +7,11 @@
 
 import RIBs
 import RxSwift
+import SVProgressHUD
 
 protocol ChatDetailsRouting: ViewableRouting {
+    func openHistory(at transaction: Transaction)
+    func dismissHistory()
 }
 
 protocol ChatDetailsPresentable: Presentable {
@@ -66,6 +69,16 @@ extension ChatDetailsInteractor: ChatDetailsPresentableListener {
         MessageDatabase.shared.sendTextMessage(to: self.viewModel.talker.id, content: message, repliedId: "") { isSuccess in
             print("send message result : \(isSuccess ? "success" : "failed")")
             self.fetchMessageData()
+        }
+    }
+
+    func openTransactionDetails(_ transactionId: String) {
+        SVProgressHUD.show()
+        TransactionDatabase.shared.fetchTransactionBy(id: transactionId) { [weak self] transaction in
+            SVProgressHUD.dismiss()
+            if let transaction = transaction {
+                self?.router?.openHistory(at: transaction)
+            }
         }
     }
 }

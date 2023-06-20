@@ -32,8 +32,10 @@ class Message {
     var mediaLink: String
     var sendTime: Date
     var repliedId: String
+    var amount: Double = 0.0
+    var transactionId: String = ""
 
-    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date, repliedId: String) {
+    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "") {
         self.id = id
         self.content = content
         self.senderId = senderId
@@ -43,6 +45,8 @@ class Message {
         self.mediaLink = mediaLink
         self.sendTime = sendTime
         self.repliedId = repliedId
+        self.amount = amount
+        self.transactionId = transactionId
     }
 
     init(id: String, senderId: String, receiverId: String, entity: MessageEntity) {
@@ -55,5 +59,7 @@ class Message {
         self.mediaLink = entity.mediaLink
         self.sendTime = entity.sendTime
         self.repliedId = entity.repliedId
+        self.amount = entity.amount
+        self.transactionId = entity.transactionId
     }
 }

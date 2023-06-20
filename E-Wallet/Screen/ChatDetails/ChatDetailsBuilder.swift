@@ -31,6 +31,9 @@ final class ChatDetailsBuilder: Builder<ChatDetailsDependency>, ChatDetailsBuild
         let viewController = ChatDetailsViewController()
         let interactor = ChatDetailsInteractor(presenter: viewController, talker: talker)
         interactor.listener = listener
-        return ChatDetailsRouter(interactor: interactor, viewController: viewController)
+        let transactionDetailsBuilder = DIContainer.resolve(TransactionDetailsBuildable.self, agrument: component)
+        return ChatDetailsRouter(interactor: interactor,
+                                 viewController: viewController,
+                                 transactionDetailsBuilder: transactionDetailsBuilder)
     }
 }

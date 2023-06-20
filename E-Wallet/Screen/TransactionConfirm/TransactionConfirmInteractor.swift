@@ -97,6 +97,14 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
                         VoucherDatabase.shared.removeVoucher(voucherId: voucherId)
                     }
 
+                    UserDatabase.shared.getUserBy(phoneNumber: self?.viewModel.phoneNumber() ?? "") { user in
+                        if let user = user {
+                            MessageDatabase.shared.sendTransferMoneyMessage(transactionId: transaction?.id ?? "", amount: self?.viewModel.amount() ?? 0.0, message: self?.viewModel.message() ?? "", to: user.id) { isSuccess in
+                                print("Sending transfer money message \(isSuccess ? "successfully" : "failed")")
+                            }
+                        }
+                    }
+
                     print("transfer successfully")
                     self?.presenter.bindPaymentResult(isSuccess: true, message: "Your money has been transfered successfully")
                     if let transaction = transaction {

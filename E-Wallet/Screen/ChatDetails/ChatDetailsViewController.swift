@@ -17,6 +17,7 @@ private struct Const {
 protocol ChatDetailsPresentableListener: AnyObject {
     func didTapBackButton()
     func didTapToSendMessage(_ message: String)
+    func openTransactionDetails(_ transactionId: String)
 }
 
 final class ChatDetailsViewController: UIViewController, ChatDetailsViewControllable {
@@ -60,6 +61,8 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
         self.collectionView.contentInset = Const.contentInset
         self.collectionView.registerCell(type: TextMessageSendCell.self)
         self.collectionView.registerCell(type: TextMessageReceiveCell.self)
+        self.collectionView.registerCell(type: MoneyMessageSendCell.self)
+        self.collectionView.registerCell(type: MoneyMessageReceiveCell.self)
         self.collectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
 
@@ -174,7 +177,24 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         case .image: print("not handle yet")
         case .requestMoney: print("not handle yet")
         case .video: print("not handle yet")
-        case .sendMoney: print("not handle yet")
+        case .sendMoney:
+            if itemViewModel.message.status == .sent || itemViewModel.message.status == .sendAndSeen {
+                guard let sendCell = self.collectionView.dequeueCell(type: MoneyMessageSendCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                sendCell.bind(itemViewModel: itemViewModel)
+                sendCell.delegate = self
+                return sendCell
+            } else {
+                guard let receiveCell = self.collectionView.dequeueCell(type: MoneyMessageReceiveCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                receiveCell.bind(itemViewModel: itemViewModel)
+                receiveCell.delegate = self
+                return receiveCell
+            }
         }
 
         return cell
@@ -184,23 +204,48 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ChatDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = self.collectionView.frame.width - Const.contentInset.left - Const.contentInset.right - 8.0
-        var cellHeight = 0.0
-        let content = self.viewModel?.content(at: indexPath.row) ?? ""
-        let font = Outfit.regularFont(size: 20.0)
-        let attributes: [NSAttributedString.Key: Any] = [.font: font]
-        let size = (content.trimmingCharacters(in: .whitespacesAndNewlines) as NSString).size(withAttributes: attributes)
-        if size.width <= cellWidth * 0.7 {
-            cellHeight = size.height + 24.0
-        } else {
-            let numberOfLines: Int = Int((size.width/(cellWidth*0.7)) + 1)
-            cellHeight = size.height * CGFloat(numberOfLines) + CGFloat(numberOfLines+1) * 7.0 + 8.0
+        guard let type = self.viewModel?.item(at: indexPath.row).message.type else {
+            return CGSize.zero
         }
 
-        return CGSize(width: cellWidth, height: cellHeight)
+        let cellWidth = self.collectionView.frame.width - Const.contentInset.left - Const.contentInset.right - 8.0
+        switch type {
+        case .text:
+            var cellHeight = 0.0
+            let content = self.viewModel?.content(at: indexPath.row) ?? ""
+            let font = Outfit.regularFont(size: 20.0)
+            let attributes: [NSAttributedString.Key: Any] = [.font: font]
+            let size = (content.trimmingCharacters(in: .whitespacesAndNewlines) as NSString).size(withAttributes: attributes)
+            if size.width <= cellWidth * 0.7 {
+                cellHeight = size.height + 24.0
+            } else {
+                let numberOfLines: Int = Int((size.width/(cellWidth*0.7)) + 1)
+                cellHeight = size.height * CGFloat(numberOfLines) + CGFloat(numberOfLines+1) * 7.0 + 8.0
+            }
+
+            return CGSize(width: cellWidth, height: cellHeight)
+        case .sendMoney: return CGSize(width: cellWidth, height: 180.0)
+        case .video: return .zero
+        case .requestMoney: return .zero
+        case .image: return .zero
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return Const.cellSpacing
+    }
+}
+
+// MARK: - MoneyMessageSendCellDelegate
+extension ChatDetailsViewController: MoneyMessageSendCellDelegate {
+    func didTapToSeeSendDetails(transactionId: String) {
+        self.listener?.openTransactionDetails(transactionId)
+    }
+}
+
+// MARK: - MoneyMessageReceiveCellDelegate
+extension ChatDetailsViewController: MoneyMessageReceiveCellDelegate {
+    func didTapToSeeReceiveDetails(transactionId: String) {
+        self.listener?.openTransactionDetails(transactionId)
     }
 }

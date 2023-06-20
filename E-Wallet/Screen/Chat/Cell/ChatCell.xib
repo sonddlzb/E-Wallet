@@ -63,9 +63,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="e9x-7f-Unw" firstAttribute="top" secondItem="9MS-pi-Nv9" secondAttribute="top" constant="5" id="6XT-Sl-G64"/>
+                            <constraint firstItem="Zqx-MB-vqB" firstAttribute="width" relation="lessThanOrEqual" secondItem="0bY-Xa-YHt" secondAttribute="width" multiplier="0.6" id="8TB-a7-duk"/>
                             <constraint firstItem="9MS-pi-Nv9" firstAttribute="leading" secondItem="0bY-Xa-YHt" secondAttribute="leading" id="8d4-3G-UWR"/>
                             <constraint firstItem="Zqx-MB-vqB" firstAttribute="leading" secondItem="9MS-pi-Nv9" secondAttribute="trailing" constant="15" id="DBK-tI-nLL"/>
                             <constraint firstItem="fg6-yz-7al" firstAttribute="leading" secondItem="Zqx-MB-vqB" secondAttribute="trailing" constant="2" id="K2V-U7-3Ez"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0oR-X6-gMU" secondAttribute="trailing" constant="5" id="So4-ke-8It"/>
                             <constraint firstItem="9MS-pi-Nv9" firstAttribute="top" secondItem="0bY-Xa-YHt" secondAttribute="top" constant="5" id="Swg-Bu-jgs"/>
                             <constraint firstItem="0oR-X6-gMU" firstAttribute="leading" secondItem="fg6-yz-7al" secondAttribute="trailing" constant="2" id="Uvh-Q3-AxD"/>
                             <constraint firstAttribute="bottom" secondItem="9MS-pi-Nv9" secondAttribute="bottom" constant="5" id="VSz-oD-oav"/>
