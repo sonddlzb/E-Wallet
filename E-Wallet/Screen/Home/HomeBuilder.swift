@@ -43,6 +43,7 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let enterBillBuilder = DIContainer.resolve(EnterBillBuildable.self, agrument: component)
         let qrBuilder = DIContainer.resolve(QRBuildable.self, agrument: component)
         let chatBuilder = DIContainer.resolve(ChatBuildable.self, agrument: component)
+        let chatDetailsBuilder = DIContainer.resolve(ChatDetailsBuildable.self, agrument: component)
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
                           dashboardBuilder: dashboardBuilder,
@@ -56,6 +57,7 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
                           giftBuilder: giftBuilder,
                           enterBillBuilder: enterBillBuilder,
                           qrBuilder: qrBuilder,
-                          chatBuilder: chatBuilder)
+                          chatBuilder: chatBuilder,
+                          chatDetailsBuilder: chatDetailsBuilder)
     }
 }

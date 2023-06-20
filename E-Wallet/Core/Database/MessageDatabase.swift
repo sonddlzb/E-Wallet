@@ -87,8 +87,8 @@ class MessageDatabase {
     }
 
     func getListRecentMessages(completion: @escaping (_ recentMessagesDict: [User: Message]) -> Void) {
-        var recentMessagesDict: [User: Message] = [:]
         self.getListRecentTalkers { listTalkers in
+            var recentMessagesDict: [User: Message] = [:]
             for talker in listTalkers {
                 self.getNewestMessageOf(talker: talker) { message in
                     if let message = message {
@@ -96,6 +96,69 @@ class MessageDatabase {
                         if recentMessagesDict.count == listTalkers.count {
                             completion(recentMessagesDict)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchAllMessagesBy(talker: User, completion: @escaping (_ listMessages: [Message]) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion([])
+            return
+        }
+
+        self.messageRef.child(userId).child(talker.id).observe(.value) { dataSnapshot in
+            var listMessages: [Message] = []
+            if let messagesDict = dataSnapshot.value as? NSDictionary {
+                    for key in messagesDict.allKeys {
+                        if let messageId = key as? String {
+                            if let messageDict = messagesDict.object(forKey: key) as? NSDictionary {
+                                let messageEntity = MessageEntity(dict: messageDict)
+                                var senderId = ""
+                                var receiverId = ""
+                                if messageEntity.type == "sent" || messageEntity.type == "sentAndSeen" {
+                                    senderId = userId
+                                    receiverId = talker.id
+                                } else {
+                                    senderId = talker.id
+                                    receiverId = userId
+                                }
+
+                                let messageObject = Message(id: messageId, senderId: senderId, receiverId: receiverId, entity: messageEntity)
+                                listMessages.append(messageObject)
+                            }
+                        }
+                    }
+            }
+
+            completion(listMessages.sorted {
+                $0.sendTime.timeIntervalSinceReferenceDate > $1.sendTime.timeIntervalSinceReferenceDate
+            })
+        }
+    }
+
+    func sendTextMessage(to receiverId: String, content: String, repliedId: String, completion: @escaping (_ isSuccess: Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+
+        let sendTime = Date()
+        let messageSendEntity = MessageEntity(content: content, status: MessageStatus.sent.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
+        let messageReceiveEntity = MessageEntity(content: content, status: MessageStatus.received.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
+
+        self.messageRef.child(userId).child(receiverId).childByAutoId().setValue(messageSendEntity.dict) { error, _ in
+            if let error = error {
+                print("Failed to send message: \(error)")
+                completion(false)
+            } else {
+                self.messageRef.child(receiverId).child(userId).childByAutoId().setValue(messageReceiveEntity.dict) { error, _ in
+                    if let error = error {
+                        print("Failed to send message: \(error)")
+                        completion(false)
+                    } else {
+                        completion(true)
                     }
                 }
             }

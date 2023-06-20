@@ -9,7 +9,7 @@ import Foundation
 
 struct HistoryViewModel: Equatable {
     static func == (lhs: HistoryViewModel, rhs: HistoryViewModel) -> Bool {
-        return lhs.listTransaction.map{ $0.id} == rhs.listTransaction.map{ $0.id}
+        return lhs.listTransaction.map{ $0.id} == rhs.listTransaction.map {$0.id}
     }
 
     var listTransaction: [Transaction]

@@ -16,6 +16,7 @@ private struct Const {
 
 protocol ChatPresentableListener: AnyObject {
     func reloadData()
+    func didSelectChatAt(index: Int)
 }
 
 final class ChatViewController: UIViewController, ChatViewControllable {
@@ -99,6 +100,10 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 4.0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.listener?.didSelectChatAt(index: indexPath.row)
     }
 }
 

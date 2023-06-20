@@ -15,6 +15,15 @@ struct MessageEntity: Codable {
     var sendTime: Date
     var repliedId: String
 
+    init(content: String, status: String, type: String, mediaLink: String, sendTime: Date, repliedId: String) {
+        self.content = content
+        self.status = status
+        self.type = type
+        self.mediaLink = mediaLink
+        self.sendTime = sendTime
+        self.repliedId = repliedId
+    }
+
     init(dict: NSDictionary) {
         self.content = dict["content"] as? String ?? ""
         self.status = dict["status"] as? String ?? ""

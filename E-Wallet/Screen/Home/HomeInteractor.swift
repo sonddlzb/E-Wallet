@@ -32,6 +32,8 @@ protocol HomeRouting: ViewableRouting {
     func routeToQR()
     func dismissQR()
     func openTransactionDetails(transaction: Transaction)
+    func routeToChatDetails(talker: User)
+    func dismissChatDetails()
 }
 
 protocol HomePresentable: Presentable {

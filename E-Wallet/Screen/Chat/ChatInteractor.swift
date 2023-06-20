@@ -18,6 +18,7 @@ protocol ChatPresentable: Presentable {
 }
 
 protocol ChatListener: AnyObject {
+    func openChatFor(talker: User)
 }
 
 final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteractable {
@@ -41,11 +42,11 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteract
     }
 
     func fetchRecentChatData() {
-        var listRecentMessages: [Message] = []
-        var listRecentUsers: [User] = []
-        var listRecentUsersTemp: [User] = []
-        var listRecentUsersTempSorted: [User] = []
         MessageDatabase.shared.getListRecentMessages { recentMessagesDict in
+            var listRecentMessages: [Message] = []
+            var listRecentUsers: [User] = []
+            var listRecentUsersTemp: [User] = []
+            var listRecentUsersTempSorted: [User] = []
             DispatchQueue.main.async {
                 for (recentUser, recentMessage) in recentMessagesDict {
                     listRecentMessages.append(recentMessage)
@@ -76,10 +77,6 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteract
                 self.presenter.bind(viewModel: self.viewModel)
             }
         }
-
-        MessageDatabase.shared.getListRecentTalkers { listTalkers in
-            print("Recently has \(listTalkers.count) people")
-        }
     }
 }
 
@@ -87,5 +84,9 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable>, ChatInteract
 extension ChatInteractor: ChatPresentableListener {
     func reloadData() {
         self.fetchRecentChatData()
+    }
+
+    func didSelectChatAt(index: Int) {
+        self.listener?.openChatFor(talker: self.viewModel.talker(at: index))
     }
 }

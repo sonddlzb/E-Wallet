@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener, QRListener, ChatListener {
+protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, TransferListener, TopUpListener, AddCardListener, WithdrawListener, TransactionConfirmListener, HistoryListener, GiftListener, EnterBillListener, QRListener, ChatListener, ChatDetailsListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -58,6 +58,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
     private var chatRouter: ChatRouting?
     private var chatBuilder: ChatBuildable
 
+    private var chatDetailsRouter: ChatDetailsRouting?
+    private var chatDetailsBuilder: ChatDetailsBuildable
+
     init(interactor: HomeInteractable,
          viewController: HomeViewControllable,
          dashboardBuilder: DashboardBuildable,
@@ -71,7 +74,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
          giftBuilder: GiftBuildable,
          enterBillBuilder: EnterBillBuildable,
          qrBuilder: QRBuildable,
-         chatBuilder: ChatBuildable) {
+         chatBuilder: ChatBuildable,
+         chatDetailsBuilder: ChatDetailsBuildable) {
         self.dashboardBuilder = dashboardBuilder
         self.profileBuilder = profileBuilder
         self.transferBuilder = transferBuilder
@@ -84,6 +88,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
         self.enterBillBuilder = enterBillBuilder
         self.qrBuilder = qrBuilder
         self.chatBuilder = chatBuilder
+        self.chatDetailsBuilder = chatDetailsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -351,5 +356,26 @@ extension HomeRouter: HomeRouting {
     func openTransactionDetails(transaction: Transaction) {
         self.routeToTab(homeTab: .history)
         self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
+    }
+
+    func routeToChatDetails(talker: User) {
+        guard self.chatDetailsRouter == nil else {
+            return
+        }
+
+        let router = self.chatDetailsBuilder.build(withListener: self.interactor, talker: talker)
+        self.attachChild(router)
+        self.viewControllable.push(viewControllable: router.viewControllable)
+        self.chatDetailsRouter = router
+    }
+
+    func dismissChatDetails() {
+        guard let router = self.chatDetailsRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.chatDetailsRouter = nil
     }
 }

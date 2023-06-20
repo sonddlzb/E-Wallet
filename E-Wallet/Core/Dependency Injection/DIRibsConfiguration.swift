@@ -145,8 +145,12 @@ extension DIConnector {
             return NotificationsBuilder(dependency: args.get())
         }
 
-        DIContainer.register(ChatBuildable.self) { resolver, args in
+        DIContainer.register(ChatBuildable.self) { _, args in
             return ChatBuilder(dependency: args.get())
+        }
+
+        DIContainer.register(ChatDetailsBuildable.self) { _, args in
+            return ChatDetailsBuilder(dependency: args.get())
         }
     }
 }
