@@ -20,6 +20,7 @@ protocol ReceiptPresentable: Presentable {
 protocol ReceiptListener: AnyObject {
     func receiptWantToRouteToHome()
     func receiptWantToSeeDetails(transaction: Transaction)
+    func receiptWantToGoToConversation(with user: User)
 }
 
 final class ReceiptInteractor: PresentableInteractor<ReceiptPresentable>, ReceiptInteractable {
@@ -52,5 +53,14 @@ extension ReceiptInteractor: ReceiptPresentableListener {
 
     func didTapSeeDetailsButton() {
         self.listener?.receiptWantToSeeDetails(transaction: self.viewModel.transaction)
+    }
+
+    func didTapGoToConversationButton() {
+        let receiverId = self.viewModel.transaction.receiverId
+        UserDatabase.shared.getUserBy(id: receiverId) { [weak self] userEntity in
+            if let userEntity = userEntity {
+                self?.listener?.receiptWantToGoToConversation(with: User(id: receiverId, entity: userEntity))
+            }
+        }
     }
 }

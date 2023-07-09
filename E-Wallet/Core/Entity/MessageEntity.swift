@@ -15,9 +15,11 @@ struct MessageEntity: Codable {
     var sendTime: Date
     var repliedId: String
     var amount: Double = 0.0
+    var width: Double = 0.0
+    var height: Double = 0.0
     var transactionId: String = ""
 
-    init(content: String, status: String, type: String, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "") {
+    init(content: String, status: String, type: String, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "", width: Double = 0.0, height: Double = 0.0) {
         self.content = content
         self.status = status
         self.type = type
@@ -25,6 +27,8 @@ struct MessageEntity: Codable {
         self.sendTime = sendTime
         self.repliedId = repliedId
         self.amount = amount
+        self.width = width
+        self.height = height
         self.transactionId = transactionId
     }
 
@@ -38,5 +42,7 @@ struct MessageEntity: Codable {
         self.repliedId = dict["repliedId"] as? String ?? ""
         self.amount = dict["amount"] as? Double ?? 0.0
         self.transactionId = dict["transactionId"] as? String ?? ""
+        self.width = dict["width"] as? Double ?? 0.0
+        self.height = dict["height"] as? Double ?? 0.0
     }
 }

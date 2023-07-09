@@ -152,5 +152,9 @@ extension DIConnector {
         DIContainer.register(ChatDetailsBuildable.self) { _, args in
             return ChatDetailsBuilder(dependency: args.get())
         }
+
+        DIContainer.register(PhotoPreviewBuildable.self) { _, args in
+            return PhotoPreviewBuilder(dependency: args.get())
+        }
     }
 }

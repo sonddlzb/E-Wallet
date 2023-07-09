@@ -29,4 +29,9 @@ extension HomeInteractor: TransactionConfirmListener {
         UserDefaults.standard.removeValidPasswordStatus()
         self.listener?.routeToSignIn()
     }
+
+    func receiptWantToRouteToChatDetails(with user: User) {
+        self.presenter.selectChatTab()
+        self.router?.receiptWantToRouteToChatDetail(with: user)
+    }
 }

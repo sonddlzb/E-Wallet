@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import Photos
 
 private struct Const {
     static let contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
@@ -18,11 +19,16 @@ protocol ChatDetailsPresentableListener: AnyObject {
     func didTapBackButton()
     func didTapToSendMessage(_ message: String)
     func openTransactionDetails(_ transactionId: String)
+    func didTapTransfer()
+    func sendImage(image: UIImage)
+    func openPhotoPreview(_ image: UIImage)
 }
 
 final class ChatDetailsViewController: UIViewController, ChatDetailsViewControllable {
 
     // MARK: - Outlets
+    @IBOutlet private weak var bottomView: UIView!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var avtImageView: UIImageView!
     @IBOutlet private weak var messageTextField: SolarTextField!
     @IBOutlet private weak var sendButton: TapableView!
@@ -31,9 +37,18 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var bottomViewBottomConstraint: NSLayoutConstraint!
 
+    private lazy var chatMenuView: ChatMenuView = {
+        let view = ChatMenuView.loadView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     // MARK: - Variables
     weak var listener: ChatDetailsPresentableListener?
     var viewModel: ChatDetailsViewModel?
+    var keyboardHeight = 280.0
+    var isChatMenuShowing = false
+    private var imagePicker = UIImagePickerController()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -42,6 +57,14 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        self.imagePicker.delegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hideChatMenu()
+        self.bottomViewBottomConstraint.constant = 0.0
     }
 
     deinit {
@@ -51,6 +74,16 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
     private func config() {
         self.configMessageTextField()
         self.configCollectionView()
+
+        self.view.addSubview(self.chatMenuView)
+        NSLayoutConstraint.activate([
+            self.chatMenuView.heightAnchor.constraint(equalToConstant: self.keyboardHeight),
+            self.chatMenuView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.chatMenuView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.chatMenuView.topAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: -20.0)
+        ])
+        self.chatMenuView.alpha = 0.0
+        self.chatMenuView.delegate = self
     }
 
     private func configCollectionView() {
@@ -63,6 +96,8 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
         self.collectionView.registerCell(type: TextMessageReceiveCell.self)
         self.collectionView.registerCell(type: MoneyMessageSendCell.self)
         self.collectionView.registerCell(type: MoneyMessageReceiveCell.self)
+        self.collectionView.registerCell(type: ImageMessageSendCell.self)
+        self.collectionView.registerCell(type: ImageMessageReceiveCell.self)
         self.collectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
 
@@ -81,6 +116,15 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
     }
 
     @IBAction func didTapMoreOptionsButton(_ sender: Any) {
+        self.showChatMenu()
+        if self.messageTextField.isEditing {
+            self.messageTextField.resignFirstResponder()
+        } else {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) {
+                self.bottomViewBottomConstraint.constant = self.keyboardHeight - 30.0
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 
     @IBAction func didTapSendButton(_ sender: Any) {
@@ -95,18 +139,54 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
 
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = keyboardFrame.height
-            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) {
-                self.bottomViewBottomConstraint.constant = keyboardHeight - 30.0
+            self.keyboardHeight = keyboardFrame.height
+            self.chatMenuView.heightConstraint()?.constant = self.keyboardHeight
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                self.bottomViewBottomConstraint.constant = self.keyboardHeight - 30.0
                 self.view.layoutIfNeeded()
-            }
+            })
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
+        guard !self.isChatMenuShowing else {
+            return
+        }
+
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) {
             self.bottomViewBottomConstraint.constant = 0.0
             self.view.layoutIfNeeded()
+        }
+    }
+
+    func showChatMenu() {
+        self.isChatMenuShowing = true
+        UIView.animate(withDuration: 0.25, delay: 0) {
+            self.chatMenuView.alpha = 1.0
+        }
+    }
+
+    func hideChatMenu() {
+        self.isChatMenuShowing = false
+        UIView.animate(withDuration: 0.25, delay: 0) {
+            self.chatMenuView.alpha = 0.0
+        }
+    }
+
+    func openGallary() {
+        PermissionHelper().requestPhotoPermission { granted, needOpenSetting in
+            if granted {
+                DispatchQueue.main.async {
+                    self.imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.modalPresentationStyle = .fullScreen
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }
+            } else if needOpenSetting {
+                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(settingsURL)
+                }
+            }
         }
     }
 }
@@ -120,11 +200,21 @@ extension ChatDetailsViewController: ChatDetailsPresentable {
         self.nameLabel.text = viewModel.name()
         self.collectionView.reloadData()
     }
+
+    func bindSentMessageFailedResult(message: String) {
+        let alertViewController = UIAlertController(title: "Send image failed", message: message, preferredStyle: .alert)
+        self.present(alertViewController, animated: true)
+    }
 }
 
 extension ChatDetailsViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.hideChatMenu()
         self.view.endEditing(true)
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) {
+            self.bottomViewBottomConstraint.constant = 0.0
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
@@ -174,7 +264,25 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
                 return receiveCell
             }
 
-        case .image: print("not handle yet")
+        case .image:
+            if itemViewModel.message.status == .sent || itemViewModel.message.status == .sendAndSeen {
+                guard let sendCell = self.collectionView.dequeueCell(type: ImageMessageSendCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                sendCell.bind(itemViewModel: itemViewModel)
+                sendCell.delegate = self
+                return sendCell
+            } else {
+                guard let receiveCell = self.collectionView.dequeueCell(type: ImageMessageReceiveCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                receiveCell.delegate = self
+                receiveCell.bind(itemViewModel: itemViewModel)
+                return receiveCell
+            }
+
         case .requestMoney: print("not handle yet")
         case .video: print("not handle yet")
         case .sendMoney:
@@ -198,6 +306,15 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.hideChatMenu()
+        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) {
+            self.bottomViewBottomConstraint.constant = 0.0
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
@@ -227,7 +344,19 @@ extension ChatDetailsViewController: UICollectionViewDelegateFlowLayout {
         case .sendMoney: return CGSize(width: cellWidth, height: 180.0)
         case .video: return .zero
         case .requestMoney: return .zero
-        case .image: return .zero
+        case .image:
+            if let imageWidth = self.viewModel?.item(at: indexPath.row).message.width, let imageHeight = self.viewModel?.item(at: indexPath.row).message.height {
+                if imageHeight > imageWidth {
+                    let cellHeight = min(cellWidth, cellWidth*imageHeight/imageWidth)
+                    return CGSize(width: cellWidth, height: cellHeight)
+                } else {
+                    let cellHeight = min(cellWidth*0.5, cellWidth*imageHeight/imageWidth)
+                    return CGSize(width: cellWidth, height: cellHeight)
+                }
+            } else {
+                let cellHeight = cellWidth*0.6
+                return CGSize(width: cellWidth, height: cellHeight)
+            }
         }
     }
 
@@ -247,5 +376,41 @@ extension ChatDetailsViewController: MoneyMessageSendCellDelegate {
 extension ChatDetailsViewController: MoneyMessageReceiveCellDelegate {
     func didTapToSeeReceiveDetails(transactionId: String) {
         self.listener?.openTransactionDetails(transactionId)
+    }
+}
+
+extension ChatDetailsViewController: ChatMenuViewDelegate {
+    func chatMenuView(_ chatMenuView: ChatMenuView, didSelectAt option: ChatMenuOption) {
+        switch option {
+        case .transfer:
+            self.listener?.didTapTransfer()
+        case .request: print("not handle yet")
+        case .photo:
+            self.openGallary()
+        case .voice: print("not handle yet")
+        }
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension ChatDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.listener?.sendImage(image: pickedImage)
+        }
+
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - ImageMessageSendCellDelegate, ImageMessageReceiveCellDelegate
+extension ChatDetailsViewController: ImageMessageSendCellDelegate, ImageMessageReceiveCellDelegate {
+    func imageMessageSendCell(_ imageMessageSendCell: ImageMessageSendCell, didSelect image: UIImage) {
+        self.listener?.openPhotoPreview(image)
+    }
+
+    func imageMessageReceiveCell(_ imageMessageReceiveCell: ImageMessageReceiveCell, didSelect image: UIImage) {
+        self.listener?.openPhotoPreview(image)
     }
 }

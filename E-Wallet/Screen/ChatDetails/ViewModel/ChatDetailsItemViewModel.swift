@@ -21,4 +21,16 @@ struct ChatDetailsItemViewModel {
     func transactionId() -> String {
         return message.transactionId
     }
+
+    func mediaURL() -> URL? {
+        return URL(string: self.message.mediaLink)
+    }
+
+    func scale() -> Double? {
+        if message.height != 0, message.width != 0 {
+            return message.width/message.height
+        } else {
+            return nil
+        }
+    }
 }

@@ -18,4 +18,9 @@ extension TransactionConfirmInteractor: ReceiptListener {
         self.listener?.receiptWantToRouteToHome()
         self.listener?.receiptWantToSeeDetails(transaction: transaction)
     }
+
+    func receiptWantToGoToConversation(with user: User) {
+        self.router?.dismissReceipt(animated: false)
+        self.listener?.receiptWantToRouteToChatDetails(with: user)
+    }
 }

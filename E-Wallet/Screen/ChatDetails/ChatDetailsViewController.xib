@@ -17,8 +17,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatDetailsViewController">
             <connections>
                 <outlet property="avtImageView" destination="XeG-G8-Spl" id="Hv2-Ee-3Wv"/>
+                <outlet property="bottomView" destination="dDt-Th-bJI" id="AfN-G6-Edm"/>
                 <outlet property="bottomViewBottomConstraint" destination="ckf-4A-EG2" id="PZg-YK-6Mb"/>
                 <outlet property="collectionView" destination="DiC-v6-a5b" id="JVa-Ug-3Zf"/>
+                <outlet property="containerView" destination="Jfe-eL-djc" id="pw4-KF-QC9"/>
                 <outlet property="messageTextField" destination="wPs-2E-F9D" id="QHl-9e-gPG"/>
                 <outlet property="nameLabel" destination="3AV-3h-m1W" id="qPn-1S-fVf"/>
                 <outlet property="sendButton" destination="MNZ-mz-5L0" id="5HC-zl-mj0"/>

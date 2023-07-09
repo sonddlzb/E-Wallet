@@ -48,4 +48,8 @@ struct ReceiptViewModel {
         default: return "Purchase Amount"
         }
     }
+
+    func isTransferTransaction() -> Bool {
+        return self.transaction.type == .transfer
+    }
 }

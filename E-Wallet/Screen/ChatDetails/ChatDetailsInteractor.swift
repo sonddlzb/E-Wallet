@@ -12,16 +12,20 @@ import SVProgressHUD
 protocol ChatDetailsRouting: ViewableRouting {
     func openHistory(at transaction: Transaction)
     func dismissHistory()
+    func routeToPhotoPreview(image: UIImage)
+    func dismissPhotoPreview()
 }
 
 protocol ChatDetailsPresentable: Presentable {
     var listener: ChatDetailsPresentableListener? { get set }
 
     func bind(viewModel: ChatDetailsViewModel)
+    func bindSentMessageFailedResult(message: String)
 }
 
 protocol ChatDetailsListener: AnyObject {
     func chatDetailsWantToDismiss()
+    func chatDetailsWantToRouteToTransferMoney(phoneNumber: String)
 }
 
 final class ChatDetailsInteractor: PresentableInteractor<ChatDetailsPresentable>, ChatDetailsInteractable {
@@ -80,5 +84,25 @@ extension ChatDetailsInteractor: ChatDetailsPresentableListener {
                 self?.router?.openHistory(at: transaction)
             }
         }
+    }
+
+    func didTapTransfer() {
+        self.listener?.chatDetailsWantToRouteToTransferMoney(phoneNumber: self.viewModel.talker.phoneNumber)
+    }
+
+    func sendImage(image: UIImage) {
+        MessageImageDatabase.shared.sendMessageImage(image, receiverId: self.viewModel.talker.id, repliedId: "") { error, isSuccess in
+            if let error = error {
+                self.presenter.bindSentMessageFailedResult(message: error.localizedDescription)
+            } else {
+                if !isSuccess {
+                    self.presenter.bindSentMessageFailedResult(message: "Something went wrong. Try again later!")
+                }
+            }
+        }
+    }
+
+    func openPhotoPreview(_ image: UIImage) {
+        self.router?.routeToPhotoPreview(image: image)
     }
 }

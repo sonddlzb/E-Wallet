@@ -12,4 +12,8 @@ extension HomeInteractor: ChatDetailsListener {
     func chatDetailsWantToDismiss() {
         self.router?.dismissChatDetails()
     }
+
+    func chatDetailsWantToRouteToTransferMoney(phoneNumber: String) {
+        self.router?.routeToTransfer(phoneNumber: phoneNumber)
+    }
 }

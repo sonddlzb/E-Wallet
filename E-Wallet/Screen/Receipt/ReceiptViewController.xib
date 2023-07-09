@@ -24,6 +24,7 @@
             <connections>
                 <outlet property="amountNameLabel" destination="HWa-dM-eCa" id="v7M-Ts-r26"/>
                 <outlet property="amountValueLabel" destination="dfF-sM-Tjd" id="fVR-4b-Ki1"/>
+                <outlet property="conversationButton" destination="0Rv-OK-6Vp" id="KAA-cf-5Lr"/>
                 <outlet property="dateTimeLabel" destination="Alz-sp-fak" id="hy7-FP-Vsf"/>
                 <outlet property="idLabel" destination="g6L-u4-JTt" id="a8G-t4-BzB"/>
                 <outlet property="messageLabel" destination="jKB-dc-RzL" id="0na-DU-pOu"/>
@@ -252,9 +253,31 @@
                                         <action selector="seeDetailsButtonDidTap:" destination="-1" eventType="touchUpInside" id="eCz-4h-dAk"/>
                                     </connections>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Rv-OK-6Vp" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                                    <rect key="frame" x="110" y="356" width="154" height="29.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to conversation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f49-AF-the">
+                                            <rect key="frame" x="0.0" y="0.0" width="154" height="19.5"/>
+                                            <fontDescription key="fontDescription" name="Outfit-SemiBold" family="Outfit" pointSize="18"/>
+                                            <color key="textColor" red="0.12549019607843137" green="0.023529411764705882" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="f49-AF-the" firstAttribute="top" secondItem="0Rv-OK-6Vp" secondAttribute="top" id="Okm-9I-E3T"/>
+                                        <constraint firstItem="f49-AF-the" firstAttribute="leading" secondItem="0Rv-OK-6Vp" secondAttribute="leading" id="PNk-8i-wyf"/>
+                                        <constraint firstAttribute="trailing" secondItem="f49-AF-the" secondAttribute="trailing" id="oFc-m5-S9h"/>
+                                        <constraint firstAttribute="bottom" secondItem="f49-AF-the" secondAttribute="bottom" constant="10" id="vOV-11-mh8"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="goToConversationButtonDidTap:" destination="-1" eventType="touchUpInside" id="jbB-Zh-hEz"/>
+                                    </connections>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="0Rv-OK-6Vp" secondAttribute="bottom" id="3pR-a4-Oxt"/>
                                 <constraint firstItem="HWa-dM-eCa" firstAttribute="leading" secondItem="tdz-aZ-ayz" secondAttribute="leading" constant="20" id="9hn-mb-atT"/>
                                 <constraint firstAttribute="trailing" secondItem="Alz-sp-fak" secondAttribute="trailing" constant="20" id="BxC-s5-Q0s"/>
                                 <constraint firstItem="g6L-u4-JTt" firstAttribute="centerY" secondItem="scS-QY-GBN" secondAttribute="centerY" id="Dwh-nf-cHc"/>
@@ -262,6 +285,7 @@
                                 <constraint firstItem="scS-QY-GBN" firstAttribute="top" secondItem="NHv-ja-pFW" secondAttribute="bottom" constant="20" id="EbE-dm-jCS"/>
                                 <constraint firstItem="bRV-Iw-c9h" firstAttribute="leading" secondItem="tdz-aZ-ayz" secondAttribute="leading" constant="20" id="JwX-gR-gbM"/>
                                 <constraint firstAttribute="trailing" secondItem="g6L-u4-JTt" secondAttribute="trailing" constant="20" id="MMT-IP-GlK"/>
+                                <constraint firstItem="0Rv-OK-6Vp" firstAttribute="centerX" secondItem="tdz-aZ-ayz" secondAttribute="centerX" id="TcX-dx-sgK"/>
                                 <constraint firstItem="NHv-ja-pFW" firstAttribute="leading" secondItem="tdz-aZ-ayz" secondAttribute="leading" constant="20" id="c2z-p8-Ed7"/>
                                 <constraint firstAttribute="trailing" secondItem="bRV-Iw-c9h" secondAttribute="trailing" constant="20" id="ey4-4g-3Yn"/>
                                 <constraint firstItem="bRV-Iw-c9h" firstAttribute="top" secondItem="scS-QY-GBN" secondAttribute="bottom" constant="30" id="iKe-zY-0uV"/>

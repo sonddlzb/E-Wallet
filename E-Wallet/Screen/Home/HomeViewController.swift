@@ -81,12 +81,20 @@ extension HomeViewController: HomeViewControllable {
         self.addChild(viewController.uiviewController)
         self.currentViewController = viewController
     }
+
+    func routeToDashboard() {
+        self.homeTabBar.setSelectedTab(.dashboard)
+    }
 }
 
 // MARK: - HomePresentable
 extension HomeViewController: HomePresentable {
     func selectHistoryTab() {
         self.homeTabBar.setSelectedTab(.history)
+    }
+
+    func selectChatTab() {
+        self.homeTabBar.setSelectedTab(.chat)
     }
 
     func showNotification(message: NotificationMessage) {

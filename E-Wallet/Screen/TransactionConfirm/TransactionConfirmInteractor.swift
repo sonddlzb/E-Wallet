@@ -38,6 +38,7 @@ protocol TransactionConfirmListener: AnyObject {
     func receiptWantToRouteToHome()
     func receiptWantToSeeDetails(transaction: Transaction)
     func transactionConfirmWantToEndLoginSession()
+    func receiptWantToRouteToChatDetails(with user: User)
 }
 
 final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfirmPresentable> {
