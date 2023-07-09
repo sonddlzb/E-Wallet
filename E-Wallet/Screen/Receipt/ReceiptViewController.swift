@@ -12,6 +12,7 @@ import UIKit
 protocol ReceiptPresentableListener: AnyObject {
     func didTapHomeButton()
     func didTapSeeDetailsButton()
+    func didTapGoToConversationButton()
 }
 
 final class ReceiptViewController: UIViewController, ReceiptViewControllable {
@@ -22,6 +23,7 @@ final class ReceiptViewController: UIViewController, ReceiptViewControllable {
     @IBOutlet private weak var amountValueLabel: UILabel!
     @IBOutlet private weak var dateTimeLabel: UILabel!
     @IBOutlet private weak var idLabel: UILabel!
+    @IBOutlet weak var conversationButton: TapableView!
 
     // MARK: - Variables
     weak var listener: ReceiptPresentableListener?
@@ -48,6 +50,10 @@ final class ReceiptViewController: UIViewController, ReceiptViewControllable {
     @IBAction func seeDetailsButtonDidTap(_ sender: Any) {
         self.listener?.didTapSeeDetailsButton()
     }
+
+    @IBAction func goToConversationButtonDidTap(_ sender: Any) {
+        self.listener?.didTapGoToConversationButton()
+    }
 }
 
 // MARK: - ReceiptPresentable
@@ -61,5 +67,6 @@ extension ReceiptViewController: ReceiptPresentable {
         self.amountValueLabel.text = self.viewModel.amount()
         self.dateTimeLabel.text = self.viewModel.time()
         self.idLabel.text = self.viewModel.refId()
+        self.conversationButton.isHidden = !self.viewModel.isTransferTransaction()
     }
 }

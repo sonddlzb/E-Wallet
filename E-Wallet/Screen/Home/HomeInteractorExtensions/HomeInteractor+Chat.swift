@@ -9,6 +9,6 @@ import Foundation
 
 extension HomeInteractor: ChatListener {
     func openChatFor(talker: User) {
-        self.router?.routeToChatDetails(talker: talker)
+        self.router?.routeToChatDetails(talker: talker, animated: true)
     }
 }

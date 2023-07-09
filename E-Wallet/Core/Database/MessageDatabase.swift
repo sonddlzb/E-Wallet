@@ -148,7 +148,7 @@ class MessageDatabase {
         let messageSendEntity = MessageEntity(content: content, status: MessageStatus.sent.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
         let messageReceiveEntity = MessageEntity(content: content, status: MessageStatus.received.rawValue, type: MessageType.text.rawValue, mediaLink: "", sendTime: sendTime, repliedId: repliedId)
 
-        self.sendMessage(senderId: userId, receiverId: receiverId, sendEntity: messageSendEntity, receiveEntity: messageSendEntity, completion: completion)
+        self.sendMessage(senderId: userId, receiverId: receiverId, sendEntity: messageSendEntity, receiveEntity: messageReceiveEntity, completion: completion)
     }
 
     func sendMessage(senderId: String, receiverId: String, sendEntity: MessageEntity, receiveEntity: MessageEntity, completion: @escaping (_ isSuccess: Bool) -> Void) {

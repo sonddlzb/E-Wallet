@@ -32,14 +32,16 @@ protocol HomeRouting: ViewableRouting {
     func routeToQR()
     func dismissQR()
     func openTransactionDetails(transaction: Transaction)
-    func routeToChatDetails(talker: User)
+    func routeToChatDetails(talker: User, animated: Bool)
     func dismissChatDetails()
+    func receiptWantToRouteToChatDetail(with user: User)
 }
 
 protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
 
     func selectHistoryTab()
+    func selectChatTab()
     func showNotification(message: NotificationMessage)
 }
 

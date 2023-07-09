@@ -33,9 +33,11 @@ class Message {
     var sendTime: Date
     var repliedId: String
     var amount: Double = 0.0
+    var width: Double = 0.0
+    var height: Double = 0.0
     var transactionId: String = ""
 
-    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "") {
+    init(id: String, content: String, senderId: String, receiverId: String, status: MessageStatus, type: MessageType, mediaLink: String, sendTime: Date, repliedId: String, amount: Double = 0.0, transactionId: String = "", width: Double = 0.0, height: Double = 0.0) {
         self.id = id
         self.content = content
         self.senderId = senderId
@@ -47,6 +49,8 @@ class Message {
         self.repliedId = repliedId
         self.amount = amount
         self.transactionId = transactionId
+        self.width = width
+        self.height = height
     }
 
     init(id: String, senderId: String, receiverId: String, entity: MessageEntity) {
@@ -61,5 +65,7 @@ class Message {
         self.repliedId = entity.repliedId
         self.amount = entity.amount
         self.transactionId = entity.transactionId
+        self.width = entity.width
+        self.height = entity.height
     }
 }

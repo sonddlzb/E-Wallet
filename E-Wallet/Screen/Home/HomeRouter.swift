@@ -15,6 +15,7 @@ protocol HomeInteractable: Interactable, DashboardListener, ProfileListener, Tra
 protocol HomeViewControllable: ViewControllable {
     func embedViewController(_ viewControlller: ViewControllable)
     func highlightOnTabBar(tab: HomeTab)
+    func routeToDashboard()
 }
 
 final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable> {
@@ -299,7 +300,11 @@ extension HomeRouter: HomeRouting {
         self.dismissWithdraw(animated: false)
         self.dismissTopUp(animated: false)
         self.dismissEnterBill(animated: false)
+        self.dismissChatDetails()
         self.routeToDashboardTab()
+        if let homeViewControllable = self.viewControllable as? HomeViewControllable {
+            homeViewControllable.routeToDashboard()
+        }
     }
 
     func receiptWantToSeeDetails(transaction: Transaction) {
@@ -309,6 +314,12 @@ extension HomeRouter: HomeRouting {
         self.dismissTopUp(animated: false)
         self.routeToHistoryTab()
         self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
+    }
+
+    func receiptWantToRouteToChatDetail(with user: User) {
+        self.dismissTransactionConfirm(animated: false)
+        self.dismissTransfer(animated: false)
+        self.routeToChatDetails(talker: user, animated: false)
     }
 
     func routeToEnterBill(serviceType: ServiceType) {
@@ -358,14 +369,14 @@ extension HomeRouter: HomeRouting {
         self.historyRouter?.routeToTransactionDetails(transaction: transaction, animated: false)
     }
 
-    func routeToChatDetails(talker: User) {
+    func routeToChatDetails(talker: User, animated: Bool) {
         guard self.chatDetailsRouter == nil else {
             return
         }
 
         let router = self.chatDetailsBuilder.build(withListener: self.interactor, talker: talker)
         self.attachChild(router)
-        self.viewControllable.push(viewControllable: router.viewControllable)
+        self.viewControllable.push(viewControllable: router.viewControllable, animated: animated)
         self.chatDetailsRouter = router
     }
 
