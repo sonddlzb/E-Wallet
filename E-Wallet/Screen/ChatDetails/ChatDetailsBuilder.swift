@@ -33,9 +33,11 @@ final class ChatDetailsBuilder: Builder<ChatDetailsDependency>, ChatDetailsBuild
         interactor.listener = listener
         let transactionDetailsBuilder = DIContainer.resolve(TransactionDetailsBuildable.self, agrument: component)
         let photoPreviewBuilder = DIContainer.resolve(PhotoPreviewBuildable.self, agrument: component)
+        let audioPreviewBuilder = DIContainer.resolve(AudioPreviewBuildable.self, agrument: component)
         return ChatDetailsRouter(interactor: interactor,
                                  viewController: viewController,
                                  transactionDetailsBuilder: transactionDetailsBuilder,
-                                 photoPreviewBuilder: photoPreviewBuilder)
+                                 photoPreviewBuilder: photoPreviewBuilder,
+                                 audioPreviewBuilder: audioPreviewBuilder)
     }
 }

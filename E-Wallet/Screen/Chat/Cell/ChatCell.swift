@@ -27,8 +27,8 @@ class ChatCell: UICollectionViewCell {
         switch itemViewModel.newestMessage.type {
         case .text: self.recentLabel.text = itemViewModel.recentMessage()
         case .sendMoney: self.recentLabel.text = "Transfer money"
-        case .video: print("not handled yet")
-        case .image: print("not handled yet")
+        case .audio: self.recentLabel.text = "Audio"
+        case .image: self.recentLabel.text = "Image"
         case .requestMoney: print("not handled yet")
         }
     }

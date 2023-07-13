@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 public extension URL {
     var params: [String: Any] {
@@ -69,4 +70,14 @@ public extension URL {
           }
         }
       }
+
+    func playLocalAudioFile() {
+        do {
+            let audioPlayer = try AVAudioPlayer(contentsOf: self)
+            audioPlayer.prepareToPlay()
+            audioPlayer.play()
+        } catch {
+            print("Error playing audio: \(error.localizedDescription)")
+        }
+    }
 }

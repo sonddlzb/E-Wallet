@@ -8,16 +8,21 @@
 import UIKit
 
 class CustomPresentTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+    var rate = 0.75
 
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return nil
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return CustomPresentAnimationController()
+        let customPresentAnimationController = CustomPresentAnimationController()
+        customPresentAnimationController.rate = rate
+        return customPresentAnimationController
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return CustomDismissAnimationController()
+        let customDismissAnimationController = CustomDismissAnimationController()
+        customDismissAnimationController.rate = rate
+        return customDismissAnimationController
     }
 }

@@ -22,6 +22,7 @@ protocol ChatDetailsPresentableListener: AnyObject {
     func didTapTransfer()
     func sendImage(image: UIImage)
     func openPhotoPreview(_ image: UIImage)
+    func openAudioPreview(audioURL: URL)
 }
 
 final class ChatDetailsViewController: UIViewController, ChatDetailsViewControllable {
@@ -49,6 +50,8 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
     var keyboardHeight = 280.0
     var isChatMenuShowing = false
     private var imagePicker = UIImagePickerController()
+    var recording: Recording!
+    var recordDuration = 0
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -69,6 +72,29 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    func createRecorder() {
+        recording = Recording(toValue: "recording.m4a")
+        recording.delegate = self
+
+        // Optionally, you can prepare the recording in the background to
+        // make it start recording faster when you hit `record()`.
+
+//        DispatchQueue.global().async {
+//            // Background thread
+//            do {
+//                try self.recording.prepare()
+//            } catch {
+//                print(error)
+//            }
+//        }
+
+        do {
+            try self.recording.prepare()
+        } catch {
+            print(error)
+        }
     }
 
     private func config() {
@@ -98,6 +124,8 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
         self.collectionView.registerCell(type: MoneyMessageReceiveCell.self)
         self.collectionView.registerCell(type: ImageMessageSendCell.self)
         self.collectionView.registerCell(type: ImageMessageReceiveCell.self)
+        self.collectionView.registerCell(type: AudioMessageSendCell.self)
+        self.collectionView.registerCell(type: AudioMessageReceiveCell.self)
         self.collectionView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
 
@@ -189,6 +217,23 @@ final class ChatDetailsViewController: UIViewController, ChatDetailsViewControll
             }
         }
     }
+
+    func startRecording() {
+        self.chatMenuView.showRecordView()
+        recordDuration = 0
+        do {
+            try recording.record()
+        } catch {
+            print(error)
+        }
+    }
+
+    func stopRecording(isCancel: Bool) {
+        recordDuration = 0
+        recording.stop(isCancel: isCancel)
+        self.chatMenuView.update(0.0)
+        self.chatMenuView.hideRecordView()
+    }
 }
 
 // MARK: - ChatDetailsPresentable
@@ -205,10 +250,23 @@ extension ChatDetailsViewController: ChatDetailsPresentable {
         let alertViewController = UIAlertController(title: "Send image failed", message: message, preferredStyle: .alert)
         self.present(alertViewController, animated: true)
     }
+
+    func deleteRecorder() {
+        self.recording.deleteRecorder()
+    }
+
+    func hideChatMenuView() {
+        self.hideChatMenu()
+        self.bottomViewBottomConstraint.constant = 0.0
+    }
 }
 
 extension ChatDetailsViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let location = touches.first?.location(in: self.view), self.chatMenuView.frame.contains(location) {
+            return
+        }
+
         self.hideChatMenu()
         self.view.endEditing(true)
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) {
@@ -284,7 +342,23 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
             }
 
         case .requestMoney: print("not handle yet")
-        case .video: print("not handle yet")
+        case .audio:
+            if itemViewModel.message.status == .sent || itemViewModel.message.status == .sendAndSeen {
+                guard let sendCell = self.collectionView.dequeueCell(type: AudioMessageSendCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                sendCell.bind(itemViewModel: itemViewModel)
+                return sendCell
+            } else {
+                guard let receiveCell = self.collectionView.dequeueCell(type: AudioMessageReceiveCell.self, indexPath: indexPath) else {
+                    return UICollectionViewCell()
+                }
+
+                receiveCell.bind(itemViewModel: itemViewModel)
+                return receiveCell
+            }
+
         case .sendMoney:
             if itemViewModel.message.status == .sent || itemViewModel.message.status == .sendAndSeen {
                 guard let sendCell = self.collectionView.dequeueCell(type: MoneyMessageSendCell.self, indexPath: indexPath) else {
@@ -336,13 +410,13 @@ extension ChatDetailsViewController: UICollectionViewDelegateFlowLayout {
             if size.width <= cellWidth * 0.7 {
                 cellHeight = size.height + 24.0
             } else {
-                let numberOfLines: Int = Int((size.width/(cellWidth*0.7)) + 1)
-                cellHeight = size.height * CGFloat(numberOfLines) + CGFloat(numberOfLines+1) * 7.0 + 8.0
+                let numberOfLines: Int = Int((size.width/(cellWidth*0.7 - 16.0)) + 1)
+                cellHeight = size.height * CGFloat(numberOfLines) + CGFloat(numberOfLines+1) * 5.0 + 8.0
             }
 
             return CGSize(width: cellWidth, height: cellHeight)
         case .sendMoney: return CGSize(width: cellWidth, height: 180.0)
-        case .video: return .zero
+        case .audio: return CGSize(width: cellWidth, height: 60.0)
         case .requestMoney: return .zero
         case .image:
             if let imageWidth = self.viewModel?.item(at: indexPath.row).message.width, let imageHeight = self.viewModel?.item(at: indexPath.row).message.height {
@@ -380,6 +454,15 @@ extension ChatDetailsViewController: MoneyMessageReceiveCellDelegate {
 }
 
 extension ChatDetailsViewController: ChatMenuViewDelegate {
+    func chatMenuViewDidTapCancel(_ chatMenuView: ChatMenuView) {
+        self.stopRecording(isCancel: true)
+    }
+
+    func chatMenuViewDidTapFinish(_ chatMenuView: ChatMenuView) {
+        self.stopRecording(isCancel: false)
+        self.listener?.openAudioPreview(audioURL: self.recording.url)
+    }
+
     func chatMenuView(_ chatMenuView: ChatMenuView, didSelectAt option: ChatMenuOption) {
         switch option {
         case .transfer:
@@ -387,7 +470,26 @@ extension ChatDetailsViewController: ChatMenuViewDelegate {
         case .request: print("not handle yet")
         case .photo:
             self.openGallary()
-        case .voice: print("not handle yet")
+        case .voice:
+            PermissionHelper().requestMicrophonePermission {[weak self] granted, isNeedOpenSetting in
+                if granted {
+                    DispatchQueue.main.async {
+                        if self?.recording == nil || self?.recording.state != .record {
+                            self?.createRecorder()
+                            // wait 0.1s for preparing recorder
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                                self?.startRecording()
+                            })
+                        } else {
+                            self?.stopRecording(isCancel: true)
+                        }
+                    }
+                } else if isNeedOpenSetting {
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            }
         }
     }
 }
@@ -412,5 +514,27 @@ extension ChatDetailsViewController: ImageMessageSendCellDelegate, ImageMessageR
 
     func imageMessageReceiveCell(_ imageMessageReceiveCell: ImageMessageReceiveCell, didSelect image: UIImage) {
         self.listener?.openPhotoPreview(image)
+    }
+}
+
+// MARK: - RecorderDelegate
+extension ChatDetailsViewController: RecorderDelegate {
+    func audioMeterDidUpdate(_ dbValue: Float) {
+        self.recording.recorder?.updateMeters()
+        let ALPHA = 0.05
+        let peakPower = pow(10, (ALPHA * Double((self.recording.recorder?.peakPower(forChannel: 0))!)))
+        var rate: Double = 0.0
+        if peakPower <= 0.2 {
+            rate = 0.2
+        } else if peakPower > 0.9 {
+            rate = 1.0
+        } else {
+            rate = peakPower
+        }
+
+        self.chatMenuView.update(CGFloat(rate))
+        self.chatMenuView.setFillColor(.green)
+        recordDuration += 1
+        self.chatMenuView.updateDuration(recordDuration)
     }
 }

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Outfit-Light.otf">
+            <string>Outfit-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioPreviewViewController">
+            <connections>
+                <outlet property="audioPlayView" destination="QoN-x8-L6I" id="qUW-FE-twV"/>
+                <outlet property="view" destination="iN0-l3-epB" id="jYO-eb-xeE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QoN-x8-L6I" customClass="AudioPlayView" customModule="E_Wallet" customModuleProvider="target">
+                    <rect key="frame" x="10" y="60" width="394" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="2EC-Dd-mFL"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfk-Sq-hmn">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play/pause record before sending it" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ET-kU-G7Y">
+                            <rect key="frame" x="81.666666666666686" y="16.666666666666668" width="251" height="17.000000000000004"/>
+                            <fontDescription key="fontDescription" name="Outfit-Light" family="Outfit" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71i-1B-HKS" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                            <rect key="frame" x="369" y="5" width="40" height="40"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_cancel_black" translatesAutoresizingMaskIntoConstraints="NO" id="zOt-Ua-A7O">
+                                    <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="zOt-Ua-A7O" secondAttribute="bottom" constant="5" id="6t1-Cg-QQf"/>
+                                <constraint firstItem="zOt-Ua-A7O" firstAttribute="top" secondItem="71i-1B-HKS" secondAttribute="top" constant="5" id="PCp-Ab-cfb"/>
+                                <constraint firstAttribute="width" secondItem="71i-1B-HKS" secondAttribute="height" id="dNy-GN-ZlQ"/>
+                                <constraint firstItem="zOt-Ua-A7O" firstAttribute="leading" secondItem="71i-1B-HKS" secondAttribute="leading" constant="5" id="erV-kr-0ms"/>
+                                <constraint firstAttribute="trailing" secondItem="zOt-Ua-A7O" secondAttribute="trailing" constant="5" id="xY6-5B-JKP"/>
+                            </constraints>
+                            <connections>
+                                <action selector="didTapCancel:" destination="-1" eventType="touchUpInside" id="TN5-YW-43E"/>
+                            </connections>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="71i-1B-HKS" secondAttribute="trailing" constant="5" id="1Vq-4G-GBr"/>
+                        <constraint firstItem="71i-1B-HKS" firstAttribute="top" secondItem="lfk-Sq-hmn" secondAttribute="top" constant="5" id="3MG-BP-rli"/>
+                        <constraint firstAttribute="bottom" secondItem="71i-1B-HKS" secondAttribute="bottom" constant="5" id="O6I-OW-x5N"/>
+                        <constraint firstAttribute="height" constant="50" id="PIm-61-WWN"/>
+                        <constraint firstItem="3ET-kU-G7Y" firstAttribute="centerY" secondItem="lfk-Sq-hmn" secondAttribute="centerY" id="VbS-qS-VBF"/>
+                        <constraint firstItem="3ET-kU-G7Y" firstAttribute="centerX" secondItem="lfk-Sq-hmn" secondAttribute="centerX" id="dAe-gw-jKy"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTK-Ot-Z3v">
+                    <rect key="frame" x="0.0" y="160" width="414" height="50"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZb-j3-JFN" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                            <rect key="frame" x="20" y="10" width="30" height="30"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_delete_red" translatesAutoresizingMaskIntoConstraints="NO" id="aAv-Ej-zUY">
+                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="mZb-j3-JFN" secondAttribute="height" id="cLe-Lb-eV4"/>
+                                <constraint firstAttribute="trailing" secondItem="aAv-Ej-zUY" secondAttribute="trailing" id="dSr-Rb-cv6"/>
+                                <constraint firstItem="aAv-Ej-zUY" firstAttribute="leading" secondItem="mZb-j3-JFN" secondAttribute="leading" id="gJe-GC-gNT"/>
+                                <constraint firstItem="aAv-Ej-zUY" firstAttribute="top" secondItem="mZb-j3-JFN" secondAttribute="top" id="pad-ao-PZg"/>
+                                <constraint firstAttribute="bottom" secondItem="aAv-Ej-zUY" secondAttribute="bottom" id="vuG-WU-PDN"/>
+                            </constraints>
+                            <connections>
+                                <action selector="didTapDelete:" destination="-1" eventType="touchUpInside" id="T3G-5A-eg8"/>
+                            </connections>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIq-BU-jnl" customClass="TapableView" customModule="E_Wallet" customModuleProvider="target">
+                            <rect key="frame" x="364" y="10" width="30" height="30"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_send_able" translatesAutoresizingMaskIntoConstraints="NO" id="EnY-rE-Ajl">
+                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="EnY-rE-Ajl" firstAttribute="top" secondItem="oIq-BU-jnl" secondAttribute="top" id="E1T-qa-Omx"/>
+                                <constraint firstAttribute="width" secondItem="oIq-BU-jnl" secondAttribute="height" id="EZ5-Da-y9f"/>
+                                <constraint firstAttribute="bottom" secondItem="EnY-rE-Ajl" secondAttribute="bottom" id="QbI-rX-Mbj"/>
+                                <constraint firstAttribute="trailing" secondItem="EnY-rE-Ajl" secondAttribute="trailing" id="bLp-Kr-dWI"/>
+                                <constraint firstItem="EnY-rE-Ajl" firstAttribute="leading" secondItem="oIq-BU-jnl" secondAttribute="leading" id="tgo-Xy-vob"/>
+                            </constraints>
+                            <connections>
+                                <action selector="didTapSend:" destination="-1" eventType="touchUpInside" id="ln8-Kq-2Rk"/>
+                            </connections>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="oIq-BU-jnl" secondAttribute="trailing" constant="20" id="AUO-My-QnK"/>
+                        <constraint firstItem="oIq-BU-jnl" firstAttribute="top" secondItem="QTK-Ot-Z3v" secondAttribute="top" constant="10" id="PDv-82-Pr3"/>
+                        <constraint firstAttribute="bottom" secondItem="mZb-j3-JFN" secondAttribute="bottom" constant="10" id="Yvg-CJ-Mm6"/>
+                        <constraint firstItem="mZb-j3-JFN" firstAttribute="top" secondItem="QTK-Ot-Z3v" secondAttribute="top" constant="10" id="aQS-yf-t5t"/>
+                        <constraint firstAttribute="bottom" secondItem="oIq-BU-jnl" secondAttribute="bottom" constant="10" id="hy2-i9-A2l"/>
+                        <constraint firstAttribute="height" constant="50" id="mos-Rw-H8C"/>
+                        <constraint firstItem="mZb-j3-JFN" firstAttribute="leading" secondItem="QTK-Ot-Z3v" secondAttribute="leading" constant="20" id="yG7-zD-wlv"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="QTK-Ot-Z3v" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="0yd-k7-gpk"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="lfk-Sq-hmn" secondAttribute="trailing" id="E9J-Wz-3X5"/>
+                <constraint firstItem="QoN-x8-L6I" firstAttribute="top" secondItem="lfk-Sq-hmn" secondAttribute="bottom" constant="10" id="Zsl-KR-5PZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QTK-Ot-Z3v" secondAttribute="trailing" id="a0o-TP-H4C"/>
+                <constraint firstItem="lfk-Sq-hmn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bl0-O9-hgS"/>
+                <constraint firstItem="lfk-Sq-hmn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="d1W-aa-t2P"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="QoN-x8-L6I" secondAttribute="trailing" constant="10" id="hFS-Ls-kaa"/>
+                <constraint firstItem="QTK-Ot-Z3v" firstAttribute="top" secondItem="QoN-x8-L6I" secondAttribute="bottom" constant="50" id="hIL-0f-VzY"/>
+                <constraint firstItem="QoN-x8-L6I" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="m2z-ij-rUT"/>
+            </constraints>
+            <point key="canvasLocation" x="-394" y="74"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_cancel_black" width="50" height="50"/>
+        <image name="ic_delete_red" width="48" height="48"/>
+        <image name="ic_send_able" width="50" height="50"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
