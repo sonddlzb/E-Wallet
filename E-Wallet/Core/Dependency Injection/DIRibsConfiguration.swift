@@ -156,5 +156,9 @@ extension DIConnector {
         DIContainer.register(PhotoPreviewBuildable.self) { _, args in
             return PhotoPreviewBuilder(dependency: args.get())
         }
+
+        DIContainer.register(AudioPreviewBuildable.self) { _, args in
+            return AudioPreviewBuilder(dependency: args.get())
+        }
     }
 }

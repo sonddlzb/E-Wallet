@@ -16,7 +16,7 @@ enum MessageStatus: String {
 
 enum MessageType: String {
     case image
-    case video
+    case audio
     case text
     case sendMoney
     case requestMoney

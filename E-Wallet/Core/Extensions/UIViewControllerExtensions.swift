@@ -28,8 +28,9 @@ public extension UIViewController {
         }
     }
 
-    func presentCustomViewController(_ viewController: UIViewController) {
+    func presentCustomViewController(_ viewController: UIViewController, rate: Double = 0.75) {
         let customPresentTransitioningDelegate = CustomPresentTransitioningDelegate()
+        customPresentTransitioningDelegate.rate = rate
         viewController.modalPresentationStyle = .custom
         viewController.transitioningDelegate = customPresentTransitioningDelegate
         present(viewController, animated: true, completion: nil)

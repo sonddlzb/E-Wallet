@@ -26,10 +26,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="334" height="79"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1e-jP-HWL">
-                                <rect key="frame" x="93.333333333333329" y="5" width="230.66666666666669" height="69"/>
+                                <rect key="frame" x="93.666666666666671" y="5" width="230.33333333333331" height="69"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdfsdfdsfsdfsdfdsfsdfdsfdsfdsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5I-FX-Knt">
-                                        <rect key="frame" x="10" y="4" width="210.66666666666666" height="61"/>
+                                        <rect key="frame" x="8" y="4" width="214.33333333333334" height="61"/>
                                         <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -37,8 +37,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.12549019607843137" green="0.023529411764705882" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="m5I-FX-Knt" firstAttribute="leading" secondItem="U1e-jP-HWL" secondAttribute="leading" constant="10" id="D9F-Rf-x3X"/>
-                                    <constraint firstAttribute="trailing" secondItem="m5I-FX-Knt" secondAttribute="trailing" constant="10" id="EWc-j0-nsv"/>
+                                    <constraint firstItem="m5I-FX-Knt" firstAttribute="leading" secondItem="U1e-jP-HWL" secondAttribute="leading" constant="8" id="D9F-Rf-x3X"/>
+                                    <constraint firstAttribute="trailing" secondItem="m5I-FX-Knt" secondAttribute="trailing" constant="8" id="EWc-j0-nsv"/>
                                     <constraint firstAttribute="bottom" secondItem="m5I-FX-Knt" secondAttribute="bottom" constant="4" id="JVs-4K-XEa"/>
                                     <constraint firstItem="m5I-FX-Knt" firstAttribute="top" secondItem="U1e-jP-HWL" secondAttribute="top" constant="4" id="bZR-X2-ybm"/>
                                 </constraints>

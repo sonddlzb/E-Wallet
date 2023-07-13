@@ -26,10 +26,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="287" height="83"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35M-8U-Kac">
-                                <rect key="frame" x="10" y="5" width="198" height="73"/>
+                                <rect key="frame" x="10" y="5" width="199" height="73"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdfsdfdsfsdfsdfdsfsdfdsfdsfdsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdffd" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAX-k2-feB">
-                                        <rect key="frame" x="10" y="4" width="178" height="65"/>
+                                        <rect key="frame" x="8" y="4" width="183" height="65"/>
                                         <fontDescription key="fontDescription" name="Outfit-Regular" family="Outfit" pointSize="20"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -37,9 +37,9 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="FAX-k2-feB" firstAttribute="leading" secondItem="35M-8U-Kac" secondAttribute="leading" constant="10" id="MrN-JG-Wn8"/>
+                                    <constraint firstItem="FAX-k2-feB" firstAttribute="leading" secondItem="35M-8U-Kac" secondAttribute="leading" constant="8" id="MrN-JG-Wn8"/>
                                     <constraint firstItem="FAX-k2-feB" firstAttribute="top" secondItem="35M-8U-Kac" secondAttribute="top" constant="4" id="NBI-Pc-PR0"/>
-                                    <constraint firstAttribute="trailing" secondItem="FAX-k2-feB" secondAttribute="trailing" constant="10" id="NEf-V3-mT5"/>
+                                    <constraint firstAttribute="trailing" secondItem="FAX-k2-feB" secondAttribute="trailing" constant="8" id="NEf-V3-mT5"/>
                                     <constraint firstAttribute="bottom" secondItem="FAX-k2-feB" secondAttribute="bottom" constant="4" id="omj-YO-W75"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

@@ -14,6 +14,8 @@ protocol ChatDetailsRouting: ViewableRouting {
     func dismissHistory()
     func routeToPhotoPreview(image: UIImage)
     func dismissPhotoPreview()
+    func routeToAudioPreview(audioURL: URL)
+    func dismissAudioPreview()
 }
 
 protocol ChatDetailsPresentable: Presentable {
@@ -21,6 +23,8 @@ protocol ChatDetailsPresentable: Presentable {
 
     func bind(viewModel: ChatDetailsViewModel)
     func bindSentMessageFailedResult(message: String)
+    func deleteRecorder()
+    func hideChatMenuView()
 }
 
 protocol ChatDetailsListener: AnyObject {
@@ -104,5 +108,9 @@ extension ChatDetailsInteractor: ChatDetailsPresentableListener {
 
     func openPhotoPreview(_ image: UIImage) {
         self.router?.routeToPhotoPreview(image: image)
+    }
+
+    func openAudioPreview(audioURL: URL) {
+        self.router?.routeToAudioPreview(audioURL: audioURL)
     }
 }

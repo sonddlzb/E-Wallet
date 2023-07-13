@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol ChatDetailsInteractable: Interactable, TransactionDetailsListener, PhotoPreviewListener {
+protocol ChatDetailsInteractable: Interactable, TransactionDetailsListener, PhotoPreviewListener, AudioPreviewListener {
     var router: ChatDetailsRouting? { get set }
     var listener: ChatDetailsListener? { get set }
 }
@@ -22,10 +22,15 @@ final class ChatDetailsRouter: ViewableRouter<ChatDetailsInteractable, ChatDetai
     private var photoPreviewBuilder: PhotoPreviewBuildable
     private var photoPreviewRouter: PhotoPreviewRouting?
 
+    private var audioPreviewBuilder: AudioPreviewBuildable
+    private var audioPreviewRouter: AudioPreviewRouting?
+
     init(interactor: ChatDetailsInteractable,
          viewController: ChatDetailsViewControllable,
          transactionDetailsBuilder: TransactionDetailsBuildable,
-         photoPreviewBuilder: PhotoPreviewBuildable) {
+         photoPreviewBuilder: PhotoPreviewBuildable,
+         audioPreviewBuilder: AudioPreviewBuildable) {
+        self.audioPreviewBuilder = audioPreviewBuilder
         self.photoPreviewBuilder = photoPreviewBuilder
         self.transactionDetailsBuilder = transactionDetailsBuilder
         super.init(interactor: interactor, viewController: viewController)
@@ -75,5 +80,26 @@ extension ChatDetailsRouter: ChatDetailsRouting {
         self.detachChild(router)
         router.viewControllable.dismiss(animated: true)
         self.photoPreviewRouter = nil
+    }
+
+    func routeToAudioPreview(audioURL: URL) {
+        guard self.audioPreviewRouter == nil else {
+            return
+        }
+
+        let router = self.audioPreviewBuilder.build(withListener: self.interactor, audioURL: audioURL)
+        self.attachChild(router)
+        self.viewControllable.uiviewController.presentCustomViewController(router.viewControllable.uiviewController, rate: 0.4)
+        self.audioPreviewRouter = router
+    }
+
+    func dismissAudioPreview() {
+        guard let router = self.audioPreviewRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        router.viewControllable.uiviewController.dismissCustomViewController()
+        self.audioPreviewRouter = nil
     }
 }

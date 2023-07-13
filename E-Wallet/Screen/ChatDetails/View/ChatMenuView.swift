@@ -15,10 +15,16 @@ private struct Const {
 
 protocol ChatMenuViewDelegate: AnyObject {
     func chatMenuView(_ chatMenuView: ChatMenuView, didSelectAt option: ChatMenuOption)
+    func chatMenuViewDidTapCancel(_ chatMenuView: ChatMenuView)
+    func chatMenuViewDidTapFinish(_ chatMenuView: ChatMenuView)
 }
 
 class ChatMenuView: UIView {
+    @IBOutlet private weak var voiceRecordHUD: VoiceRecordHUD!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var recordContainerView: UIView!
+
     weak var delegate: ChatMenuViewDelegate?
 
     static func loadView() -> ChatMenuView {
@@ -37,6 +43,35 @@ class ChatMenuView: UIView {
         self.collectionView.dataSource = self
         self.collectionView.contentInset = Const.contentInset
         self.collectionView.registerCell(type: ChatMenuCell.self)
+    }
+
+    func update(_ rate: CGFloat) {
+        self.voiceRecordHUD.update(rate)
+    }
+
+    func setFillColor(_ color: UIColor) {
+        self.voiceRecordHUD.fillColor = color
+    }
+
+    func updateDuration(_ duration: Int) {
+        // current speed 60 image/s
+        self.durationLabel.text = (duration/60).timeString()
+    }
+
+    func showRecordView() {
+        self.recordContainerView.isHidden = false
+    }
+
+    func hideRecordView() {
+        self.recordContainerView.isHidden = true
+    }
+
+    @IBAction func didTapCancel(_ sender: Any) {
+        self.delegate?.chatMenuViewDidTapCancel(self)
+    }
+
+    @IBAction func didTapFinish(_ sender: Any) {
+        self.delegate?.chatMenuViewDidTapFinish(self)
     }
 }
 
