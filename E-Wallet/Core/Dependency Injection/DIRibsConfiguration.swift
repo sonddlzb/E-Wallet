@@ -160,5 +160,9 @@ extension DIConnector {
         DIContainer.register(AudioPreviewBuildable.self) { _, args in
             return AudioPreviewBuilder(dependency: args.get())
         }
+
+        DIContainer.register(FeedbackBuildable.self) { _, args in
+            return FeedbackBuilder(dependency: args.get())
+        }
     }
 }

@@ -15,4 +15,5 @@ public struct DatabaseConst {
     static let billPath = "bills"
     static let notificationPath = "notifications"
     static let messagePath = "message"
+    static let feedbackPath = "feedback"
 }
