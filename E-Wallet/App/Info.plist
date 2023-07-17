@@ -2,18 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone permission must be accepted for this feature</string>
-	<key>NSContactsUsageDescription</key>
-	<string>You can select receiver from your contacts</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You can select photos to your avatar</string>
-	<key>NSCameraUsageDescription</key>
-	<string>You can take photos to your avatar</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.daoson.e-wallet</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
@@ -35,6 +27,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You can take photos to your avatar</string>
+	<key>NSContactsUsageDescription</key>
+	<string>You can select receiver from your contacts</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone permission must be accepted for this feature</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can select photos to your avatar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Outfit-Bold.otf</string>

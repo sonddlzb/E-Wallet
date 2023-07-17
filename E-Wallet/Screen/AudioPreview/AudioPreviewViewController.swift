@@ -39,7 +39,6 @@ final class AudioPreviewViewController: UIViewController, AudioPreviewViewContro
     }
 }
 
-
 // MARK: - AudioPreviewPresentable
 extension AudioPreviewViewController: AudioPreviewPresentable {
     func bind(viewModel: AudioPreviewViewModel) {
