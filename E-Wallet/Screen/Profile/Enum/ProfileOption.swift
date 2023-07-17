@@ -13,7 +13,7 @@ enum ProfileOption: String, CaseIterable {
     case expenseManagement = "Expense Management"
     case changePassword = "Change Password"
     case voucher = "Voucher"
-    case helpCenter = "Help Center"
+    case feedback = "Feedback"
     case setting = "Setting"
 
     func image() -> UIImage? {

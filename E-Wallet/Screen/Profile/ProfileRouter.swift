@@ -7,7 +7,7 @@
 
 import RIBs
 
-protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener, ExpenseListener, AccountListener {
+protocol ProfileInteractable: Interactable, EditProfileListener, EnterPasswordListener, ExpenseListener, AccountListener, FeedbackListener {
     var router: ProfileRouting? { get set }
     var listener: ProfileListener? { get set }
 
@@ -30,16 +30,21 @@ final class ProfileRouter: ViewableRouter<ProfileInteractable, ProfileViewContro
     private var accountRouter: AccountRouting?
     private var accountBuilder: AccountBuildable
 
+    private var feedbackRouter: FeedbackRouting?
+    private var feedbackBuilder: FeedbackBuildable
+
     init(interactor: ProfileInteractable,
          viewController: ProfileViewControllable,
          editProfileBuilder: EditProfileBuildable,
          enterPasswordBuilder: EnterPasswordBuildable,
          expenseBuilder: ExpenseBuildable,
-         accountBuilder: AccountBuildable) {
+         accountBuilder: AccountBuildable,
+         feedbackBuilder: FeedbackBuildable) {
         self.enterPasswordBuilder = enterPasswordBuilder
         self.editProfileBuilder = editProfileBuilder
         self.expenseBuilder = expenseBuilder
         self.accountBuilder = accountBuilder
+        self.feedbackBuilder = feedbackBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -144,5 +149,26 @@ extension ProfileRouter: ProfileRouting {
 
     func reloadCardData() {
         self.accountRouter?.reloadData()
+    }
+
+    func routeToFeedback() {
+        guard self.feedbackRouter == nil else {
+            return
+        }
+
+        let router = self.feedbackBuilder.build(withListener: self.interactor)
+        self.attachChild(router)
+        self.viewControllable.push(viewControllable: router.viewControllable)
+        self.feedbackRouter = router
+    }
+
+    func dismissFeedback() {
+        guard let router = self.feedbackRouter else {
+            return
+        }
+
+        self.detachChild(router)
+        self.viewControllable.popToBefore(viewControllable: router.viewControllable)
+        self.feedbackRouter = nil
     }
 }

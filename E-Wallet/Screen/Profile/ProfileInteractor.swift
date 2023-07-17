@@ -21,6 +21,8 @@ protocol ProfileRouting: ViewableRouting {
     func routeToAccount()
     func dismissAccount()
     func reloadCardData()
+    func routeToFeedback()
+    func dismissFeedback()
 }
 
 protocol ProfilePresentable: Presentable {
@@ -98,7 +100,10 @@ extension ProfileInteractor: ProfilePresentableListener {
             self.router?.routeToExpense()
         case .paymentManagement:
             self.router?.routeToAccount()
-        default: print("not handle yet")
+        case .feedback:
+            self.router?.routeToFeedback()
+        default:
+            print("not handled yet")
         }
     }
 }
