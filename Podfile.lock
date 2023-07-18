@@ -620,6 +620,9 @@ PODS:
   - Firebase/Crashlytics (10.6.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 10.6.0)
+  - Firebase/Messaging (10.6.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.6.0)
   - FirebaseABTesting (10.6.0):
     - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.6.0):
@@ -684,6 +687,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.6.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseRemoteConfig (10.6.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
@@ -864,6 +876,7 @@ DEPENDENCIES:
   - EFQRCode
   - Firebase
   - Firebase/Crashlytics
+  - Firebase/Messaging
   - FirebaseAuth
   - FirebaseCore
   - FirebaseDatabase
@@ -904,6 +917,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
+    - FirebaseMessaging
     - FirebaseRemoteConfig
     - FirebaseSessions
     - FirebaseStorage
@@ -969,6 +983,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 06195bac336b5e4c893ec04a111631a4cdb00178
   FirebaseFirestore: f91b23a3c71448475d17163baf916d5d20d01609
   FirebaseInstallations: 13dde135fa0524e15bddb133ccc8465c53a1b3f3
+  FirebaseMessaging: fd93783258c53ae5cdb9b41bf0c51606a677f2d5
   FirebaseRemoteConfig: 7ef4dd164f3066c64ca1efab0f990152a6b94fc0
   FirebaseSessions: 60e877d5159eb571a3d82df68947a7941b475a20
   FirebaseStorage: 10d4f43a4ef98e7554da72197ad52216686ea990
@@ -1005,6 +1020,6 @@ SPEC CHECKSUMS:
   TLLogging: 636a4873bf1aaa9d60c4b938433b17e3ce33cb51
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: c94527fbc7a6acb3cdc8fd2f91b09e6ae0544505
+PODFILE CHECKSUM: 9f78e40f60a5f5cfd393186ed3724c4fe1c5d612
 
 COCOAPODS: 1.12.1

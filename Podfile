@@ -26,6 +26,7 @@
    pod 'FirebaseRemoteConfig'
    pod 'FirebaseFirestore'
    pod 'FirebaseStorage'
+   pod 'Firebase/Messaging'
    pod 'TLLogging'
    pod 'DropDown'
    pod 'Stripe' 

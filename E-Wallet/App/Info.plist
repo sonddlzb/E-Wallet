@@ -15,9 +15,11 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Client</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-134060336001-ios-2cfe6134e0f6478e1cfe80</string>
+				<string>app-1-134060336001-ios-e38f952ca8b8bb861cfe80</string>
 			</array>
 		</dict>
 		<dict>
