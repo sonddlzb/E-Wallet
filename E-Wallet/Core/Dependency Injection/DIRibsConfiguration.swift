@@ -164,5 +164,9 @@ extension DIConnector {
         DIContainer.register(FeedbackBuildable.self) { _, args in
             return FeedbackBuilder(dependency: args.get())
         }
+
+        DIContainer.register(GiftAreaBuildable.self) { _, args in
+            return GiftAreaBuilder(dependency: args.get())
+        }
     }
 }

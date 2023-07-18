@@ -11,6 +11,8 @@ import RxSwift
 protocol GiftRouting: ViewableRouting {
     func routeToVoucherDetails(voucher: Voucher)
     func dissmissVoucherDetails()
+    func routeToGiftArea(voucher: Voucher)
+    func dismissGiftArea()
 }
 
 protocol GiftPresentable: Presentable {
@@ -22,6 +24,7 @@ protocol GiftPresentable: Presentable {
 }
 
 protocol GiftListener: AnyObject {
+    func giftWantToOpenService(_ serviceType: ServiceType)
 }
 
 final class GiftInteractor: PresentableInteractor<GiftPresentable>, GiftInteractable {
@@ -76,5 +79,7 @@ extension GiftInteractor: GiftPresentableListener {
             self.presenter.bindNotReadyState(at: itemViewModel.voucher)
             return
         }
+
+        self.router?.routeToGiftArea(voucher: itemViewModel.voucher)
     }
 }
