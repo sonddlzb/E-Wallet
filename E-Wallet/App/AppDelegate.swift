@@ -8,13 +8,14 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+import FirebaseMessaging
 import FirebaseRemoteConfig
 import SVProgressHUD
 import Stripe
 import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow!
     var rootRouter: RootRouting?
@@ -27,18 +28,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.configSVProgressHUD()
         self.configStripe()
         self.configRemoteConfig()
-        self.configNotification()
-        return true
-    }
 
-    private func configNotification() {
         UNUserNotificationCenter.current().delegate = self
-        let localNotificationHelper = LocalNotificationHelper()
-        localNotificationHelper.notifications = [
-            RemindNotification(id: "reminder-1", title: "Hey, someone want to connect with you in E-Wallet", datetime: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date().addingTimeInterval(60.0)))
-        ]
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
 
-        localNotificationHelper.schedule()
+        return true
     }
 
     private func configWindow() {
@@ -52,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     private func configFirebase() {
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
     }
 
     private func configSVProgressHUD() {
@@ -74,7 +76,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let id = notification.request.identifier
-        print("Received notification with ID = \(id)")
+        print("Presented notification with ID = \(id)")
         completionHandler([.sound, .alert])
+    }
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        // save token of device for send notification to firebase
+        print("FCMToken: \(fcmToken)")
+        UserDefaults.standard.set(fcmToken, forKey: "FCMToken")
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
     }
 }
