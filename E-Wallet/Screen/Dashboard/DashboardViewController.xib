@@ -123,7 +123,7 @@
                     <rect key="frame" x="0.0" y="168" width="414" height="728"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQv-UX-RDr">
-                            <rect key="frame" x="0.0" y="70" width="414" height="1000"/>
+                            <rect key="frame" x="0.0" y="70" width="414" height="650"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kd-9f-gok">
                                     <rect key="frame" x="20" y="70" width="374" height="280"/>
@@ -156,7 +156,7 @@
                                 <constraint firstAttribute="trailing" secondItem="9kd-9f-gok" secondAttribute="trailing" constant="20" id="IYf-ge-okB"/>
                                 <constraint firstItem="9kd-9f-gok" firstAttribute="leading" secondItem="BQv-UX-RDr" secondAttribute="leading" constant="20" id="W62-ik-4lt"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="Xxz-Dr-lOP"/>
-                                <constraint firstAttribute="height" constant="1000" id="oUu-1I-wSc"/>
+                                <constraint firstAttribute="bottom" secondItem="9kd-9f-gok" secondAttribute="bottom" constant="300" id="ovI-aW-YP5"/>
                                 <constraint firstItem="9kd-9f-gok" firstAttribute="top" secondItem="BQv-UX-RDr" secondAttribute="top" constant="70" id="vPg-Ar-RI5"/>
                             </constraints>
                         </view>
