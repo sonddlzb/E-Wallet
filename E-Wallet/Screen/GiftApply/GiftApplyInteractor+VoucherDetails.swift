@@ -9,7 +9,7 @@ import Foundation
 
 extension GiftApplyInteractor: VoucherDetailsListener {
     func voucherDetailsWantToOpenGiftArea(voucher: Voucher) {
-        
+
     }
 
     func voucherDetailsWantToDismiss() {

@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 import UIKit
+import MessageUI
 
 protocol TransactionDetailsPresentableListener: AnyObject {
     func copyTransactionId(_ id: String)
@@ -54,6 +55,15 @@ final class TransactionDetailsViewController: UIViewController, TransactionDetai
     }
 
     @IBAction func contactSupportButtonDidTap(_ sender: Any) {
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients(["ewalletfeedbackcenter@gmail.com"])
+            mailComposer.setSubject("Transaction \(self.viewModel.transaction.id): \(self.viewModel.description())")
+            present(mailComposer, animated: true, completion: nil)
+        } else {
+            FailedDialog.show(title: "Mail is not available", message: "Your device is not supported to send an email")
+        }
     }
 }
 
@@ -108,5 +118,17 @@ extension TransactionDetailsViewController: TransactionDetailsPresentable {
         self.customerNameLabel.text = viewModel.customerName()
         self.addressLabel.text = viewModel.address()
         self.billTypeLabel.text = viewModel.billType()
+    }
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+extension TransactionDetailsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+        if let error = error {
+            FailedDialog.show(title: "Sent mail failed", message: error.localizedDescription)
+        } else {
+            self.view.makeToast("Your mail was sent successfully!")
+        }
     }
 }
