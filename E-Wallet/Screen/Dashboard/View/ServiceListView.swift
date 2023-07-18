@@ -19,6 +19,7 @@ class ServiceListView: UIView {
     private var containerView: UIView!
     private var collectionView: UICollectionView!
     weak var delegate: ServiceListViewDelegate?
+    var viewModel = ServiceViewModel.makeFull()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,12 +68,17 @@ class ServiceListView: UIView {
         self.containerView.fitSuperviewConstraint()
         self.collectionView.fitSuperviewConstraint()
     }
+
+    func bind(viewModel: ServiceViewModel) {
+        self.viewModel = viewModel
+        self.collectionView.reloadData()
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ServiceListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ServiceType.allCases.count
+        return self.viewModel.numberOfServices()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -80,12 +86,12 @@ extension ServiceListView: UICollectionViewDelegate, UICollectionViewDataSource 
             return UICollectionViewCell()
         }
 
-        cell.bind(serviceType: ServiceType.allCases[indexPath.row])
+        cell.bind(serviceType: self.viewModel.service(at: indexPath.row))
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate?.serviceListView(self, didSelectAt: ServiceType.allCases[indexPath.row])
+        self.delegate?.serviceListView(self, didSelectAt: self.viewModel.service(at: indexPath.row))
     }
 }
 

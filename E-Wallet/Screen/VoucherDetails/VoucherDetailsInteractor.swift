@@ -21,6 +21,7 @@ protocol VoucherDetailsPresentable: Presentable {
 protocol VoucherDetailsListener: AnyObject {
     func voucherDetailsWantToDismiss()
     func voucherDetailsWantTransactionConfirmToUse(voucher: Voucher)
+    func voucherDetailsWantToOpenGiftArea(voucher: Voucher)
 }
 
 final class VoucherDetailsInteractor: PresentableInteractor<VoucherDetailsPresentable>, VoucherDetailsInteractable {
@@ -62,7 +63,7 @@ extension VoucherDetailsInteractor: VoucherDetailsPresentableListener {
         if !self.isFromGift {
             self.listener?.voucherDetailsWantTransactionConfirmToUse(voucher: self.viewModel.voucher)
         } else {
-            // handle later
+            self.listener?.voucherDetailsWantToOpenGiftArea(voucher: self.viewModel.voucher)
         }
     }
 }

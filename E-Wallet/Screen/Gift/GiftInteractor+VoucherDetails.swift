@@ -15,4 +15,8 @@ extension GiftInteractor: VoucherDetailsListener {
     func voucherDetailsWantToDismiss() {
         self.router?.dissmissVoucherDetails()
     }
+
+    func voucherDetailsWantToOpenGiftArea(voucher: Voucher) {
+        self.router?.routeToGiftArea(voucher: voucher)
+    }
 }

@@ -8,6 +8,10 @@
 import Foundation
 
 extension GiftApplyInteractor: VoucherDetailsListener {
+    func voucherDetailsWantToOpenGiftArea(voucher: Voucher) {
+        
+    }
+
     func voucherDetailsWantToDismiss() {
         self.router?.dismissVoucherDetails(animated: true)
     }
