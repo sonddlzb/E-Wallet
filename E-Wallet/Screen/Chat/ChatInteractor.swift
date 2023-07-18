@@ -89,4 +89,21 @@ extension ChatInteractor: ChatPresentableListener {
     func didSelectChatAt(index: Int) {
         self.listener?.openChatFor(talker: self.viewModel.talker(at: index))
     }
+
+    func didEnterKeyword(_ keyword: String) {
+        if keyword.isEmpty {
+            self.presenter.bind(viewModel: self.viewModel)
+        } else {
+            var listTalkers: [User] = []
+            var listMessages: [Message] = []
+            for index in 0...self.viewModel.listNewestMessages.count-1 {
+                if self.viewModel.listTalkers[index].fullName.lowercased().contains(keyword.lowercased()) {
+                    listTalkers.append(self.viewModel.listTalkers[index])
+                    listMessages.append(self.viewModel.listNewestMessages[index])
+                }
+            }
+
+            self.presenter.bind(viewModel: ChatViewModel(listNewestMessages: listMessages, listTalkers: listTalkers))
+        }
+    }
 }
