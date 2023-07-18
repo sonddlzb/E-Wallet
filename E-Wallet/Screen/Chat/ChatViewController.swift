@@ -17,6 +17,7 @@ private struct Const {
 protocol ChatPresentableListener: AnyObject {
     func reloadData()
     func didSelectChatAt(index: Int)
+    func didEnterKeyword(_ keyword: String)
 }
 
 final class ChatViewController: UIViewController, ChatViewControllable {
@@ -37,7 +38,11 @@ final class ChatViewController: UIViewController, ChatViewControllable {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.listener?.reloadData()
+        if !self.searchTextField.text.isEmpty {
+            self.listener?.didEnterKeyword(self.searchTextField.text)
+        } else {
+            self.listener?.reloadData()
+        }
     }
 
     private func config() {
@@ -53,7 +58,7 @@ final class ChatViewController: UIViewController, ChatViewControllable {
         self.searchTextField.isHighlightedWhenEditting = false
         self.searchTextField.borderColor = .crayola
         self.searchTextField.backgroundColor = UIColor(rgb: 0xF5F5F5)
-//        self.searchTextField.delegate = self
+        self.searchTextField.delegate = self
     }
 
     private func configCollectionView() {
@@ -63,6 +68,21 @@ final class ChatViewController: UIViewController, ChatViewControllable {
         self.collectionView.dataSource = self
         self.collectionView.contentInset = Const.contentInset
         self.collectionView.registerCell(type: ChatCell.self)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        self.collectionView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        if recognizer.state == .ended {
+            let location = recognizer.location(in: collectionView)
+            if let indexPath = collectionView.indexPathForItem(at: location) {
+                self.listener?.didSelectChatAt(index: indexPath.row)
+                view.endEditing(true)
+            } else {
+                view.endEditing(true)
+            }
+        }
     }
 }
 
@@ -110,5 +130,12 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
 extension ChatViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+}
+
+extension ChatViewController: SolarTextFieldDelegate {
+    func solarTextField(_ textField: SolarTextField, willChangeToText text: String) -> Bool {
+        self.listener?.didEnterKeyword(text)
+        return true
     }
 }
