@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="319" height="104"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UWJ-5n-qOr" customClass="AudioPlayView" customModule="E_Wallet" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="27" width="223.33333333333334" height="50"/>
+                                <rect key="frame" x="10" y="27" width="223.33333333333334" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="G9U-uh-IvU"/>
@@ -32,7 +32,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="UWJ-5n-qOr" firstAttribute="width" secondItem="xSX-IX-9kr" secondAttribute="width" multiplier="0.7" id="0hl-1A-Q5G"/>
-                            <constraint firstItem="UWJ-5n-qOr" firstAttribute="leading" secondItem="xSX-IX-9kr" secondAttribute="leading" id="S6m-ka-jil"/>
+                            <constraint firstItem="UWJ-5n-qOr" firstAttribute="leading" secondItem="xSX-IX-9kr" secondAttribute="leading" constant="10" id="S6m-ka-jil"/>
                             <constraint firstItem="UWJ-5n-qOr" firstAttribute="centerY" secondItem="xSX-IX-9kr" secondAttribute="centerY" id="xqJ-oO-Dpx"/>
                         </constraints>
                     </view>

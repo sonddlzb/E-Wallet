@@ -20,7 +20,9 @@ class AudioMessageReceiveCell: UICollectionViewCell {
     func bind(itemViewModel: ChatDetailsItemViewModel) {
         itemViewModel.downloadM4AFile { audioURL in
             if let audioURL = audioURL {
-                self.audioPlayerView.bind(audioURL: audioURL)
+                DispatchQueue.main.async {
+                    self.audioPlayerView.bind(audioURL: audioURL)
+                }
             }
         }
     }

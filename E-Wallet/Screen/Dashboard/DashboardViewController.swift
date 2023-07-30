@@ -94,6 +94,13 @@ extension DashboardViewController: DashboardPresentable {
         self.centerPriceLabel.text = homeViewModel.currency() + " " + String(homeViewModel.balance())
         self.welcomeLabel.text = "Welcome " + homeViewModel.name()
     }
+
+    func bindNotHandleResult() {
+        let alertVC = UIAlertController(title: "", message: "Comming soon", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel)
+        alertVC.addAction(okAction)
+        self.present(alertVC, animated: true)
+    }
 }
 
 // MARK: - DashboardBarViewDelegate

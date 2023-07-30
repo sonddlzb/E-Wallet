@@ -19,7 +19,6 @@ enum MessageType: String {
     case audio
     case text
     case sendMoney
-    case requestMoney
 }
 
 class Message {

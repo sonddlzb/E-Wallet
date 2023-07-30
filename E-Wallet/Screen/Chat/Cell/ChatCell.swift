@@ -29,7 +29,6 @@ class ChatCell: UICollectionViewCell {
         case .sendMoney: self.recentLabel.text = "Transfer money"
         case .audio: self.recentLabel.text = "Audio"
         case .image: self.recentLabel.text = "Image"
-        case .requestMoney: print("not handled yet")
         }
     }
 }

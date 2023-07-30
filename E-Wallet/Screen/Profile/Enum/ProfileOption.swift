@@ -14,7 +14,6 @@ enum ProfileOption: String, CaseIterable {
     case changePassword = "Change Password"
     case voucher = "Voucher"
     case feedback = "Feedback"
-    case setting = "Setting"
 
     func image() -> UIImage? {
         return UIImage(named: "ic_\(self.rawValue.lowercased())")

@@ -341,7 +341,6 @@ extension ChatDetailsViewController: UICollectionViewDelegate, UICollectionViewD
                 return receiveCell
             }
 
-        case .requestMoney: print("not handle yet")
         case .audio:
             if itemViewModel.message.status == .sent || itemViewModel.message.status == .sendAndSeen {
                 guard let sendCell = self.collectionView.dequeueCell(type: AudioMessageSendCell.self, indexPath: indexPath) else {
@@ -417,7 +416,6 @@ extension ChatDetailsViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: cellHeight)
         case .sendMoney: return CGSize(width: cellWidth, height: 180.0)
         case .audio: return CGSize(width: cellWidth, height: 60.0)
-        case .requestMoney: return .zero
         case .image:
             if let imageWidth = self.viewModel?.item(at: indexPath.row).message.width, let imageHeight = self.viewModel?.item(at: indexPath.row).message.height {
                 if imageHeight > imageWidth {

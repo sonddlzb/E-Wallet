@@ -134,6 +134,7 @@ class AudioPlayView: UIView {
         self.url = audioURL
         try? session.setCategory(AVAudioSession.Category.playback)
         self.player = try? AVAudioPlayer(contentsOf: audioURL)
+        self.timeLabel.text = Int(self.player?.duration ?? 0).timeString()
         self.player?.delegate = self
     }
 

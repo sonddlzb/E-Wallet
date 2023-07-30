@@ -18,6 +18,7 @@ protocol DashboardPresentable: Presentable {
     var listener: DashboardPresentableListener? { get set }
 
     func bind(homeViewModel: HomeViewModel)
+    func bindNotHandleResult()
 }
 
 protocol DashboardListener: AnyObject {
@@ -73,6 +74,8 @@ extension DashboardInteractor: DashboardPresentableListener {
     func didSelect(serviceType: ServiceType) {
         if serviceType == .electricity || serviceType == .internet || serviceType == .water || serviceType == .televison {
             self.listener?.dashboardWantToRouteToEnterBill(serviceType: serviceType)
+        } else {
+            self.presenter.bindNotHandleResult()
         }
     }
 
