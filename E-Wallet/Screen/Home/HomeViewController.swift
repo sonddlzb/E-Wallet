@@ -35,13 +35,13 @@ final class HomeViewController: UIViewController {
     // only for test add voucher
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//        let entity = VoucherEntity(description: "Discount 10% max $8 for all types of bill payment",
+//        let entity = VoucherEntity(description: "Discount 20% max $8 for all types of bill",
 //                                   discountType: "percent",
-//                                   openTime: Date(timeIntervalSinceReferenceDate: 703302560.84386),
-//                                   amount: 10, expirationTime: Date(timeIntervalSinceReferenceDate: 708502560.84386),
-//                                   minValue: 40,
+//                                   openTime: Date(timeIntervalSinceReferenceDate: 705302560.84386),
+//                                   amount: 20, expirationTime: Date(timeIntervalSinceReferenceDate: 718502560.84386),
+//                                   minValue: 30,
 //                                   maxDiscount: 8,
-//                                   userId: "g7gpxnE9mLaL3JnIA6BDFpPPIXt1",
+//                                   userId: "2udUU4cluNVF46jE2QL0val6k892",
 //                                   serviceTypes: ["Electricity", "Water", "Internet", "TV"])
 //        VoucherDatabase.shared.createVoucher(voucherEntity: entity) { successfully in
 //            print("add voucher \(successfully)")

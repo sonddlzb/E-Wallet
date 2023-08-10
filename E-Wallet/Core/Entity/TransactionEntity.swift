@@ -26,4 +26,5 @@ struct TransactionEntity: Codable {
     var status: String
     var time: Date
     var description: String
+    var message = ""
 }

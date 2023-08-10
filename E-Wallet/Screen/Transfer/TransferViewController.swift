@@ -84,8 +84,13 @@ final class TransferViewController: UIViewController, TransferViewControllable {
             return
         }
 
+        var message = self.messageTextView.text ?? ""
+        if self.messageTextView.textColor == UIColor.lightGray {
+            message = ""
+        }
+
         if let amount = self.moneyTextField.text?.convertMoneyToNumber() {
-            self.listener?.routeToTransactionConfirm(phoneNumber: phoneNumberTextField.text, name: name, amount: amount, message: self.messageTextView.text)
+            self.listener?.routeToTransactionConfirm(phoneNumber: phoneNumberTextField.text, name: name, amount: amount, message: message)
         }
     }
 

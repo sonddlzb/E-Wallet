@@ -132,6 +132,14 @@ extension TransactionConfirmViewController: TransactionConfirmPresentable {
         self.voucher = voucher
         self.collectionView.reloadData()
     }
+
+    func pauseScreen() {
+        self.view.isUserInteractionEnabled = false
+    }
+
+    func continueScreen() {
+        self.view.isUserInteractionEnabled = true
+    }
 }
 
 // MARK: - PaymentMethodViewDelegate

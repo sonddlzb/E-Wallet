@@ -34,6 +34,7 @@ extension TransactionConfirmInteractor: EnterPasswordListener {
     func enterPasswordDidAuthenticateOldUserSuccess() {
         self.router?.dismissPassword()
         SVProgressHUD.show()
+        self.presenter.pauseScreen()
         switch self.viewModel.paymentType() {
         case .transfer:
             self.transferMoney()
