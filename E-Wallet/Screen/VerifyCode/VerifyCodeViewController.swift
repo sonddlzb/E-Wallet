@@ -114,6 +114,11 @@ extension VerifyCodeViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
+        if string.isEmpty && range.length == 1 {
+            // Người dùng đã nhấn phím xoá
+            print("Người dùng đã nhấn phím xoá")
+        }
+
         let maxLength = 1
         let currentString = (textField.text ?? "") as NSString
         let newString = currentString.replacingCharacters(in: range, with: string)

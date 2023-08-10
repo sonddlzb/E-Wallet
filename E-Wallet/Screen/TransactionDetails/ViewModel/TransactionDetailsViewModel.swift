@@ -36,6 +36,10 @@ struct TransactionDetailsViewModel {
         return UIImage(named: "ic_\(self.transaction.type.rawValue.lowercased())_history")
     }
 
+    func message() -> String {
+        return self.transaction.message
+    }
+
     func amount() -> String {
         switch self.transaction.type {
         case .topUp: return "+$" + String(self.transaction.amount)

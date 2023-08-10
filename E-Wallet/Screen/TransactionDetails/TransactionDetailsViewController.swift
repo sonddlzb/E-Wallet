@@ -31,6 +31,7 @@ final class TransactionDetailsViewController: UIViewController, TransactionDetai
     @IBOutlet private weak var customerNameLabel: UILabel!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var billTypeLabel: UILabel!
+    @IBOutlet private weak var messageLabel: UILabel!
 
     @IBOutlet private weak var billStackViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var historyStackViewHeightConstraint: NSLayoutConstraint!
@@ -76,6 +77,8 @@ extension TransactionDetailsViewController: TransactionDetailsPresentable {
         self.amountLabel.text = viewModel.amount()
         self.statusLabel.text = viewModel.status()
         self.timeLabel.text = viewModel.time()
+        self.messageLabel.text = viewModel.message()
+
         if viewModel.transaction.status == .completed {
             self.statusContainerView.backgroundColor = UIColor(rgb: 0x1AB65C).withAlphaComponent(0.2)
             self.statusLabel.textColor = UIColor(rgb: 0x1AB65C)

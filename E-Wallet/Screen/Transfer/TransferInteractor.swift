@@ -80,7 +80,7 @@ extension TransferInteractor: TransferPresentableListener {
                                              "Phone number": phoneNumber.formatPhoneNumber(),
                                              "Name": name,
                                              "Amount": "$" + String(amount),
-                                             "message": message]
+                                             "Message": message]
         self.listener?.transferWantToRouteToTransactionConfirm(confirmData: confirmData)
     }
 

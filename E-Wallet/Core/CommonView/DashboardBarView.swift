@@ -48,7 +48,7 @@ class DashboardBarView: UIView {
         self.stackView = UIStackView()
         self.addSubview(self.stackView)
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView.fitSuperviewConstraint()
+        self.stackView.fitSuperviewConstraint(edgeInset: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 5.0, right: 0.0))
         self.stackView.axis = .horizontal
         self.stackView.distribution = .fillEqually
     }

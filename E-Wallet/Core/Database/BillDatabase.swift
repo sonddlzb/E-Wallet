@@ -15,7 +15,7 @@ class BillDatabase {
     private var database = Firestore.firestore().collection(DatabaseConst.billPath)
 
     func getBillByCustomerId(_ customerId: String, serviceType: ServiceType, completion: @escaping (_ bill: Bill?) -> Void) {
-        self.database.whereField("customerId", isEqualTo: customerId).whereField("type", isEqualTo: serviceType.rawValue).getDocuments { querySnapshot, error in
+        self.database.whereField("customerId", isEqualTo: customerId).whereField("type", isEqualTo: serviceType.rawValue.capitalized).getDocuments { querySnapshot, error in
             if error != nil {
                 completion(nil)
                 return

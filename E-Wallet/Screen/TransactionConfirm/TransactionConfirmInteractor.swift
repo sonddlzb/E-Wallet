@@ -30,6 +30,8 @@ protocol TransactionConfirmPresentable: Presentable {
     func bind(viewModel: TransactionConfirmViewModel)
     func bind(voucher: Voucher)
     func bindPaymentResult(isSuccess: Bool, message: String)
+    func pauseScreen()
+    func continueScreen()
 }
 
 protocol TransactionConfirmListener: AnyObject {
@@ -87,9 +89,10 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
     }
 
     func transferMoney() {
-        AccountDatabase.shared.transfer(selectedCard: self.viewModel.selectedCard, amount: self.viewModel.amount(), receiverPhoneNumber: self.viewModel.phoneNumber(), completion: { [weak self] error, transaction in
+        AccountDatabase.shared.transfer(selectedCard: self.viewModel.selectedCard, amount: self.viewModel.amount(), receiverPhoneNumber: self.viewModel.phoneNumber(), message: self.viewModel.message(), completion: { [weak self] error, transaction in
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
+                self?.presenter.continueScreen()
                 if let error = error {
                     print("transfer failed! \(error.localizedDescription)")
                     self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
@@ -125,12 +128,14 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
             STPPaymentHelper.shared.handlePayment(card: card, price: self.viewModel.amount(), paymentType: .topUp, completion: {[weak self] error in
                 if let error = error {
                     SVProgressHUD.dismiss()
+                    self?.presenter.continueScreen()
                     DispatchQueue.main.async {
                         self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                     }
                 } else {
                     AccountDatabase.shared.topUp(amount: self?.viewModel.amount() ?? 0.0) { error, transaction in
                         SVProgressHUD.dismiss()
+                        self?.presenter.continueScreen()
                         if let error = error {
                             self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                         } else {
@@ -161,12 +166,14 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
                 if let error = error {
                     DispatchQueue.main.async {
                         SVProgressHUD.dismiss()
+                        self?.presenter.continueScreen()
                         self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                     }
                 } else {
                     AccountDatabase.shared.withdraw(amount: self?.viewModel.amount() ?? 0.0) { error, transaction in
                         DispatchQueue.main.async {
                             SVProgressHUD.dismiss()
+                            self?.presenter.continueScreen()
                             if let error = error {
                                 self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                             } else {
@@ -191,6 +198,7 @@ final class TransactionConfirmInteractor: PresentableInteractor<TransactionConfi
             AccountDatabase.shared.handlePayment(selectedCard: self.viewModel.selectedCard, billId: self.viewModel.billId(), paymentType: paymentType, amount: self.viewModel.amount() - self.viewModel.discount) { [weak self] error, transaction in
                 DispatchQueue.main.async {
                     SVProgressHUD.dismiss()
+                    self?.presenter.continueScreen()
                     if let error = error {
                         self?.presenter.bindPaymentResult(isSuccess: false, message: error.localizedDescription)
                     } else {

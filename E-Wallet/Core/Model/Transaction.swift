@@ -25,9 +25,10 @@ class Transaction: Equatable, Hashable {
     var status: PaymentStatus
     var time: Date
     var description: String
+    var message = ""
 
     init(id: String, type: PaymentType, senderId: String, receiverId: String,
-         amount: Double, currency: String, status: PaymentStatus, time: Date, description: String) {
+         amount: Double, currency: String, status: PaymentStatus, time: Date, description: String, message: String = "") {
         self.id = id
         self.type = type
         self.senderId = senderId
@@ -37,6 +38,7 @@ class Transaction: Equatable, Hashable {
         self.status = status
         self.time = time
         self.description = description
+        self.message = message
     }
 
     init(id: String, entity: TransactionEntity) {
@@ -49,5 +51,6 @@ class Transaction: Equatable, Hashable {
         self.status = PaymentStatus(rawValue: entity.status) ?? .completed
         self.time = entity.time
         self.description = entity.description
+        self.message = entity.message
     }
 }

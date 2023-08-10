@@ -152,7 +152,7 @@ class AccountDatabase {
         }
     }
 
-    func transfer(selectedCard: Card?, amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+    func transfer(selectedCard: Card?, amount: Double, receiverPhoneNumber: String, message: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -173,17 +173,17 @@ class AccountDatabase {
                             completion(error, nil)
                             return
                         } else {
-                            self?.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, completion: completion)
+                            self?.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, message: message, completion: completion)
                         }
                     }
                 }
             })
         } else {
-            self.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, completion: completion)
+            self.transferWithBalance(amount: amount, receiverPhoneNumber: receiverPhoneNumber, message: message, completion: completion)
         }
     }
 
-    func transferWithBalance(amount: Double, receiverPhoneNumber: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
+    func transferWithBalance(amount: Double, receiverPhoneNumber: String, message: String, completion: @escaping (_ error: Error?, _ transaction: Transaction?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -226,7 +226,8 @@ class AccountDatabase {
                                                                               currency: "$",
                                                                               status: PaymentStatus.completed.rawValue,
                                                                               time: Date(),
-                                                                              description: "Transfer money to \(receiver.fullName)")
+                                                                              description: "Transfer money to \(receiver.fullName)",
+                                                                              message: message)
                                     TransactionDatabase.shared.addNewTransaction(entity: transactionEntity) { error, transactionId in
                                         if let error = error {
                                             print("Create transaction failed with error \(error.localizedDescription)")

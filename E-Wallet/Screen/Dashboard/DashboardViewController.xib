@@ -174,13 +174,13 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="pFq-BE-0D0"/>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLU-4r-1kQ">
-                    <rect key="frame" x="20" y="128" width="374" height="150"/>
+                    <rect key="frame" x="20" y="128" width="374" height="155"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97U-ZV-TzC" customClass="DashboardBarView" customModule="E_Wallet" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="75" width="374" height="75"/>
+                            <rect key="frame" x="0.0" y="75" width="374" height="80"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="75" id="DHd-tT-Rc7"/>
+                                <constraint firstAttribute="height" constant="80" id="DHd-tT-Rc7"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -216,7 +216,6 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="150" id="79O-Q6-GkY"/>
                         <constraint firstItem="97U-ZV-TzC" firstAttribute="leading" secondItem="XLU-4r-1kQ" secondAttribute="leading" id="C6Y-NK-bIF"/>
                         <constraint firstAttribute="trailing" secondItem="97U-ZV-TzC" secondAttribute="trailing" id="EZi-FO-DnO"/>
                         <constraint firstItem="eg3-hW-uUX" firstAttribute="leading" secondItem="XLU-4r-1kQ" secondAttribute="leading" id="RMg-j7-d2x"/>

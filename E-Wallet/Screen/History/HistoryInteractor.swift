@@ -32,6 +32,7 @@ final class HistoryInteractor: PresentableInteractor<HistoryPresentable>, Histor
     weak var listener: HistoryListener?
     var viewModel = HistoryViewModel.makeEmpty()
     var previousFilterModel: FilterModel?
+    var currentTopic = ""
     var isInFilterMode = false {
         didSet {
             self.presenter.bindFilterState(isInFilterMode: isInFilterMode)
@@ -77,6 +78,7 @@ extension HistoryInteractor: HistoryPresentableListener {
             return
         }
 
+        self.currentTopic = topic
         self.fetchTransactionsData(topic: topic)
     }
 
@@ -97,6 +99,11 @@ extension HistoryInteractor: HistoryPresentableListener {
     }
 
     func didTapFilter() {
-        self.router?.routeToFilter(filterModel: self.previousFilterModel)
+        if isInFilterMode {
+            self.isInFilterMode = false
+            self.reloadDataIfNeed(topic: self.currentTopic)
+        } else {
+            self.router?.routeToFilter(filterModel: self.previousFilterModel)
+        }
     }
 }

@@ -9,7 +9,7 @@ enum PaymentType: String, CaseIterable {
     case electricity = "Electricity"
     case internet = "Internet"
     case water = "Water"
-    case televison = "TV"
+    case televison = "Tv"
     case topUp = "Top Up"
     case withdraw = "Withdraw"
     case transfer = "Transfer"
@@ -104,7 +104,7 @@ class STPPaymentHelper {
                     paymentMethodParams.cvc = card.cvc
 
                     let billingDetails = STPPaymentMethodBillingDetails()
-                    billingDetails.name = Auth.auth().currentUser?.email ?? "Unknown"
+                    billingDetails.name = Auth.auth().currentUser?.phoneNumber ?? "Unknown"
 
                     paymentIntentParams.paymentMethodParams =
                         STPPaymentMethodParams(card: paymentMethodParams,
